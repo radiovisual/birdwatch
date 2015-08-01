@@ -5,6 +5,7 @@ var underscore = require('underscore');
 var eachAsync = require('each-async');
 var report = require("./report");
 var chalk = require('chalk');
+var http = require('http');
 var Twit = require('twit');
 var fs = require('fs');
 
@@ -260,6 +261,51 @@ exports.startTimer = function(feeds, options, cb){
     }, this.refreshTime*1000);
 };
 
+
+/**
+ * Get the cached tweets object
+ *
+ * @returns {Array}
+ */
+exports.getCachedTweets = function(){
+    if(in_memory_cache){
+        return in_memory_cache;
+    } else {
+
+        try {
+            fs.readFile('./cache/cached_tweets.json', function (err, data) {
+                if (err) {
+                    report.logError(["Error reading file cached_tweets.json in getCachedTweets()", err]);
+                } else {
+                    in_memory_cache.push(data);
+                    return in_memory_cache;
+                }
+            });
+        } catch (err){
+            console.log(err);
+        }
+
+    }
+};
+
+/**
+ * Start the server so that the file can be served.
+ *
+ * @param port
+ * @returns {*}
+ */
+module.exports.startServer = function(port){
+
+    var self = this;
+    var server = http.createServer(function (req, res){
+        res.writeHead(200, {'Content-Type': 'text/json'});
+        res.end(JSON.stringify(self.getCachedTweets()));
+    });
+
+    server.listen(port);
+    return server;
+
+};
 
 
 

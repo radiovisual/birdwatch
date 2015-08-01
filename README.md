@@ -19,8 +19,26 @@ You can filter tweets by hashtags, or ignore retweets.
 - Filter the tweets by hashtags
 - Easy setup
 
+### Usage
+
+```js
+
+var Birdwatch = require('./index');
+
+var birdwatch = new Birdwatch({refreshTime: 600, port:4002})
+    .feed('reactjs', {filter_tags: /#reactjs/i })
+    .feed('nodejs', { filter_tags: /#nodejs/i });
+
+birdwatch.start(function (err) {
+    if(!err) {
+        // done
+    }
+});
+
+```
 ### TODO:
 
+- [ ] Better serving solution
 - [ ] Write tests
 - [ ] Write documentation
 - [ ] publish to npm
