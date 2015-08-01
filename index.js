@@ -15,6 +15,7 @@ if (!fs.existsSync("configure/local_configure.js")) {
     report.checkCredentialsForDefaultValues(credentials);
 }
 
+
 /**
  * Initialize a new Birdwatch
  *
@@ -42,7 +43,6 @@ objectAssign(Birdwatch.prototype, EventEmitter.prototype);
 objectAssign(Birdwatch.prototype, require('./utils'));
 
 module.exports = Birdwatch;
-
 
 
 /**
@@ -74,6 +74,7 @@ Birdwatch.prototype.feed = function(screenname, options){
  * @param {Function} cb - callback
  * @api public
  */
+
 Birdwatch.prototype.start = function (cb){
 
     cb = cb || function () {};

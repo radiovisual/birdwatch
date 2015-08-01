@@ -62,7 +62,6 @@ exports.processFeeds = function(feeds, options, cb){
 
     });
 
-
 };
 
 
@@ -72,6 +71,7 @@ exports.processFeeds = function(feeds, options, cb){
  * @param {String} screenname - screenname associated to the feed
  * @returns {Promise}
  */
+
 function getTwitterData(screenname){
 
     console.log("Fetching twitter data for: ", chalk.yellow("@"+screenname));
@@ -97,6 +97,7 @@ function getTwitterData(screenname){
  * @param {Object} options          - the feed options
  * @returns {Promise}
  */
+
 function filterTweets(tweetdata, screenname, options){
 
     return new Promise(function (resolve, reject){
@@ -147,7 +148,6 @@ function filterTweets(tweetdata, screenname, options){
 
     });
 
-
 }
 
 /**
@@ -156,6 +156,7 @@ function filterTweets(tweetdata, screenname, options){
  * @param {Array} feeds
  * @returns {Promise}
  */
+
 var processCache = function(feeds){
 
     return new Promise(function(resolve, reject){
@@ -184,6 +185,7 @@ var processCache = function(feeds){
  * @param options
  * @returns {Promise}
  */
+
 var sortTweets = function(tweetObjects, options){
 
     return new Promise(function(resolve, reject){
@@ -203,6 +205,7 @@ var sortTweets = function(tweetObjects, options){
  *
  * @param {Object} dataToSave
  */
+
 function saveCacheFile(dataToSave){
 
     fs.writeFile('./cache/cached_tweets.json', JSON.stringify(dataToSave), function (err) {

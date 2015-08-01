@@ -31,3 +31,9 @@ configure/local_configure.js
 
 # Ignore my test app
 app.js
+
+# Ignore Webstorm preferences
+.idea/
+
+# Don't save the local cache file
+cache/cached_tweets.json

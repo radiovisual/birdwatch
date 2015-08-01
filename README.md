@@ -1,9 +1,27 @@
-# birdwatch
+# Birdwatch 
 
-Get raw tweets from one or more specific twitter feeds
+:chicken: :eyeglasses: :watch:
+
+**Get raw tweets from one or more specific twitter feeds.**
+
+Birdwatch will help you grab tweets from specific twitter accounts, and cache the tweets in a local file on your server,
+thus avoiding any requests limits set by the Twitter API, and giving you more control over the data that is saved.
+You can filter tweets by hashtags, or ignore retweets.  
+
+**Note:** This is a work in progress. *Pull requests welcome!*
+
+### Features
+
+- Simple API
+- Easily configure how often you want the cache to update
+- Filter the tweets by hashtags
+- Easy setup
 
 ### TODO:
 
+- [ ] Write tests
+- [ ] Write documentation
+- [ ] publish to npm
 - [ ] Allow custom sorting rules
 - [ ] HTML-ify the cached tweets
 - [ ] More caching options (currently on-disk only)
