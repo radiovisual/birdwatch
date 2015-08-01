@@ -1,0 +1,33 @@
+{
+  "name": "birdwatch",
+  "version": "0.0.1",
+  "description": "Monitor and cache specific twitter feeds",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/radiovisual/birdwatch.git"
+  },
+  "keywords": [
+    "twitter",
+    "birdwatch",
+    "request",
+    "twit"
+  ],
+  "author": "Michael Wuergler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/radiovisual/birdwatch/issues"
+  },
+  "homepage": "https://github.com/radiovisual/birdwatch",
+  "dependencies": {
+    "underscore": "~1.8.3",
+    "twit": "~2.1.0",
+    "chalk": "~1.1.0",
+    "object-assign": "~3.0.0",
+    "each-async": "~1.1.1",
+    "native-promise-only": "~0.8.0-a"
+  }
+}
