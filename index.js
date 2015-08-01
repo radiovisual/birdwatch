@@ -93,9 +93,6 @@ Birdwatch.prototype.start = function (cb){
 
         this.feeds.push({screenname:item.screenname, options:options});
 
-        //console.log("get tweets for: ",item.screenname);
-        //console.log(item.screenname, " has options supplied: ", item.options);
-
         next();
 
     }.bind(this), function (error){

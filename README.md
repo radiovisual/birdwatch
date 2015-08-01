@@ -26,9 +26,9 @@ You can filter tweets by hashtags, or ignore retweets.
 - [ ] publish to npm
 - [ ] Allow custom sorting rules
 - [ ] HTML-ify the cached tweets
-- [ ] More caching options (currently on-disk only)
+- [ ] More caching options (currently on-disk/in-memory only)
 
-## License
+### License
 
 The MIT License (MIT)
 

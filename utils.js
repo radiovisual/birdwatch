@@ -19,7 +19,26 @@ var T = new Twit({
     access_token_secret:  credentials.access_token_secret
 });
 
+/**
+ * Temporarily hold the data that is returned from the promises
+ * gathering the twitter data. When this array is full with all the
+ * responses from twitter, saveToCache() uses it to create the in-memory
+ * and on-disk caches. When the birdwatching cycle is over, this is emptied
+ * and waits for the next birdwatching cycle to  begin.
+ * @type {Array}
+ */
 var returned_tweets = [];
+
+/**
+ * This will act as the in-memory cache, holding the jsondata
+ * That will also be saved into the cached_tweets.json file.
+ * We use an in-memory cache to increase response times, and reduce
+ * the time needed to read from the disk. The on-disk cache is there
+ * as a backup and will be used if the in-memory cache is empty
+ * @type {Array}
+ */
+
+var in_memory_cache = [];
 
 /**
  * Process the feeds by starting the promise chain.
@@ -28,6 +47,7 @@ var returned_tweets = [];
  * @param {Object} options - birdwatch configuration options
  * @param {Function} cb - callback
  */
+
 exports.processFeeds = function(feeds, options, cb){
 
     // Let's go Birdwatching!
@@ -38,15 +58,14 @@ exports.processFeeds = function(feeds, options, cb){
         var feedoptions = item.options;
         var screenname = item.screenname;
 
-        var p = getTwitterData(screenname)
-            .then(function(tweetdata){
+        var p = getTwitterData(screenname).then(function(tweetdata){
             return filterTweets(tweetdata, screenname, feedoptions);
         }).then(function(){
             return processCache(feeds);
         }).then(function(processedCacheObjects){
             return sortTweets(processedCacheObjects);
         }).then(function(sorteddataobjects){
-            saveCacheFile(sorteddataobjects);
+            saveToCache(sorteddataobjects);
         });
 
         p.catch(function(error){
@@ -91,6 +110,7 @@ function getTwitterData(screenname){
 
     });
 }
+
 
 /**
  * Filter the tweets if filtering options are supplied.
@@ -180,6 +200,7 @@ var processCache = function(feeds){
     });
 };
 
+
 /**
  * Sort the tweets
  *
@@ -209,7 +230,7 @@ var sortTweets = function(tweetObjects, options){
  * @param {Object} dataToSave
  */
 
-function saveCacheFile(dataToSave){
+function saveToCache(dataToSave){
 
     fs.writeFile('./cache/cached_tweets.json', JSON.stringify(dataToSave), function (err) {
         if (err) {
@@ -217,9 +238,11 @@ function saveCacheFile(dataToSave){
         } else {
             report.reportSuccessMessageWithTime("Cache file saved with "+dataToSave.length+" tweets");
             returned_tweets = [];
+            in_memory_cache.push(JSON.stringify(dataToSave));
         }
     });
 }
+
 
 /**
  * Start the interval timer based on this.refreshTime

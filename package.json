@@ -28,6 +28,7 @@
     "chalk": "~1.1.0",
     "object-assign": "~3.0.0",
     "each-async": "~1.1.1",
-    "native-promise-only": "~0.8.0-a"
+    "native-promise-only": "~0.8.0-a",
+    "express": "~4.13.2"
   }
 }
