@@ -79,6 +79,8 @@ Birdwatch.prototype.start = function (cb){
 
     cb = cb || function () {};
 
+
+
     eachAsync(this.feed(), function(item, index, next){
 
         var birdwatch_opts = this.options;
@@ -105,8 +107,12 @@ Birdwatch.prototype.start = function (cb){
 
         report.logStartMessage(this.options, this.feeds);
         this.processFeeds(this.feeds, this.options, cb);
+        this.startTimer(this.feeds, this.options, cb);
 
     }.bind(this));
 
 };
+
+
+
 

@@ -30,6 +30,9 @@ var returned_tweets = [];
  */
 exports.processFeeds = function(feeds, options, cb){
 
+    // Let's go Birdwatching!
+    report.processBirdwatchingMessage();
+
     eachAsync(feeds, function(item, index, next){
 
         var feedoptions = item.options;
@@ -158,7 +161,7 @@ function filterTweets(tweetdata, screenname, options){
  */
 
 var processCache = function(feeds){
-
+    
     return new Promise(function(resolve, reject){
 
         // Are we ready to format the data?
@@ -213,9 +216,26 @@ function saveCacheFile(dataToSave){
             report.logError(["Error saving cached_tweets.json in processCache()", error]);
         } else {
             report.reportSuccessMessageWithTime("Cache file saved with "+dataToSave.length+" tweets");
+            returned_tweets = [];
         }
     });
 }
+
+/**
+ * Start the interval timer based on this.refreshTime
+ *
+ * @note: seconds are converted to milliseconds
+ * @param {Array} feeds - feeds to pass to this.processFeeds()
+ * @param {Object} options - options to pass to this.processFeeds()
+ * @param {Function} cb - callback to pass to this.processFeeds()
+ */
+
+exports.startTimer = function(feeds, options, cb){
+    var self = this;
+    setInterval(function(){
+        self.processFeeds(feeds, options, cb);
+    }, this.refreshTime*1000);
+};
 
 
 

@@ -54,3 +54,8 @@ module.exports.reportSuccessMessageWithTime = function(message){
 function secondsToMinutes(seconds){
     return Math.round(seconds/60);
 }
+
+module.exports.processBirdwatchingMessage = function(){
+    console.log( chalk.cyan("\nLet's go Birdwatching: ")+chalk.gray(new Date() )) ;
+    console.log();
+};
