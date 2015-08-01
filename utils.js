@@ -161,7 +161,7 @@ function filterTweets(tweetdata, screenname, options){
  */
 
 var processCache = function(feeds){
-    
+
     return new Promise(function(resolve, reject){
 
         // Are we ready to format the data?

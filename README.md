@@ -8,6 +8,8 @@ Birdwatch will help you grab tweets from specific twitter accounts, and cache th
 thus avoiding any requests limits set by the Twitter API, and giving you more control over the data that is saved.
 You can filter tweets by hashtags, or ignore retweets.  
 
+# ![birdwatch](media/screenshot-v.0.0.1.png)
+
 **Note:** This is a work in progress. *Pull requests welcome!*
 
 ### Features
