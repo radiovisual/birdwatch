@@ -35,7 +35,11 @@ birdwatch.start(function (err) {
     }
 });
 
+// now get your tweets in JSON format
+console.log(birdwatch.getCachedTweets());
+
 ```
+
 ### TODO:
 
 - [ ] Better serving solution
