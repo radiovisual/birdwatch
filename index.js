@@ -35,7 +35,6 @@ function Birdwatch(options){
 
     this.feeds = [];
     this.tweets = [];
-    this.port = options.port || 3000;
     this.refreshTime = options.refreshTime || 300;
 
 }

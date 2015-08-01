@@ -18,6 +18,7 @@ You can filter tweets by hashtags, or ignore retweets.
 - Easily configure how often you want the cache to update
 - Filter the tweets by hashtags
 - Easy setup
+- Option to ignore retweets
 
 ### Usage
 
@@ -25,7 +26,7 @@ You can filter tweets by hashtags, or ignore retweets.
 
 var Birdwatch = require('./index');
 
-var birdwatch = new Birdwatch({refreshTime: 600, port:4002})
+var birdwatch = new Birdwatch({refreshTime: 600})
     .feed('reactjs', {filter_tags: /#reactjs/i })
     .feed('nodejs', { filter_tags: /#nodejs/i });
 
@@ -35,8 +36,8 @@ birdwatch.start(function (err) {
     }
 });
 
-// now get your tweets in JSON format
-console.log(birdwatch.getCachedTweets());
+// now get your tweets in JSON format to serve or print
+var cachedTweets = birdwatch.getCachedTweets();
 
 ```
 
