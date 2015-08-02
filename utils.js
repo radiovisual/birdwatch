@@ -136,7 +136,7 @@ function filterTweets(tweetdata, screenname, options){
         } else {
 
             var matches = [];
-            console.log(chalk.white.bold("Filtering "+screenname+": ") + chalk.gray(options.filter_tags));
+            console.log(chalk.white.bold("Filtering tags: "+screenname+": ") + chalk.gray(options.filter_tags));
 
             // is options.filter_tags a string or regex?
             var isRegEx = isRegexp(options.filter_tags);
@@ -238,7 +238,7 @@ function saveToCache(dataToSave){
         if (err) {
             report.logError(["Error saving cached_tweets.json in processCache()", error]);
         } else {
-            report.reportSuccessMessageWithTime("Cache file saved with "+dataToSave.length+" tweets");
+            report.reportSuccessMessageWithTime("Cache updated with "+dataToSave.length+" tweets");
             returned_tweets = [];
             in_memory_cache.push(JSON.stringify(dataToSave));
         }

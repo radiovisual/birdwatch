@@ -1,4 +1,4 @@
-# Birdwatch :baby_chick: :watch:
+# Birdwatch :baby_chick::watch:
 
 > Get raw tweets from one or more specific twitter feeds.
 

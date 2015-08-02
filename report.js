@@ -56,6 +56,6 @@ function secondsToMinutes(seconds){
 }
 
 module.exports.processBirdwatchingMessage = function(){
-    console.log( chalk.cyan("\nLet's go Birdwatching: ")+chalk.gray(new Date() )) ;
+    console.log( chalk.cyan("\nLet's go Birdwatching! ")+chalk.gray(new Date() )) ;
     console.log();
 };
