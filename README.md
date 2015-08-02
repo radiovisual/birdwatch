@@ -24,30 +24,29 @@ You can filter tweets by hashtags, or ignore retweets.
 
 var Birdwatch = require('./index');
 
+// Birdwatch @reactjs & @nodejs twitter feeds; update every 10 mins
 var birdwatch = new Birdwatch({refreshTime: 600})
     .feed('reactjs', {filter_tags: /#reactjs/i })
     .feed('nodejs', { filter_tags: /#nodejs/i });
 
+// Start the birdwatching process
 birdwatch.start(function (err) {
     if(!err) {
         // done
     }
 });
 
-// now get your tweets in JSON format to serve or print
+// Now get your tweets in JSON format to serve or print
 birdwatch.getCachedTweets().then(function(tweetdata){
     console.log(tweetdata);
 });
-
 
 ```
 
 ### TODO:
 
 - [ ] Better serving solution
-- [ ] Write tests
 - [ ] Write documentation
-- [ ] publish to npm
 - [ ] Allow custom sorting rules
 - [ ] HTML-ify the cached tweets
 - [ ] More caching options (currently on-disk/in-memory only)

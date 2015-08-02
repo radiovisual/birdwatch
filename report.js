@@ -59,3 +59,7 @@ module.exports.processBirdwatchingMessage = function(){
     console.log( chalk.cyan("\nLet's go Birdwatching! ")+chalk.gray(new Date() )) ;
     console.log();
 };
+
+module.exports.reportFilteringMessage = function(screenname, filter_tags){
+    console.log(chalk.white.bold("Filtering tags: "+screenname+": ") + chalk.gray(filter_tags));
+};

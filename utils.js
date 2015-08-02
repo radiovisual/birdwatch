@@ -45,29 +45,31 @@ var in_memory_cache = [];
 /**
  * Process the feeds by starting the promise chain.
  *
- * @param {Array} feeds - the list of feeds to process
- * @param {Object} options - birdwatch configuration options
- * @param {Function} cb - callback
+ * @param {Array} feeds         - the list of feeds to process
+ * @param {Object} bwoptions    - birdwatch configuration options
+ * @param {Function} cb         - callback
  */
 
-exports.processFeeds = function(feeds, options, cb){
+exports.processFeeds = function(feeds, bwoptions, cb){
 
     // Let's go Birdwatching!
-    report.processBirdwatchingMessage();
+    if(this.logReports){
+        report.processBirdwatchingMessage();
+    }
 
     eachAsync(feeds, function(item, index, next){
 
         var feedoptions = item.options;
         var screenname = item.screenname;
 
-        var p = getTwitterData(screenname).then(function(tweetdata){
-            return filterTweets(tweetdata, screenname, feedoptions);
+        var p = getTwitterData(screenname, bwoptions).then(function(tweetdata){
+            return filterTweets(tweetdata, screenname, feedoptions, bwoptions);
         }).then(function(){
             return processCache(feeds);
         }).then(function(processedCacheObjects){
             return sortTweets(processedCacheObjects);
         }).then(function(sorteddataobjects){
-            saveToCache(sorteddataobjects);
+            saveToCache(sorteddataobjects, bwoptions);
         });
 
         p.catch(function(error){
@@ -92,13 +94,16 @@ exports.processFeeds = function(feeds, options, cb){
 /**
  * Request twitter data from the Twitter API
  *
- * @param {String} screenname - screenname associated to the feed
+ * @param {String} screenname   - screenname associated to the feed
+ * @param {Object} bwoptions    - birdwatch configuration options
  * @returns {Promise}
  */
 
-function getTwitterData(screenname){
+function getTwitterData(screenname, bwoptions){
 
-    console.log("Fetching twitter data for: ", chalk.yellow("@"+screenname));
+    if(bwoptions.logReports){
+        console.log("Fetching twitter data for: ", chalk.yellow("@"+screenname));
+    }
 
     return new Promise(function(resolve, reject){
 
@@ -119,16 +124,17 @@ function getTwitterData(screenname){
  *
  * @param {Object} tweetdata        - the returned tweet data from Twitter
  * @param {String} screenname       - the screenname of the current feed
- * @param {Object} options          - the feed options
+ * @param {Object} feedoptions      - the feed options
+ * @param {Object} bwoptions        - birdwatch options
  * @returns {Promise}
  */
 
-function filterTweets(tweetdata, screenname, options){
+function filterTweets(tweetdata, screenname, feedoptions, bwoptions){
 
     return new Promise(function (resolve, reject){
 
         // return the unfiltered tweetdata if no filters are requested
-        if( !options.hasOwnProperty("filter_tags") ){
+        if( !feedoptions.hasOwnProperty("filter_tags") ){
             returned_tweets.push(tweetdata);
             resolve();
 
@@ -136,21 +142,23 @@ function filterTweets(tweetdata, screenname, options){
         } else {
 
             var matches = [];
-            console.log(chalk.white.bold("Filtering tags: "+screenname+": ") + chalk.gray(options.filter_tags));
+
+            if(bwoptions.logReports){
+                report.reportFilteringMessage(screenname, feedoptions.filter_tags);
+            }
 
             // is options.filter_tags a string or regex?
-            var isRegEx = isRegexp(options.filter_tags);
+            var isRegEx = isRegexp(feedoptions.filter_tags);
 
             var search_tags;
 
             if(!isRegEx){
-                reject(Error(["You must supply a regex to filter_tags\nCheck your syntax on: "+options.filter_tags]));
+                reject(new Error(["You must supply a regex to filter_tags\nCheck your syntax on: "+feedoptions.filter_tags]));
             }
 
-            var remove_retweets =  options.hasOwnProperty("remove_retweets") && options.remove_retweets;
+            var remove_retweets = feedoptions.remove_retweets;
 
             for (var i in tweetdata){
-
 
                 var tweet = tweetdata[i];
                 var isRetweet = tweet.hasOwnProperty("retweeted_status");
@@ -161,8 +169,7 @@ function filterTweets(tweetdata, screenname, options){
 
                 // TODO: HTML-ify tweet.text and add a HTMLtext property to the tweet object before saving.
 
-                var tweet_str = tweet.text;
-                if(options.filter_tags.test(tweet_str)){
+                if(feedoptions.filter_tags.test(tweet.text)){
                     matches.push(tweet);
                 }
             }
@@ -207,8 +214,8 @@ var processCache = function(feeds){
  * Sort the tweets
  *
  * @discussion: Defaults to chronological order. Custom sorting control coming soon
- * @param tweetObjects
- * @param options
+ * @param {Array} tweetObjects  - the tweet objects to sort
+ * @param {Object} options      - TODO: allow custom sorting options
  * @returns {Promise}
  */
 
@@ -227,18 +234,23 @@ var sortTweets = function(tweetObjects, options){
 
 
 /**
- * Save the processed tweets to the file cache
+ * Save the processed tweets to the cache
  *
- * @param {Object} dataToSave
+ * @param {Object} dataToSave       - the data to save
+ * @param {Object} bwoptions        - birdwatch configuration options
  */
 
-function saveToCache(dataToSave){
+function saveToCache(dataToSave, bwoptions){
 
     fs.writeFile('./cache/cached_tweets.json', JSON.stringify(dataToSave), function (err) {
         if (err) {
             report.logError(["Error saving cached_tweets.json in processCache()", error]);
         } else {
-            report.reportSuccessMessageWithTime("Cache updated with "+dataToSave.length+" tweets");
+
+            if(bwoptions.logReports){
+                report.reportSuccessMessageWithTime("Cache updated with "+dataToSave.length+" tweets");
+            }
+
             returned_tweets = [];
             in_memory_cache.push(JSON.stringify(dataToSave));
         }

@@ -35,8 +35,8 @@ function Birdwatch(options){
 
     this.feeds = [];
     this.tweets = [];
-    this.refreshTime = options.refreshTime || 300;
-
+    this.refreshTime = this.options.refreshTime || 300;
+    this.logReports = this.options.logReports || false;
 }
 
 objectAssign(Birdwatch.prototype, EventEmitter.prototype);
@@ -79,14 +79,18 @@ Birdwatch.prototype.start = function (cb){
 
     cb = cb || function () {};
 
+    if(!this.feed() || this.feed().length === 0){
+        cb(new Error("You must supply at least one feed to Birdwatch"));
+        return;
+    }
+
     eachAsync(this.feed(), function(item, index, next){
 
-        var birdwatch_opts = this.options;
         var options = item.options;
 
         if(!item.screenname || item.screenname.length === 0){
-            // TODO: cb(new Error('screenname required on .feed()')); return;
-            throw("Screenname value cannot be empty on a feed");
+            cb(new Error('Screenname required'));
+            return;
         }
 
         this.feeds.push({screenname:item.screenname, options:options});
@@ -100,7 +104,10 @@ Birdwatch.prototype.start = function (cb){
             return;
         }
 
-        report.logStartMessage(this.options, this.feeds);
+        if (this.logReports){
+            report.logStartMessage(this.options, this.feeds);
+        }
+
         this.processFeeds(this.feeds, this.options, cb);
         this.startTimer(this.feeds, this.options, cb);
 
