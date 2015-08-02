@@ -79,8 +79,6 @@ Birdwatch.prototype.start = function (cb){
 
     cb = cb || function () {};
 
-    this.startServer(this.port);
-
     eachAsync(this.feed(), function(item, index, next){
 
         var birdwatch_opts = this.options;

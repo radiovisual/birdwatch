@@ -102,7 +102,7 @@ function getTwitterData(screenname){
 
     return new Promise(function(resolve, reject){
 
-        T.get("statuses/user_timeline", {screen_name: screenname},  function(err, reply){
+        T.get("statuses/user_timeline", {screen_name: screenname, count:200, include_rts:true},  function(err, reply){
             if (err){
                 reject(Error(err));
             } else {
@@ -266,8 +266,10 @@ exports.startTimer = function(feeds, options, cb){
 /**
  * Get the cached tweets object
  *
+ * @discussion: returns in-memory if available, otherwise fallback to on-disk
  * @returns {Array}
  */
+
 exports.getCachedTweets = function(){
 
     if(in_memory_cache && in_memory_cache.length > 0){
