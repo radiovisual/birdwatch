@@ -267,30 +267,32 @@ exports.startTimer = function(feeds, options, cb){
  * Get the cached tweets object
  *
  * @discussion: returns in-memory if available, otherwise fallback to on-disk
- * @returns {Array}
+ * @returns {*} Promise
  */
 
 exports.getCachedTweets = function(){
 
-    if(in_memory_cache && in_memory_cache.length > 0){
+    return new Promise(function(resolve, reject){
 
-        return in_memory_cache;
+        if(in_memory_cache && in_memory_cache.length > 0){
 
-    } else {
+            resolve(in_memory_cache);
 
-        try {
-            fs.readFile('./cache/cached_tweets.json', 'utf8', function (err, data) {
-                if (err) {
-                    report.logError(["Error reading file cached_tweets.json in getCachedTweets()", err]);
-                } else {
-                    return JSON.parse(data);
-                }
-            });
-        } catch (err){
-            console.log(err);
+        } else {
+
+            try {
+                fs.readFile('./cache/cached_tweets.json', 'utf8', function (err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(JSON.parse(data));
+                    }
+                });
+            } catch (err){
+                reject(err);
+            }
         }
-
-    }
+    });
 };
 
 

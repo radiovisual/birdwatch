@@ -37,7 +37,10 @@ birdwatch.start(function (err) {
 });
 
 // now get your tweets in JSON format to serve or print
-var cachedTweets = birdwatch.getCachedTweets();
+birdwatch.getCachedTweets().then(function(tweetdata){
+    console.log(tweetdata);
+});
+
 
 ```
 
