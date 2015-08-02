@@ -13,10 +13,16 @@
   "keywords": [
     "twitter",
     "birdwatch",
-    "request",
-    "twit"
+    "tweets",
+    "caching",
+    "monitor",
+    "json"
   ],
-  "author": "Michael Wuergler",
+  "author": {
+    "name": "Michael Wuergler",
+    "email": "senjudev@gmail.com",
+    "url": "http://numetriclabs.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/radiovisual/birdwatch/issues"
