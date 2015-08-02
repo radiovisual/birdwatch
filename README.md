@@ -24,10 +24,10 @@ You can filter tweets by hashtags, or ignore retweets.
 
 var Birdwatch = require('./index');
 
-// Birdwatch @reactjs & @nodejs twitter feeds; update every 10 mins
+// Birdwatch @reactjs & @nodejs twitter feeds and update every 10 mins
 var birdwatch = new Birdwatch({refreshTime: 600})
     .feed('reactjs', {filter_tags: /#reactjs/i })
-    .feed('nodejs', { filter_tags: /#nodejs/i });
+    .feed('nodejs',  {filter_tags: /#nodejs/i  });
 
 // Start the birdwatching process
 birdwatch.start(function (err) {
