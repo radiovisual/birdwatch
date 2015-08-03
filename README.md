@@ -53,7 +53,7 @@ birdwatch.getCachedTweets().then(function(tweetdata){
 
 ##### refreshTime
 
-Type: `number` *(seconds)*
+Type: `number` *(seconds)*<br>
 Default: `600` *(10 minutes)*
 
 The number of seconds to wait before the cache updates again.
@@ -62,12 +62,10 @@ Use this to update your cache frequently, but not frequent enough to hit any [Tw
   
 ##### logReports
 
-Type: `boolean`
+Type: `boolean`<br>
 Default: `false`
 
-Shows a pretty-printed update to the console.
-
-Useful for debugging and logging.
+Shows a pretty-printed update to the console. Useful for debugging and logging.
 
 # ![birdwatch](media/screenshot-v.0.0.1.png)
 
@@ -77,7 +75,7 @@ Add a twitter feed.
 
 #### screenname
 
-*Required*
+*Required*<br>
 Type: `string`
 
 The screenname of the twitter account you want to watch.
