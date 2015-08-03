@@ -1,5 +1,5 @@
 'use strict';
-var test_tweets = require("./test/test_tweets.json");
+var test_tweets = require("./test/test_tweets.js");
 var underscore = require('underscore');
 var eachAsync = require('each-async');
 var isRegexp = require('is-regexp');
