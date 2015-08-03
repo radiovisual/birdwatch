@@ -89,19 +89,21 @@ Options set here will override the defaults in the constructor.
 ##### Possible Options:
 
 `filter_tags`<br>
-  The regular expression containing the tags you want to filter with<br>
-  Type: 'Regex'<br>
-  Default: `null (filters off by default)`
+  The regular expression containing the tags you want to filter with.<br>
+  Type: `Regex`<br>
+  Default: `null (filters off by default)
+  
+  **Tip:** If you need help writing your regular expressions, try: [regexpal.com](http://regexpal.com/)
    
 `remove_retweets`<br>
-  Use this if you want to remove retweets from the feed you are watching<br>
+  Use this if you want to remove retweets from the feed you are watching.<br>
   Type: `boolean`<br>
   Default: `false`
 
 
 ### birdwatch.start(callback)
 
-Start the birdwatch process.
+Start the Birdwatch process.
 
 #### callback(error)
 
