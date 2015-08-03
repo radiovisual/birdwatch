@@ -12,24 +12,6 @@ module.exports.logStartMessage = function (options, feeds){
     console.log(chalk.cyan("| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ |\n"));
 };
 
-module.exports.reportConfigFileMissingError = function(){
-    console.log(chalk.red('\n\n| CONFIGURATION ERROR!'));
-    console.error(chalk.white("| Config file "+chalk.yellow("configure/local_configure.js")+" missing!"));
-    console.error("| Did you forget to create your local_configure.js file?\n\n");
-    process.exit(1);
-};
-
-module.exports.checkCredentialsForDefaultValues = function(credentials){
-    if (
-        credentials.consumer_key === 'YOUR_CONSUMER_KEY' ||
-        credentials.consumer_secret === 'YOUR_CONSUMER_SECRET' ||
-        credentials.access_token ===  'YOUR_ACCESS_TOKEN' ||
-        credentials.access_token_secret === 'YOUR_ACCESS_TOKEN_SECRET'
-    ) {
-        this.logError(chalk.white("Please update your ") + chalk.yellow("configure/local_configure.js")+ chalk.white(" file with your credentials.\n\n"), true);
-    }
-};
-
 module.exports.logError = function(message, exit){
 
     if(message.join){

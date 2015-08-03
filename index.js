@@ -1,28 +1,10 @@
 'use strict';
+var credentials = require('./configure/local_configure.js');
 var EventEmitter = require('events').EventEmitter;
 var objectAssign = require('object-assign');
 var eachAsync = require('each-async');
 var report = require('./report');
 var fs = require('fs');
-var credentials;
-
-// Do not proceed unless the configure/local_configure.js exists
-if (!fs.existsSync("configure/local_configure.js")) {
-    report.reportConfigFileMissingError();
-} else {
-    credentials = require('./configure/local_configure');
-    // make sure that the credentials are not the default values
-    report.checkCredentialsForDefaultValues(credentials);
-}
-
-if (!fs.existsSync("./cache/cached_tweets.json")) {
-    fs.writeFile("./cache/cached_tweets.json", JSON.stringify({}), function (err) {
-        if (err) {
-            console.error(new Error("Cannot create cache file ./cache/cached_tweets.json: "+err.message));
-            process.exit(1);
-        }
-    });
-}
 
 
 /**

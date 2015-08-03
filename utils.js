@@ -277,7 +277,9 @@ exports.startTimer = function(feeds, options, cb){
 /**
  * Get the cached tweets object
  *
- * @discussion: returns in-memory if available, otherwise fallback to on-disk
+ * @discussion: returns in-memory if available, otherwise fallback to on-disk.
+ * If the cache file does not exist, then return an empty json object
+ *
  * @returns {*} Promise
  */
 
@@ -287,23 +289,25 @@ exports.getCachedTweets = function(){
 
     return new Promise(function(resolve, reject){
 
-        if(in_memory_cache && in_memory_cache.length > 0){
+        if (in_memory_cache && in_memory_cache.length > 0){
 
             resolve(in_memory_cache);
 
         } else {
 
-            if (fs.existsSync(cacheFile)) {
-                fs.readFile(cacheFile, 'utf8', function (err, data) {
-                    if (err) {
-                        reject(err);
+            fs.open(cacheFile, 'r', function(err,data){
+                if(err){
+                    if(err.code === "ENOENT"){
+                        resolve([]);
                     } else {
-                        resolve(JSON.parse(data));
+                        reject(err);
                     }
-                });
-            } else {
-                reject(new Error("Cannot find cache file "+ cacheFile));
-            }
+                } else {
+                    resolve(JSON.parse(data));
+                }
+
+            });
+
         }
     });
 };
