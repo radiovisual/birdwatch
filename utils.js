@@ -285,27 +285,22 @@ exports.startTimer = function(feeds, options, cb){
 
 exports.getCachedTweets = function(){
 
-    var cacheFile =  "./cache/cached_tweets.json";
+    var cacheFile = "./cache/cached_tweets.json";
 
     return new Promise(function(resolve, reject){
 
-        if (in_memory_cache && in_memory_cache.length > 0){
+        if (in_memory_cache.length > 0){
 
             resolve(in_memory_cache);
 
         } else {
 
-            fs.open(cacheFile, 'r', function(err,data){
-                if(err){
-                    if(err.code === "ENOENT"){
-                        resolve([]);
-                    } else {
-                        reject(err);
-                    }
+            fs.readFile(cacheFile, 'utf8', function(err, data){
+                if(err) {
+                    resolve([]);
                 } else {
                     resolve(JSON.parse(data));
                 }
-
             });
 
         }
