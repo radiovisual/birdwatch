@@ -2,6 +2,8 @@
 
 > Get raw tweets from one or more specific twitter feeds.
 
+[![Build Status](https://travis-ci.org/radiovisual/birdwatch.svg?branch=master)](https://travis-ci.org/radiovisual/birdwatch)
+
 Birdwatch will help you grab tweets from specific twitter accounts, and cache the tweets on-disk and in-memory on your server, 
 thus avoiding any request limits set by the Twitter API, and giving you more control over the data that is saved.
 You can filter tweets by hashtags, or ignore retweets.  
