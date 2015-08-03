@@ -21,7 +21,7 @@ $ npm install --save birdwatch
   3. Rename the `configure.js` file to `local_configure.js` 
   4. Now you are ready to birdwatch!
 
-*Note: If you skip step #3, you will get the following error: `Cannot find module './configure/local_configure.js'
+*Note: If you skip step #3, you will get the following error: `Cannot find module './configure/local_configure.js'`*
 
 ## Usage
 
@@ -73,6 +73,8 @@ Useful for debugging and logging.
 
 ### birdwatch.feed(screenname, options)
 
+Add a twitter feed.
+
 #### screenname
 
 *Required*
@@ -91,12 +93,31 @@ Options set here will override the defaults in the constructor.
 `filter_tags`
   The regular expression containing the tags you want to filter with
   Type: 'Regex'
-  
+  Default: `null (filters off by default)`
+   
 `remove_retweets`
   Use this if you want to remove retweets from the feed you are watching
   Type: `boolean`
   Default: `false`
-  
+
+
+### birdwatch.start(callback)
+
+Start the birdwatch process.
+
+#### callback(error)
+
+Type: `function`
+
+The callback gets sent to birdwatch.start() when complete
+
+### birdwatch.getCachedTweets()
+
+Use this to access the birdwatch cache of tweets in the JSON format
+
+Returns: `Promise`
+
+
 ### Coming Soon:
 
 - [ ] Better serving solution
