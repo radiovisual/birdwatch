@@ -15,6 +15,15 @@ if (!fs.existsSync("configure/local_configure.js")) {
     report.checkCredentialsForDefaultValues(credentials);
 }
 
+if (!fs.existsSync("./cache/cached_tweets.json")) {
+    fs.writeFile("./cache/cached_tweets.json", JSON.stringify({}), function (err) {
+        if (err) {
+            console.error(new Error("Cannot create cache file ./cache/cached_tweets.json: "+err.message));
+            process.exit(1);
+        }
+    });
+}
+
 
 /**
  * Initialize a new Birdwatch

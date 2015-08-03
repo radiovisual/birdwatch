@@ -1,6 +1,5 @@
 'use strict';
 var credentials = require('./configure/local_configure');
-var ctweets = require('./cache/cached_tweets.json');
 var underscore = require('underscore');
 var eachAsync = require('each-async');
 var isRegexp = require('is-regexp');
@@ -284,6 +283,8 @@ exports.startTimer = function(feeds, options, cb){
 
 exports.getCachedTweets = function(){
 
+    var cacheFile =  "./cache/cached_tweets.json";
+
     return new Promise(function(resolve, reject){
 
         if(in_memory_cache && in_memory_cache.length > 0){
@@ -292,16 +293,16 @@ exports.getCachedTweets = function(){
 
         } else {
 
-            try {
-                fs.readFile('./cache/cached_tweets.json', 'utf8', function (err, data) {
+            if (fs.existsSync(cacheFile)) {
+                fs.readFile(cacheFile, 'utf8', function (err, data) {
                     if (err) {
                         reject(err);
                     } else {
                         resolve(JSON.parse(data));
                     }
                 });
-            } catch (err){
-                reject(err);
+            } else {
+                reject(new Error("Cannot find cache file "+ cacheFile));
             }
         }
     });

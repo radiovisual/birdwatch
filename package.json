@@ -29,13 +29,13 @@
   },
   "homepage": "https://github.com/radiovisual/birdwatch",
   "dependencies": {
-    "underscore": "~1.8.3",
-    "twit": "~2.1.0",
     "chalk": "~1.1.0",
-    "object-assign": "~3.0.0",
     "each-async": "~1.1.1",
+    "is-regexp": "~1.0.0",
     "native-promise-only": "~0.8.0-a",
-    "is-regexp": "~1.0.0"
+    "object-assign": "~3.0.0",
+    "twit": "~2.1.0",
+    "underscore": "~1.8.3"
   },
   "devDependencies": {
     "chai": "^3.2.0",
