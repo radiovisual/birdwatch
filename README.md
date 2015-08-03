@@ -6,34 +6,36 @@ Birdwatch will help you grab tweets from specific twitter accounts, and cache th
 thus avoiding any request limits set by the Twitter API, and giving you more control over the data that is saved.
 You can filter tweets by hashtags, or ignore retweets.  
 
-# ![birdwatch](media/screenshot-v.0.0.1.png)
-
 **Note:** This is a work in progress. *Pull requests welcome!*
 
-### Features
+## Installation
 
-- Simple API
-- Easily configure how often you want the cache to update
-- Filter the tweets by hashtags
-- Easy setup
-- Option to ignore retweets
+**Step 1:** Install the package via npm
+```
+$ npm install --save birdwatch
+```
 
-### Usage
+**Step 2:** Add your twitter app credentials to the configuration file
+  1. Open the file: `node_modules/birdwatch/configure/configure.js`
+  2. Replace the placeholder values with your twitter app credentials
+  3. Rename the `configure.js` file to `local_configure.js` 
+  4. Now you are ready to birdwatch!
+
+*Note: If you skip step #3, you will get the following error: `Cannot find module './configure/local_configure.js'
+
+## Usage
 
 ```js
 
-var Birdwatch = require('./index');
+var Birdwatch = require('birdwatch');
 
-// Birdwatch @reactjs & @nodejs twitter feeds and update every 10 mins
-var birdwatch = new Birdwatch({refreshTime: 600})
+var birdwatch = new Birdwatch({refreshTime: 500})
+    .feed('gulpjs')
     .feed('reactjs', {filter_tags: /#reactjs/i })
-    .feed('nodejs',  {filter_tags: /#nodejs/i  });
+    .feed('nodejs',  {filter_tags: /#nodejs/i, remove_retweets:true  });
 
-// Start the birdwatching process
 birdwatch.start(function (err) {
-    if(!err) {
-        // done
-    }
+    if(err) { console.log(err); }
 });
 
 // Now get your tweets in JSON format to serve or print
@@ -43,10 +45,61 @@ birdwatch.getCachedTweets().then(function(tweetdata){
 
 ```
 
-### TODO:
+## API
+
+### Birdwatch([options])
+
+#### options
+
+##### refreshTime
+
+Type: `number` *(seconds)*
+Default: `600` *(10 minutes)*
+
+The number of seconds to wait before the cache updates again.
+ 
+Use this to update your cache frequently, but not frequent enough to hit any [Twitter API Rate Limits](https://dev.twitter.com/rest/public/rate-limits).
+  
+##### logReports
+
+Type: `boolean`
+Default: `false`
+
+Shows a pretty-printed update to the console.
+
+Useful for debugging and logging.
+
+# ![birdwatch](media/screenshot-v.0.0.1.png)
+
+### birdwatch.feed(screenname, options)
+
+#### screenname
+
+*Required*
+Type: `string`
+
+The screenname of the twitter account you want to watch.
+
+#### options
+
+Type: `object`
+
+Options set here will override the defaults in the constructor.
+
+##### Possible Options:
+
+`filter_tags`
+  The regular expression containing the tags you want to filter with
+  Type: 'Regex'
+  
+`remove_retweets`
+  Use this if you want to remove retweets from the feed you are watching
+  Type: `boolean`
+  Default: `false`
+  
+### Coming Soon:
 
 - [ ] Better serving solution
-- [ ] Write documentation
 - [ ] Allow custom sorting rules
 - [ ] HTML-ify the cached tweets
 - [ ] More caching options (currently on-disk/in-memory only)
