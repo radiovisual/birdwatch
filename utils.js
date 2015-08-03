@@ -1,24 +1,34 @@
 'use strict';
-var credentials = require('./configure/local_configure');
+var test_tweets = require("./test/test_tweets.json");
 var underscore = require('underscore');
 var eachAsync = require('each-async');
 var isRegexp = require('is-regexp');
+var fsAccess = require('fs-access');
 var report = require("./report");
 var chalk = require('chalk');
 var http = require('http');
 var Twit = require('twit');
 var fs = require('fs');
 
+
+/*
+* The credentials file to use for Twitter API authentication.
+* This will be dynamically set in setupCredentials()
+*
+* @type {object} - The json object from local_configure.js
+*/
+var credentials;
+
+/*
+* The Twit object used to access the Twitter API.
+* This value will be dynamically assigned in setupCredentials()
+*/
+var twit;
+
 // Polyfill Promise
 require("native-promise-only");
 
-// Setup the Twit object
-var T = new Twit({
-    consumer_key:         credentials.consumer_key,
-    consumer_secret:      credentials.consumer_secret,
-    access_token:         credentials.access_token,
-    access_token_secret:  credentials.access_token_secret
-});
+
 
 /**
  * Temporarily hold the data that is returned from the promises
@@ -38,8 +48,8 @@ var returned_tweets = [];
  * as a backup and will be used if the in-memory cache is empty
  * @type {Array}
  */
-
 var in_memory_cache = [];
+
 
 /**
  * Process the feeds by starting the promise chain.
@@ -61,7 +71,9 @@ exports.processFeeds = function(feeds, bwoptions, cb){
         var feedoptions = item.options;
         var screenname = item.screenname;
 
-        var p = getTwitterData(screenname, bwoptions).then(function(tweetdata){
+        var p = setupCredentials().then(function(testmode){
+            return getTwitterData(screenname, bwoptions, testmode);
+        }).then(function(tweetdata){
             return filterTweets(tweetdata, screenname, feedoptions, bwoptions);
         }).then(function(){
             return processCache(feeds);
@@ -90,15 +102,64 @@ exports.processFeeds = function(feeds, bwoptions, cb){
 };
 
 
+
+
+/**
+ * Setup the credentials for the app.
+ *
+ * Do we have real credentials? Or are we testing?
+ * Travis CI and Mocha shouldn't need valid credentials to test with,
+ * so we use this promise to determine if we are in test mode or not.
+ * This promise will return `true` if we are in test mode
+ * (i.e, the local_configure is not set), and `false` if we in are in normal
+ * app mode. This function also sets var credentials when in normal app mode.
+ *
+ * @returns {Promise}
+ */
+
+function setupCredentials(){
+
+    return new Promise(function(resolve, reject){
+
+        if( credentials && credentials.access_token !== "YOUR_ACCESS_TOKEN" ){
+            resolve(false);
+
+        } else {
+
+            fsAccess('./configure/local_configure.js', function(err){
+                if(err) {
+                    resolve(true);
+                } else {
+
+                    credentials = require("./configure/local_configure.js");
+
+                    twit = new Twit({
+                        consumer_key:         credentials.consumer_key,
+                        consumer_secret:      credentials.consumer_secret,
+                        access_token:         credentials.access_token,
+                        access_token_secret:  credentials.access_token_secret
+                    });
+
+                    resolve(false)
+                }
+            });
+
+        }
+
+    });
+
+}
+
 /**
  * Request twitter data from the Twitter API
  *
  * @param {String} screenname   - screenname associated to the feed
  * @param {Object} bwoptions    - birdwatch configuration options
+ * @param {Boolean} testmode    - are we in test mode? If yes, serve test data
  * @returns {Promise}
  */
 
-function getTwitterData(screenname, bwoptions){
+function getTwitterData(screenname, bwoptions, testmode){
 
     if(bwoptions.logReports){
         console.log("Fetching twitter data for: ", chalk.yellow("@"+screenname));
@@ -106,7 +167,12 @@ function getTwitterData(screenname, bwoptions){
 
     return new Promise(function(resolve, reject){
 
-        T.get("statuses/user_timeline", {screen_name: screenname, count:200, include_rts:true},  function(err, reply){
+        // Send test_tweets in testing environments
+        if(testmode){
+            resolve(test_tweets);
+        }
+
+        twit.get("statuses/user_timeline", {screen_name: screenname, count:200, include_rts:true},  function(err, reply){
             if (err){
                 reject(Error(err));
             } else {

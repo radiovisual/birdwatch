@@ -34,6 +34,7 @@
   "dependencies": {
     "chalk": "~1.1.0",
     "each-async": "~1.1.1",
+    "fs-access": "^1.0.0",
     "is-regexp": "~1.0.0",
     "native-promise-only": "~0.8.0-a",
     "object-assign": "~3.0.0",

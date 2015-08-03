@@ -1,11 +1,9 @@
 'use strict';
-var credentials = require('./configure/local_configure.js');
 var EventEmitter = require('events').EventEmitter;
 var objectAssign = require('object-assign');
 var eachAsync = require('each-async');
 var report = require('./report');
 var fs = require('fs');
-
 
 /**
  * Initialize a new Birdwatch
