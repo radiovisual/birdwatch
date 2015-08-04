@@ -307,9 +307,9 @@ var sortTweets = function(tweetObjects, options){
 
 function saveToCache(dataToSave, bwoptions){
 
-    fs.writeFile('./cache/cached_tweets.json', JSON.stringify(dataToSave), function (err) {
+    fs.writeFile('./cache/cached_tweets.json', JSON.stringify(dataToSave), {flag:'w'}, function (err) {
         if (err) {
-            report.logError(["Error saving cached_tweets.json in processCache()", err]);
+            report.logError(["Error saving cached_tweets.json in saveToCache()", err]);
         } else {
 
             if(bwoptions.logReports){

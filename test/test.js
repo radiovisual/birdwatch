@@ -85,7 +85,6 @@ describe('Public API', function(){
         birdwatch.start(function(err){});
 
         return birdwatch.getCachedTweets().then(function(tweetdata){
-            console.log("tweetdata: "+ tweetdata);
             assert(tweetdata[0].created_at);
         });
 

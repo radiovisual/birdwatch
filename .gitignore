@@ -36,4 +36,4 @@ app.js
 .idea/
 
 # Don't save the local cache file
-cache/cached_tweets.json
+cached_tweets.json
