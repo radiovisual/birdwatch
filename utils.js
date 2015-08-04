@@ -370,6 +370,7 @@ exports.getCachedTweets = function(){
         // Otherwise the on-disk cache file is always served in the test scenarios,
         // and we can't test sorting, and removing retweets, etc if this is the case
         // See https://github.com/radiovisual/birdwatch/issues/4
+        // Maybe this will help: http://blog.mediumequalsmessage.com/promise-deferred-objects-in-javascript-pt2-practical-use
         if (in_memory_cache.length > 0){
 
             resolve(in_memory_cache);
