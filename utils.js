@@ -83,8 +83,8 @@ exports.processFeeds = function(feeds, bwoptions, cb){
             saveToCache(sorteddataobjects, bwoptions);
         });
 
-        p.catch(function(error){
-            report.logError(error, false);
+        p.catch(function(err){
+            report.logError(err, false);
         });
 
         next();
@@ -174,7 +174,7 @@ function getTwitterData(screenname, bwoptions, testmode){
 
         twit.get("statuses/user_timeline", {screen_name: screenname, count:200, include_rts:true},  function(err, reply){
             if (err){
-                reject(Error(err));
+                reject(err);
             } else {
                 resolve(reply);
             }
@@ -309,7 +309,7 @@ function saveToCache(dataToSave, bwoptions){
 
     fs.writeFile('./cache/cached_tweets.json', JSON.stringify(dataToSave), function (err) {
         if (err) {
-            report.logError(["Error saving cached_tweets.json in processCache()", error]);
+            report.logError(["Error saving cached_tweets.json in processCache()", err]);
         } else {
 
             if(bwoptions.logReports){
