@@ -377,8 +377,17 @@ exports.getCachedTweets = function(){
 
         } else {
 
-            fs.readFile(cacheFile, 'utf8', function(err, data){
+            fsAccess(cacheFile, function(err){
+                if(err){
+                    resolve([]);
+                } else {
+
+                }
+            });
+
+            fs.readFile(cacheFile, {encoding:'utf8'}, function(err, data){
                 if(err) {
+                    console.log("Error reading cacheFile, returning: `[]`", err);
                     resolve([]);
                 } else {
                     resolve(JSON.parse(data));

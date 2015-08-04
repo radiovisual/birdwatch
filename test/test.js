@@ -57,7 +57,7 @@ describe('Public API', function(){
 
     it('should get fulfilled promise from .getCachedTweets()', function(){
 
-        var birdwatch = new Birdwatch()
+        var birdwatch = new Birdwatch({useTestData:true})
             .feed('MichaelWuergler');
 
         birdwatch.start(function(err){});
@@ -70,7 +70,7 @@ describe('Public API', function(){
 
     it('should get tweet data returned from .getCachedTweets()', function(){
 
-        var birdwatch = new Birdwatch()
+        var birdwatch = new Birdwatch({useTestData:true})
             .feed('MichaelWuergler');
 
         birdwatch.start(function(err){});
