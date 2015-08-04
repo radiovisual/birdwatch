@@ -76,6 +76,10 @@ describe('Public API', function(){
         birdwatch.start(function(err){});
 
         return birdwatch.getCachedTweets().then(function(tweetdata){
+            // output to debug the console in Travis CI
+            // Why you no work node 0.10.40?
+            console.log("tweetdata.length: ", tweetdata.length);
+            console.log("tweetdata ("+typeof(tweetdata)+"): ", tweetdata);
             assert(tweetdata[0].created_at);
         });
 
