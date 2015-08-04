@@ -35,7 +35,7 @@ require("native-promise-only");
  * gathering the twitter data. When this array is full with all the
  * responses from twitter, saveToCache() uses it to create the in-memory
  * and on-disk caches. When the birdwatching cycle is over, this is emptied
- * and waits for the next birdwatching cycle to  begin.
+ * and waits for the next birdwatching cycle to begin.
  * @type {Array}
  */
 var returned_tweets = [];
@@ -61,6 +61,8 @@ var in_memory_cache = [];
 
 exports.processFeeds = function(feeds, bwoptions, cb){
 
+    var self = this;
+
     // Let's go Birdwatching!
     if(this.logReports){
         report.processBirdwatchingMessage();
@@ -71,16 +73,16 @@ exports.processFeeds = function(feeds, bwoptions, cb){
         var feedoptions = item.options;
         var screenname = item.screenname;
 
-        var p = setupCredentials().then(function(testmode){
-            return getTwitterData(screenname, bwoptions, testmode);
+        var p = self.setupCredentials(bwoptions).then(function(testmode){
+            return self.getTwitterData(screenname, bwoptions, testmode);
         }).then(function(tweetdata){
-            return filterTweets(tweetdata, screenname, feedoptions, bwoptions);
+            return self.filterTweets(tweetdata, screenname, feedoptions, bwoptions);
         }).then(function(){
-            return processCache(feeds);
+            return self.processCache(feeds);
         }).then(function(processedCacheObjects){
-            return sortTweets(processedCacheObjects);
+            return self.sortTweets(processedCacheObjects);
         }).then(function(sorteddataobjects){
-            saveToCache(sorteddataobjects, bwoptions);
+            self.saveToCache(sorteddataobjects, bwoptions);
         });
 
         p.catch(function(err){
@@ -111,18 +113,21 @@ exports.processFeeds = function(feeds, bwoptions, cb){
  * Travis CI and Mocha shouldn't need valid credentials to test with,
  * so we use this promise to determine if we are in test mode or not.
  * This promise will return `true` if we are in test mode
- * (i.e, the local_configure is not set), and `false` if we in are in normal
- * app mode. This function also sets var credentials when in normal app mode.
+ * (i.e, the local_configure is not set or we want to use the test_tweet data),
+ * and `false` if we in are in normal app mode.
+ * This function also sets var credentials when in normal app mode.
  *
+ * @param {object} bwoptions - the birdwatch configuration options
  * @returns {Promise}
  */
 
-function setupCredentials(){
+exports.setupCredentials = function(bwoptions){
 
     return new Promise(function(resolve, reject){
 
-        if( credentials && credentials.access_token !== "YOUR_ACCESS_TOKEN" ){
-            resolve(false);
+        if( bwoptions.useTestData ){
+
+            resolve(true);
 
         } else {
 
@@ -140,7 +145,7 @@ function setupCredentials(){
                         access_token_secret:  credentials.access_token_secret
                     });
 
-                    resolve(false)
+                    resolve(false);
                 }
             });
 
@@ -148,18 +153,19 @@ function setupCredentials(){
 
     });
 
-}
+};
+
 
 /**
  * Request twitter data from the Twitter API
  *
  * @param {String} screenname   - screenname associated to the feed
  * @param {Object} bwoptions    - birdwatch configuration options
- * @param {Boolean} testmode    - are we in test mode? If yes, serve test data
+ * @param {Boolean} testmode    - are we in test mode? If yes, serve test tweet data
  * @returns {Promise}
  */
 
-function getTwitterData(screenname, bwoptions, testmode){
+exports.getTwitterData = function(screenname, bwoptions, testmode){
 
     if(bwoptions.logReports){
         console.log("Fetching twitter data for: ", chalk.yellow("@"+screenname));
@@ -169,19 +175,22 @@ function getTwitterData(screenname, bwoptions, testmode){
 
         // Send test_tweets in testing environments
         if(testmode){
+
             resolve(test_tweets);
+
+        } else {
+
+            twit.get("statuses/user_timeline", {screen_name: screenname, count:200, include_rts:true},  function(err, reply){
+                if (err){
+                    reject(err);
+                } else {
+                    resolve(reply);
+                }
+            });
         }
 
-        twit.get("statuses/user_timeline", {screen_name: screenname, count:200, include_rts:true},  function(err, reply){
-            if (err){
-                reject(err);
-            } else {
-                resolve(reply);
-            }
-        });
-
     });
-}
+};
 
 
 /**
@@ -194,16 +203,17 @@ function getTwitterData(screenname, bwoptions, testmode){
  * @returns {Promise}
  */
 
-function filterTweets(tweetdata, screenname, feedoptions, bwoptions){
+exports.filterTweets = function(tweetdata, screenname, feedoptions, bwoptions){
 
     return new Promise(function (resolve, reject){
 
         // return the unfiltered tweetdata if no filters are requested
-        if( !feedoptions.hasOwnProperty("filter_tags") ){
+        // and if no need to remove the retweets
+        if( !feedoptions.filter_tags && !feedoptions.remove_retweets){
             returned_tweets.push(tweetdata);
             resolve();
 
-        // otherwise, return the filtered tweets
+        // otherwise, let's filter the tweets
         } else {
 
             var matches = [];
@@ -212,29 +222,27 @@ function filterTweets(tweetdata, screenname, feedoptions, bwoptions){
                 report.reportFilteringMessage(screenname, feedoptions.filter_tags);
             }
 
-            // is options.filter_tags a string or regex?
+            // is options.filter_tags a regex?
             var isRegEx = isRegexp(feedoptions.filter_tags);
 
-            var search_tags;
-
-            if(!isRegEx){
+            if(feedoptions.filter_tags && !isRegEx){
                 reject(new Error(["You must supply a regex to filter_tags\nCheck your syntax on: "+feedoptions.filter_tags]));
             }
-
-            var remove_retweets = feedoptions.remove_retweets;
 
             for (var i in tweetdata){
 
                 var tweet = tweetdata[i];
-                var isRetweet = tweet.hasOwnProperty("retweeted_status");
+                var isRetweet = tweet.retweeted_status;
 
-                if(isRetweet && remove_retweets){
+                if(isRetweet && feedoptions.remove_retweets){
                     continue;
                 }
 
                 // TODO: HTML-ify tweet.text and add a HTMLtext property to the tweet object before saving.
 
-                if(feedoptions.filter_tags.test(tweet.text)){
+                if(feedoptions.filter_tags && feedoptions.filter_tags.test(tweet.text)){
+                    matches.push(tweet);
+                } else if (!feedoptions.filter_tags) {
                     matches.push(tweet);
                 }
             }
@@ -245,7 +253,8 @@ function filterTweets(tweetdata, screenname, feedoptions, bwoptions){
 
     });
 
-}
+};
+
 
 /**
  * Break the data objects out of the returned_tweets array
@@ -254,7 +263,7 @@ function filterTweets(tweetdata, screenname, feedoptions, bwoptions){
  * @returns {Promise}
  */
 
-var processCache = function(feeds){
+exports.processCache = function(feeds){
 
     return new Promise(function(resolve, reject){
 
@@ -284,7 +293,7 @@ var processCache = function(feeds){
  * @returns {Promise}
  */
 
-var sortTweets = function(tweetObjects, options){
+exports.sortTweets = function(tweetObjects, options){
 
     return new Promise(function(resolve, reject){
 
@@ -305,9 +314,11 @@ var sortTweets = function(tweetObjects, options){
  * @param {Object} bwoptions        - birdwatch configuration options
  */
 
-function saveToCache(dataToSave, bwoptions){
+exports.saveToCache = function(dataToSave, bwoptions){
 
-    fs.writeFile('./cache/cached_tweets.json', JSON.stringify(dataToSave), {flag:'w'}, function (err) {
+    in_memory_cache.push(JSON.stringify(dataToSave));
+
+    fs.writeFileSync('./cache/cached_tweets.json', JSON.stringify(dataToSave), {flag:'w'}, function (err) {
         if (err) {
             report.logError(["Error saving cached_tweets.json in saveToCache()", err]);
         } else {
@@ -317,10 +328,9 @@ function saveToCache(dataToSave, bwoptions){
             }
 
             returned_tweets = [];
-            in_memory_cache.push(JSON.stringify(dataToSave));
         }
     });
-}
+};
 
 
 /**
@@ -355,6 +365,11 @@ exports.getCachedTweets = function(){
 
     return new Promise(function(resolve, reject){
 
+        // TODO: make the process wait until in_memory cache is available.
+        // This will allow the process to be properly tested.
+        // Otherwise the on-disk cache file is always served in the test scenarios,
+        // and we can't test sorting, and removing retweets, etc if this is the case
+        // See https://github.com/radiovisual/birdwatch/issues/4
         if (in_memory_cache.length > 0){
 
             resolve(in_memory_cache);
@@ -371,6 +386,7 @@ exports.getCachedTweets = function(){
 
         }
     });
+
 };
 
 

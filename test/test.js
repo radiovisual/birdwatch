@@ -6,15 +6,6 @@ var assert = chai.assert;
 var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
-/*
- * TODO: Add more tests
- *
- * removes filtered tweets
- * removes retweets when remove_retweets:true
- * fails if filter_tags isn't valid regex
- * tweets are sorted
- *
- * */
 
 describe('Birdwatch', function() {
 
@@ -89,6 +80,59 @@ describe('Public API', function(){
         });
 
     });
+
+    it('should fail when filter_tweets is not a valid regex', function(){
+
+        var birdwatch = new Birdwatch()
+            .feed('MichaelWuergler', {filter_tags: ''});
+
+        birdwatch.start(function(err){
+            assertEqual(err.message.slice(0,38) , "You must supply a regex to filter_tags");
+        });
+
+    });
+
+    /*
+    // Currently, we can't test filter_tags
+    // See: https://github.com/radiovisual/birdwatch/issues/4
+    it('should return only filtered tweets with option `filter_tags`', function(){
+
+        var birdwatch = new Birdwatch({useTestData:true})
+            .feed('Twitterer', {filter_tags:/#09/} );
+
+        birdwatch.start(function(err){});
+
+        return birdwatch.getCachedTweets().then(function(tweetdata){
+            assert(tweetdata.length === 1);
+        });
+
+    });
+    */
+
+    /*
+    // Currently, we can't test remove_retweets
+    // See: https://github.com/radiovisual/birdwatch/issues/4
+    it('should remove retweets with option `remove_retweets`', function(){
+
+        var birdwatch = new Birdwatch({useTestData:true})
+            .feed('Twitterer', {remove_retweets:true} );
+
+        birdwatch.start(function(err){});
+
+        return birdwatch.getCachedTweets().then(function(tweetdata){
+            assert(tweetdata.length === 5);
+        });
+
+    });
+    */
+
+    /*
+    // Currently, we can't test sorting
+    // See: https://github.com/radiovisual/birdwatch/issues/4
+    it('should sort the tweets', function(){
+
+    });
+    */
 
 });
 

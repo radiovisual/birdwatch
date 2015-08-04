@@ -26,6 +26,7 @@ function Birdwatch(options){
     this.tweets = [];
     this.refreshTime = this.options.refreshTime || 300;
     this.logReports = this.options.logReports || false;
+    this.useTestData = this.options.useTestData || false;
 }
 
 objectAssign(Birdwatch.prototype, EventEmitter.prototype);
