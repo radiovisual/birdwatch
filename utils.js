@@ -316,7 +316,7 @@ exports.sortTweets = function(tweetObjects, options){
 
 exports.saveToCache = function(dataToSave, bwoptions){
 
-    in_memory_cache.push(JSON.stringify(dataToSave));
+    in_memory_cache = dataToSave;
 
     fs.writeFileSync('./cache/cached_tweets.json', JSON.stringify(dataToSave), {flag:'w'}, function (err) {
         if (err) {
