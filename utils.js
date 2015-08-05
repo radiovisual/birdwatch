@@ -10,6 +10,8 @@ var http = require('http');
 var Twit = require('twit');
 var fs = require('fs');
 
+//TODO: inspect the length of the tweet data at the begining and end of each
+// function to see which one is ignoring the filtered tweet data.
 
 /*
 * The credentials file to use for Twitter API authentication.
@@ -126,8 +128,8 @@ exports.setupCredentials = function(bwoptions){
     return new Promise(function(resolve, reject){
 
         if( bwoptions.useTestData ){
-
             resolve(true);
+            return;
 
         } else {
 
@@ -248,6 +250,7 @@ exports.filterTweets = function(tweetdata, screenname, feedoptions, bwoptions){
             }
 
             returned_tweets.push(matches);
+
             resolve();
         }
 
@@ -316,6 +319,7 @@ exports.sortTweets = function(tweetObjects, options){
 
 exports.saveToCache = function(dataToSave, bwoptions){
 
+    // TODO: Should this be in_memory_cache.push(dataToSave) ?
     in_memory_cache = dataToSave;
 
     fs.writeFileSync('./cache/cached_tweets.json', JSON.stringify(dataToSave), {flag:'w'}, function (err) {
@@ -327,6 +331,7 @@ exports.saveToCache = function(dataToSave, bwoptions){
                 report.reportSuccessMessageWithTime("Cache updated with "+dataToSave.length+" tweets");
             }
 
+            // moved to above. move it back?
             returned_tweets = [];
         }
     });

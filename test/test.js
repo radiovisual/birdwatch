@@ -76,10 +76,6 @@ describe('Public API', function(){
         birdwatch.start(function(err){});
 
         return birdwatch.getCachedTweets().then(function(tweetdata){
-            // output to debug the console in Travis CI
-            // Why you no work node 0.10.40?
-            console.log("tweetdata.length: ", tweetdata.length);
-            console.log("tweetdata ("+typeof(tweetdata)+"): ", tweetdata);
             assert(tweetdata[0].created_at);
         });
 
@@ -88,7 +84,7 @@ describe('Public API', function(){
     it('should fail when filter_tweets is not a valid regex', function(){
 
         var birdwatch = new Birdwatch()
-            .feed('MichaelWuergler', {filter_tags: ''});
+            .feed('Twitterer', {filter_tags: ''});
 
         birdwatch.start(function(err){
             assertEqual(err.message.slice(0,38) , "You must supply a regex to filter_tags");
@@ -102,12 +98,13 @@ describe('Public API', function(){
     it('should return only filtered tweets with option `filter_tags`', function(){
 
         var birdwatch = new Birdwatch({useTestData:true})
-            .feed('Twitterer', {filter_tags:/#09/} );
+            .feed('MichaelWuergler', {filter_tags: /#09/});
 
         birdwatch.start(function(err){});
 
         return birdwatch.getCachedTweets().then(function(tweetdata){
-            assert(tweetdata.length === 1);
+            console.log("tweetdata ", tweetdata);
+            assert(tweetdata[0].text.search("#09") > -1);
         });
 
     });
