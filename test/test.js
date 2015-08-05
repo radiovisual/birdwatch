@@ -110,6 +110,7 @@ describe('Public API', function(){
     });
     */
 
+    /*
     // Currently, we can't test removeRetweets
     // See: https://github.com/radiovisual/birdwatch/issues/4
     it('should remove retweets with option `removeRetweets`', function(){
