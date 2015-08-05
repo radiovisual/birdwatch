@@ -104,7 +104,7 @@ describe('Public API', function(){
 
         return birdwatch.getCachedTweets().then(function(tweetdata){
             console.log("tweetdata ", tweetdata);
-            assert(tweetdata[0].text.search("#09") > -1);
+            assert(tweetdata.length === 1);
         });
 
     });

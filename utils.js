@@ -361,20 +361,18 @@ exports.getCachedTweets = function(){
 
     return new Promise(function(resolve, reject){
 
-        // TODO: make the process wait until in_memory cache is available.
-        // This will allow the process to be properly tested.
-        // Otherwise the on-disk cache file is always served in the test scenarios,
-        // and we can't test sorting, and removing retweets, etc if this is the case
+        // TODO: Figure out a better way to serve the cached data.
         // See https://github.com/radiovisual/birdwatch/issues/4
         //
         // My current attempt is to add a setTimeout if the in-memory cache is not available
         // so that I give it one more chance to return from in-memory cache before resorting
         // to the disk. This at least gives the test_tweet data to make it into the in-memory
-        // cache. Which might let my test data be used in Mocha.
+        // cache -- Which might let my test data be used in Mocha. However, I realize that this
+        // makes first call to Birdwatch respond slowly. I know there is a better way, I just
+        // haven't thought of it yet.
         //
         // IF YOU HAVE A BETTER IDEA, I WOULD LOVE SOME INPUT!
         //
-        // Maybe this will help: http://blog.mediumequalsmessage.com/promise-deferred-objects-in-javascript-pt2-practical-use
         if (in_memory_cache.length > 0){
 
             resolve(in_memory_cache);
