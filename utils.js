@@ -128,13 +128,17 @@ exports.setupCredentials = function(bwoptions){
     return new Promise(function(resolve, reject){
 
         if( bwoptions.useTestData ){
+            console.log("bwoptions.useTestData == true, resolving `true` from setupCredentials()");
             resolve(true);
             return;
 
         } else {
 
-            fsAccess( __dirname + '/configure/local_configure.js', function(err){
+            var configureFile = __dirname + "/configure/local_configure.js";
+
+            fsAccess(configureFile, function(err){
                 if(err) {
+                    console.log("Error accessing "+configureFile+", resolving `true` from setupCredentials()");
                     resolve(true);
                 } else {
 
@@ -146,7 +150,7 @@ exports.setupCredentials = function(bwoptions){
                         access_token:         credentials.access_token,
                         access_token_secret:  credentials.access_token_secret
                     });
-
+                    console.log("Found local_configure.js, resolving `false` from setupCredentials()");
                     resolve(false);
                 }
             });
@@ -176,7 +180,7 @@ exports.getTwitterData = function(screenname, bwoptions, testmode){
     return new Promise(function(resolve, reject){
 
         // Send test_tweets in testing environments
-        if(testmode){
+        if(testmode === true){
 
             resolve(test_tweets);
 
@@ -375,6 +379,7 @@ exports.getCachedTweets = function(){
         //
         if (in_memory_cache.length > 0){
 
+            console.log("serving from in_memory_cache (before setTimer)");
             resolve(in_memory_cache);
 
         } else {
@@ -383,6 +388,7 @@ exports.getCachedTweets = function(){
 
                 if(in_memory_cache.length > 0){
 
+                    console.log("serving from in_memory_cache (after setTimer)");
                     resolve(in_memory_cache);
 
                 } else {
@@ -392,6 +398,7 @@ exports.getCachedTweets = function(){
                             console.log("Error reading cacheFile, returning: `[]`", err);
                             resolve([]);
                         } else {
+                            console.log("serving from on-disk cache");
                             resolve(JSON.parse(data));
                         }
                     });
