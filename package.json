@@ -1,6 +1,6 @@
 {
   "name": "birdwatch",
-  "version": "0.4.1",
+  "version": "0.4.3",
   "description": "Monitor and cache specific twitter feeds",
   "main": "index.js",
   "engines": {

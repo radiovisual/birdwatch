@@ -134,7 +134,8 @@ exports.setupCredentials = function(bwoptions){
 
         } else {
 
-            var configureFile = "./birdwatch-config.js";
+            // get the birdwatch-config() file at the project root directory
+            var configureFile = process.cwd() +"/birdwatch-config.js";
 
             fsAccess(configureFile, function(err){
                 if(err) {
