@@ -53,7 +53,15 @@ birdwatch.getCachedTweets().then(function(tweetdata){
  - If birdwatch can't find an `html` string on the returned tweet data, then it adds one for you, 
    complete with twitter-ready HTML, thanks to [tweet-patch](https://github.com/radiovisual/tweet-patch). 
    This means the plain-text hashtags, user-mentions and hyperlinks are converted to twitter-ready markup.
-
+   
+ - ```js
+   var cached_tweets[0].text;
+   //=> "This is the #plaintext tweet"
+   
+   var cached_tweets[0].html;
+   //=> "This is the <a href="https://twitter.com/hashtag/plaintext">#plaintext</a> tweet"
+   ```
+   
 ## API
 
 ### Birdwatch([options])
