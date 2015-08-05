@@ -317,17 +317,25 @@ exports.saveToCache = function(dataToSave, bwoptions){
     // first check to see if the .cache_tweets file exists
     var cacheFile = "./cache/cached_tweets.json";
 
-    fs.writeFileSync(cacheFile, JSON.stringify(dataToSave), {flag:'w+'}, function (err) {
-        if (err) {
-            report.logError(["Error saving cached_tweets.json in saveToCache()", err]);
+    fsAccess(cacheFile, function(err){
+        if(!err){
+
+            fs.writeFileSync(cacheFile, JSON.stringify(dataToSave), {flag:'w'}, function (err) {
+                if (err) {
+                    report.logError(["Error saving cached_tweets.json in saveToCache()", err]);
+                } else {
+
+                    if(bwoptions.logReports){
+                        report.reportSuccessMessageWithTime("Cache updated with "+dataToSave.length+" tweets");
+                    }
+
+                    // moved from above. move it back?
+                    returned_tweets = [];
+                }
+            });
+
         } else {
-
-            if(bwoptions.logReports){
-                report.reportSuccessMessageWithTime("Cache updated with "+dataToSave.length+" tweets");
-            }
-
-            // moved to above. move it back?
-            returned_tweets = [];
+            console.log("fsAccess Error in saveToCache(): ", err);
         }
     });
 };
