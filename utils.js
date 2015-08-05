@@ -13,10 +13,6 @@ var http = require('http');
 var Twit = require('twit');
 var fs = require('fs');
 
-
-//TODO: inspect the length of the tweet data at the begining and end of each
-// function to see which one is ignoring the filtered tweet data.
-
 /*
 * The credentials file to use for Twitter API authentication.
 * This will be dynamically set in setupCredentials()
@@ -137,7 +133,7 @@ exports.setupCredentials = function(bwoptions){
 
         } else {
 
-            fsAccess('./configure/local_configure.js', function(err){
+            fsAccess( __dirname + '/configure/local_configure.js', function(err){
                 if(err) {
                     resolve(true);
                 } else {
@@ -212,7 +208,6 @@ exports.getTwitterData = function(screenname, bwoptions, testmode){
 exports.filterTweets = function(tweetdata, screenname, feedoptions, bwoptions){
 
     return new Promise(function (resolve, reject){
-
 
             var matches = [];
 
@@ -362,10 +357,9 @@ exports.startTimer = function(feeds, options, cb){
 
 exports.getCachedTweets = function(){
 
-    var cacheFile = "./cache/cached_tweets.json";
+    var cacheFile = __dirname + "/cache/cached_tweets.json";
 
     return new Promise(function(resolve, reject){
-
 
         // TODO: make the process wait until in_memory cache is available.
         // This will allow the process to be properly tested.
