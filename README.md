@@ -60,6 +60,10 @@ birdwatch.getCachedTweets().then(function(tweetdata){
 
 #### options
 
+Type: `object`
+
+Options set here will override the defaults in the constructor.
+
 ##### refreshTime
 
 Type: `number` *(seconds)*<br>
@@ -100,7 +104,7 @@ The screenname of the twitter account you want to watch.
 
 Type: `object`
 
-Options set here will override the defaults in the constructor.
+Feed options.
 
 ##### Possible Options:
 
