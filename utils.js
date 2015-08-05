@@ -314,7 +314,10 @@ exports.saveToCache = function(dataToSave, bwoptions){
     // TODO: Should this be in_memory_cache.push(dataToSave) ?
     in_memory_cache = dataToSave;
 
-    fs.writeFileSync('./cache/cached_tweets.json', JSON.stringify(dataToSave), {flag:'w'}, function (err) {
+    // first check to see if the .cache_tweets file exists
+    var cacheFile = "./cache/cached_tweets.json";
+
+    fs.writeFileSync(cacheFile, JSON.stringify(dataToSave), {flag:'w+'}, function (err) {
         if (err) {
             report.logError(["Error saving cached_tweets.json in saveToCache()", err]);
         } else {
