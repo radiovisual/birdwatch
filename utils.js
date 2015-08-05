@@ -6,10 +6,13 @@ var eachAsync = require('each-async');
 var isRegexp = require('is-regexp');
 var fsAccess = require('fs-access');
 var report = require("./report");
+var mkdirp = require('mkdirp');
 var chalk = require('chalk');
+var path = require("path");
 var http = require('http');
 var Twit = require('twit');
 var fs = require('fs');
+
 
 //TODO: inspect the length of the tweet data at the begining and end of each
 // function to see which one is ignoring the filtered tweet data.
@@ -315,29 +318,19 @@ exports.saveToCache = function(dataToSave, bwoptions){
     in_memory_cache = dataToSave;
 
     // first check to see if the .cache_tweets file exists
-    var cacheFile = "./cache/cached_tweets.json";
+    var cacheFile = __dirname + "/cache/cached_tweets.json";
 
-    fsAccess(cacheFile, function(err){
-        if(!err){
+    var getDirName = path.dirname;
 
-            fs.writeFileSync(cacheFile, JSON.stringify(dataToSave), {flag:'w'}, function (err) {
-                if (err) {
-                    report.logError(["Error saving cached_tweets.json in saveToCache()", err]);
-                } else {
+    function writeFile(path, contents){
+        mkdirp(getDirName(path), function(err){
+            if(err) { console.error(err); }
+            fs.writeFile(path, contents);
+        })
+    }
 
-                    if(bwoptions.logReports){
-                        report.reportSuccessMessageWithTime("Cache updated with "+dataToSave.length+" tweets");
-                    }
+    writeFile(cacheFile, JSON.stringify(dataToSave));
 
-                    // moved from above. move it back?
-                    returned_tweets = [];
-                }
-            });
-
-        } else {
-            console.log("fsAccess Error in saveToCache(): ", err);
-        }
-    });
 };
 
 

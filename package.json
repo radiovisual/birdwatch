@@ -1,6 +1,6 @@
 {
   "name": "birdwatch",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "Monitor and cache specific twitter feeds",
   "main": "index.js",
   "engines": {
@@ -36,6 +36,7 @@
     "each-async": "~1.1.1",
     "fs-access": "^1.0.0",
     "is-regexp": "~1.0.0",
+    "mkdirp": "^0.5.1",
     "native-promise-only": "~0.8.0-a",
     "object-assign": "~3.0.0",
     "tweet-patch": "^1.0.0",
