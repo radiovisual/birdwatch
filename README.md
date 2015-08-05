@@ -55,10 +55,10 @@ birdwatch.getCachedTweets().then(function(tweetdata){
    This means the plain-text hashtags, user-mentions and hyperlinks are converted to twitter-ready markup.
    
  - ```js
-   var cached_tweets[0].text;
+   cached_tweets[0].text;
    //=> "This is the #plaintext tweet"
    
-   var cached_tweets[0].html;
+   cached_tweets[0].html;
    //=> "This is the <a href="https://twitter.com/hashtag/plaintext">#plaintext</a> tweet"
    ```
    
