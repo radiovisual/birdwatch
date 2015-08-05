@@ -92,35 +92,32 @@ describe('Public API', function(){
 
     });
 
-    /*
-    // Currently, we can't test filterTags
-    // See: https://github.com/radiovisual/birdwatch/issues/4
     it('should return only filtered tweets with option `filterTags`', function(){
 
         var birdwatch = new Birdwatch({useTestData:true})
-            .feed('MichaelWuergler', {filterTags: /#09/});
+            .feed('MichaelWuergler', {filterTags: /#09|#08|#07|#06/});
 
         birdwatch.start(function(err){});
 
         return birdwatch.getCachedTweets().then(function(tweetdata){
-            console.log("tweetdata ", tweetdata);
-            assert(tweetdata.length === 1);
+            assert(tweetdata.length === 4);
         });
 
     });
-    */
 
     /*
-    // Currently, we can't test remove_retweets
+    // Currently, we can't test removeRetweets
     // See: https://github.com/radiovisual/birdwatch/issues/4
-    it('should remove retweets with option `remove_retweets`', function(){
+    it('should remove retweets with option `removeRetweets`', function(){
 
         var birdwatch = new Birdwatch({useTestData:true})
-            .feed('Twitterer', {remove_retweets:true} );
+            .feed('Twitterer', {removeRetweets:true} );
 
         birdwatch.start(function(err){});
 
         return birdwatch.getCachedTweets().then(function(tweetdata){
+            console.log("tweetdata.length ",tweetdata.length);
+            console.log("tweetdata ",tweetdata);
             assert(tweetdata.length === 5);
         });
 

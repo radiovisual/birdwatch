@@ -63,6 +63,9 @@ var in_memory_cache = [];
 
 exports.processFeeds = function(feeds, bwoptions, cb){
 
+    returned_tweets = [];
+    in_memory_cache = [];
+
     var self = this;
 
     // Let's go Birdwatching!
@@ -127,10 +130,9 @@ exports.setupCredentials = function(bwoptions){
 
     return new Promise(function(resolve, reject){
 
-        if( bwoptions.useTestData ){
+        if (bwoptions.useTestData){
             console.log("bwoptions.useTestData == true, resolving `true` from setupCredentials()");
             resolve(true);
-            return;
 
         } else {
 
@@ -151,6 +153,7 @@ exports.setupCredentials = function(bwoptions){
                         access_token:         credentials.access_token,
                         access_token_secret:  credentials.access_token_secret
                     });
+
                     console.log("Found birdwatch-config.js, resolving `false` from setupCredentials()");
 
                     resolve(false);
