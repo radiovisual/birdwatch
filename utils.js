@@ -1,5 +1,6 @@
 'use strict';
 var test_tweets = require("./test/test_tweets.js");
+var tweetPatch = require("tweet-patch");
 var underscore = require('underscore');
 var eachAsync = require('each-async');
 var isRegexp = require('is-regexp');
@@ -209,14 +210,6 @@ exports.filterTweets = function(tweetdata, screenname, feedoptions, bwoptions){
 
     return new Promise(function (resolve, reject){
 
-        // return the unfiltered tweetdata if no filters are requested
-        // and if no need to remove the retweets
-        if( !feedoptions.filter_tags && !feedoptions.remove_retweets){
-            returned_tweets.push(tweetdata);
-            resolve();
-
-        // otherwise, let's filter the tweets
-        } else {
 
             var matches = [];
 
@@ -240,7 +233,7 @@ exports.filterTweets = function(tweetdata, screenname, feedoptions, bwoptions){
                     continue;
                 }
 
-                // TODO: HTML-ify tweet.text and add a HTMLtext property to the tweet object before saving.
+                tweet.html = tweet.html || tweetPatch(tweet);
 
                 if(feedoptions.filter_tags && feedoptions.filter_tags.test(tweet.text)){
                     matches.push(tweet);
@@ -252,7 +245,6 @@ exports.filterTweets = function(tweetdata, screenname, feedoptions, bwoptions){
             returned_tweets.push(matches);
 
             resolve();
-        }
 
     });
 
