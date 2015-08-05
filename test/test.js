@@ -1,5 +1,5 @@
 'use strict';
-var configuration = require('../configure/configure.js');
+var configuration = require('../configure/birdwatch-config.js');
 var Birdwatch = require('../');
 var chai = require("chai");
 var assert = chai.assert;
@@ -139,7 +139,7 @@ describe('Public API', function(){
 
 describe('Configuration', function(){
 
-    it("should not expose private keys in configure/configure.js", function(){
+    it("should not expose private keys in configure/birdwatch-config.js", function(){
 
         assert(
             configuration.consumer_key          === 'YOUR_CONSUMER_KEY' &&

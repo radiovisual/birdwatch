@@ -30,6 +30,7 @@ node_modules
 
 # Don't store private keys in the repo
 configure/local_configure.js
+birdwatch-config.js
 
 # Ignore my test app
 app.js

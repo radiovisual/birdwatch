@@ -1,6 +1,6 @@
 
-// Replace the strings with your Twitter API Credentials,
-// then rename this file to 'local_configure.js'
+// Copy this file into your application's root directory, then
+// replace the strings with your Twitter API Credentials.
 
 module.exports = {
     consumer_key:         'YOUR_CONSUMER_KEY',

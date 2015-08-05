@@ -17,7 +17,7 @@ var fs = require('fs');
 * The credentials file to use for Twitter API authentication.
 * This will be dynamically set in setupCredentials()
 *
-* @type {object} - The json object from local_configure.js
+* @type {object} - The json object from birdwatch-config.js
 */
 var credentials;
 
@@ -115,7 +115,7 @@ exports.processFeeds = function(feeds, bwoptions, cb){
  * Travis CI and Mocha shouldn't need valid credentials to test with,
  * so we use this promise to determine if we are in test mode or not.
  * This promise will return `true` if we are in test mode
- * (i.e, the local_configure is not set or we want to use the test_tweet data),
+ * (i.e, the birdwatch-config.js is not set or we want to use the test_tweet data),
  * and `false` if we in are in normal app mode.
  * This function also sets var credentials when in normal app mode.
  *
@@ -134,7 +134,7 @@ exports.setupCredentials = function(bwoptions){
 
         } else {
 
-            var configureFile = __dirname + "/configure/local_configure.js";
+            var configureFile = __dirname + "/birdwatch-config.js";
 
             fsAccess(configureFile, function(err){
                 if(err) {
@@ -142,7 +142,7 @@ exports.setupCredentials = function(bwoptions){
                     resolve(true);
                 } else {
 
-                    credentials = require("./configure/local_configure.js");
+                    credentials = require("./birdwatch-config.js");
 
                     twit = new Twit({
                         consumer_key:         credentials.consumer_key,
@@ -150,7 +150,8 @@ exports.setupCredentials = function(bwoptions){
                         access_token:         credentials.access_token,
                         access_token_secret:  credentials.access_token_secret
                     });
-                    console.log("Found local_configure.js, resolving `false` from setupCredentials()");
+                    console.log("Found birdwatch-config.js, resolving `false` from setupCredentials()");
+
                     resolve(false);
                 }
             });

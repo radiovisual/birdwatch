@@ -18,12 +18,12 @@ $ npm install --save birdwatch
 ```
 
 **Step 2:** Add your twitter app credentials to the configuration file
-  1. Open the file: `node_modules/birdwatch/configure/configure.js`
-  2. Replace the placeholder values with your twitter app credentials
-  3. Rename the `configure.js` file to `local_configure.js` 
-  4. *Now you are ready to birdwatch!*
+  1. Copy the file: `node_modules/birdwatch/configure/birdwatch-config.js`
+  2. Paste the copied file from step #1 into your app's **root directory**
+  3. Now update the `birdwatch-config.js` file with your Twitter app credentials and save the file.
+  4. *Now you're ready to birdwatch!*
 
-*Note: Skipping step #3, results in error: `Cannot find module './configure/local_configure.js'`*
+*Note: Skipping these steps will tell the app to serve up fake tweet data for testing purposes.
 
 ## Usage
 
