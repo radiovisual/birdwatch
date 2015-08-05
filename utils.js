@@ -143,7 +143,7 @@ exports.setupCredentials = function(bwoptions){
                     resolve(true);
                 } else {
 
-                    credentials = require("./birdwatch-config.js");
+                    credentials = require(configureFile);
 
                     twit = new Twit({
                         consumer_key:         credentials.consumer_key,
