@@ -29,7 +29,7 @@ $ npm install --save birdwatch
 
 ```js
 
-var Birdwatch = require('birdwatch');
+var birdwatch = require('birdwatch');
 
 var birdwatch = new Birdwatch({refreshTime: 500})
     .feed('gulpjs')
