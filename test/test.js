@@ -42,9 +42,9 @@ describe('Public API', function(){
     it('should add a feed with options', function(){
 
         var birdwatch = new Birdwatch()
-           .feed('testfeed', { filter_tags:/test/i });
+           .feed('testfeed', { filterTags:/test/i });
 
-        assert(birdwatch._feed[0].options.hasOwnProperty('filter_tags'));
+        assert(birdwatch._feed[0].options.hasOwnProperty('filterTags'));
     });
 
     it('should fail if no feed is supplied', function(){
@@ -84,21 +84,21 @@ describe('Public API', function(){
     it('should fail when filter_tweets is not a valid regex', function(){
 
         var birdwatch = new Birdwatch()
-            .feed('Twitterer', {filter_tags: ''});
+            .feed('Twitterer', {filterTags: ''});
 
         birdwatch.start(function(err){
-            assertEqual(err.message.slice(0,38) , "You must supply a regex to filter_tags");
+            assertEqual(err.message.slice(0,38) , "You must supply a regex to filterTags");
         });
 
     });
 
     /*
-    // Currently, we can't test filter_tags
+    // Currently, we can't test filterTags
     // See: https://github.com/radiovisual/birdwatch/issues/4
-    it('should return only filtered tweets with option `filter_tags`', function(){
+    it('should return only filtered tweets with option `filterTags`', function(){
 
         var birdwatch = new Birdwatch({useTestData:true})
-            .feed('MichaelWuergler', {filter_tags: /#09/});
+            .feed('MichaelWuergler', {filterTags: /#09/});
 
         birdwatch.start(function(err){});
 

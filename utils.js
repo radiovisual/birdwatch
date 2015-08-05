@@ -214,14 +214,14 @@ exports.filterTweets = function(tweetdata, screenname, feedoptions, bwoptions){
             var matches = [];
 
             if(bwoptions.logReports){
-                report.reportFilteringMessage(screenname, feedoptions.filter_tags);
+                report.reportFilteringMessage(screenname, feedoptions.filterTags);
             }
 
-            // is options.filter_tags a regex?
-            var isRegEx = isRegexp(feedoptions.filter_tags);
+            // is options.filterTags a regex?
+            var isRegEx = isRegexp(feedoptions.filterTags);
 
-            if(feedoptions.filter_tags && !isRegEx){
-                reject(new Error(["You must supply a regex to filter_tags\nCheck your syntax on: "+feedoptions.filter_tags]));
+            if(feedoptions.filterTags && !isRegEx){
+                reject(new Error(["You must supply a regex to filterTags\nCheck your syntax on: "+feedoptions.filterTags]));
             }
 
             for (var i in tweetdata){
@@ -229,15 +229,15 @@ exports.filterTweets = function(tweetdata, screenname, feedoptions, bwoptions){
                 var tweet = tweetdata[i];
                 var isRetweet = tweet.retweeted_status;
 
-                if(isRetweet && feedoptions.remove_retweets){
+                if(isRetweet && feedoptions.removeRetweets){
                     continue;
                 }
 
                 tweet.html = tweet.html || tweetPatch(tweet);
 
-                if(feedoptions.filter_tags && feedoptions.filter_tags.test(tweet.text)){
+                if(feedoptions.filterTags && feedoptions.filterTags.test(tweet.text)){
                     matches.push(tweet);
-                } else if (!feedoptions.filter_tags) {
+                } else if (!feedoptions.filterTags) {
                     matches.push(tweet);
                 }
             }

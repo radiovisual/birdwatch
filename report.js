@@ -42,6 +42,6 @@ module.exports.processBirdwatchingMessage = function(){
     console.log();
 };
 
-module.exports.reportFilteringMessage = function(screenname, filter_tags){
-    console.log(chalk.white.bold("Filtering tags: "+screenname+": ") + chalk.gray(filter_tags));
+module.exports.reportFilteringMessage = function(screenname, filterTags){
+    console.log(chalk.white.bold("Filtering tags: "+screenname+": ") + chalk.gray(filterTags));
 };

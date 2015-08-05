@@ -33,8 +33,8 @@ var Birdwatch = require('birdwatch');
 
 var birdwatch = new Birdwatch({refreshTime: 500})
     .feed('gulpjs')
-    .feed('reactjs', {filter_tags: /#reactjs/i })
-    .feed('nodejs',  {filter_tags: /#nodejs/i, remove_retweets:true  });
+    .feed('reactjs', {filterTags: /#reactjs/i })
+    .feed('nodejs',  {filterTags: /#nodejs/i, removeRetweets:true  });
 
 birdwatch.start(function (err) {
     if(err) { console.log(err); }
@@ -71,7 +71,7 @@ Default: `600` *(10 minutes)*
 
 The number of seconds to wait before the cache updates again.
  
-Use this to update your cache frequently, but not frequent enough to hit any [Twitter API Rate Limits](https://dev.twitter.com/rest/public/rate-limits).
+**Tip:** Update your cache frequently, but not frequently enough to hit any [Twitter API Rate Limits](https://dev.twitter.com/rest/public/rate-limits).
   
 ##### logReports
 
@@ -108,14 +108,14 @@ Feed options.
 
 ##### Possible Options:
 
-`filter_tags`<br>
+`filterTags`<br>
   The regular expression containing the tags you want to filter with.<br>
   Type: `Regex`<br>
   Default: `null (filters off by default)
   
-  **Tip:** If you need help writing your regular expressions, try: [regexpal.com](http://regexpal.com/)
+  **Tip:** If you need help writing your regular expressions, try [regexpal.com](http://regexpal.com/)
    
-`remove_retweets`<br>
+`removeRetweets`<br>
   Use this if you want to remove retweets from the feed you are watching.<br>
   Type: `boolean`<br>
   Default: `false`
