@@ -29,7 +29,7 @@ $ npm install --save birdwatch
 
 ```js
 
-var birdwatch = require('birdwatch');
+var Birdwatch = require('birdwatch');
 
 var birdwatch = new Birdwatch({refreshTime: 500})
     .feed('gulpjs')
@@ -129,7 +129,7 @@ Start the Birdwatch process.
 
 Type: `function`
 
-The callback gets sent to birdwatch.start() when complete
+The callback gets sent to birdwatch.start() when complete.
 
 ### birdwatch.getCachedTweets()
 
