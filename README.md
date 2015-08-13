@@ -87,14 +87,14 @@ Default: `false`
 
 Shows a pretty-printed update to the console. Useful for debugging and logging.
 
+# ![birdwatch](media/screenshot-v.0.0.1.png)
+
 ##### useTestData
 
 Type: `boolean`<br>
 Default: `false`
 
 Use the test tweet data instead of making a network requests. Useful for testing/debugging.
-
-# ![birdwatch](media/screenshot-v.0.0.1.png)
 
 ### birdwatch.feed(screenname, options)
 
