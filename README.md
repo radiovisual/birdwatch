@@ -147,9 +147,9 @@ Returns: `Promise`
 
 ### Coming Soon:
 
-- [ ] Better serving solution
-- [ ] Allow custom sorting rules
-- [ ] More caching options (currently on-disk/in-memory only)
+- [ ] Better serving solution (see issue [#9](https://github.com/radiovisual/birdwatch/issues/9))
+- [ ] Allow custom sorting rules (see issue [#5](https://github.com/radiovisual/birdwatch/issues/5))
+- [ ] Better caching options 
 
 ### License
 
