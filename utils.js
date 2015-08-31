@@ -9,7 +9,6 @@ var report = require("./report");
 var mkdirp = require('mkdirp');
 var chalk = require('chalk');
 var path = require("path");
-var http = require('http');
 var Twit = require('twit');
 var fs = require('fs');
 
