@@ -1,7 +1,7 @@
 {
   "name": "birdwatch",
   "version": "0.4.4",
-  "description": "Monitor and cache specific twitter feeds",
+  "description": "Monitor, filter and cache specific twitter feeds.",
   "main": "index.js",
   "engines": {
     "node": ">=0.10.0"
@@ -19,7 +19,14 @@
     "tweets",
     "caching",
     "monitor",
-    "json"
+    "json",
+    "filter",
+    "tags",
+    "hashtag",
+    "retweet",
+    "remove",
+    "html",
+    "cache"
   ],
   "author": {
     "name": "Michael Wuergler",

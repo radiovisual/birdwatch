@@ -383,7 +383,6 @@ exports.getCachedTweets = function(){
         //
         if (in_memory_cache.length > 0){
 
-            console.log("serving from in_memory_cache (before setTimer)");
             resolve(in_memory_cache);
 
         } else {
