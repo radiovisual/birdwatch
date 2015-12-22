@@ -57,31 +57,34 @@ describe('Public API', function(){
 
     it('should get fulfilled promise from .getCachedTweets()', function(){
 
-        var birdwatch = new Birdwatch({useTestData:true})
+        var birdwatch = new Birdwatch()
             .feed('MichaelWuergler');
 
-        birdwatch.start(function(err){});
+		birdwatch.start(function(err){});
 
         return birdwatch.getCachedTweets().then(function(tweetdata){
-            assert(tweetdata);
+            assert(tweetdata.length > 0);
         });
 
     });
 
     it('should get tweet data returned from .getCachedTweets()', function(){
 
-        var birdwatch = new Birdwatch({useTestData:true})
+        var birdwatch = new Birdwatch()
             .feed('MichaelWuergler');
 
-        birdwatch.start(function(err){});
+		birdwatch.start(function(err){
 
-        return birdwatch.getCachedTweets().then(function(tweetdata){
-            assert(tweetdata[0].created_at);
-        });
+		});
+
+		return birdwatch.getCachedTweets().then(function(tweetdata){
+			console.log('tweetdata created_at: ', tweetdata[0].created_at);
+			assert(tweetdata[0].created_at);
+		});
 
     });
 
-    it('should fail when filter_tweets is not a valid regex', function(){
+    it('should fail when filterTags is not a valid regex', function(){
 
         var birdwatch = new Birdwatch()
             .feed('Twitterer', {filterTags: ''});

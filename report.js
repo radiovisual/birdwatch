@@ -14,7 +14,7 @@ module.exports.logStartMessage = function (options, feeds){
 
 module.exports.logError = function(message, exit){
 
-    if(message.join){
+    if (message.join) {
         message = message.join("\n");
     }
     console.log(chalk.red('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'));

@@ -44,7 +44,7 @@ module.exports = Birdwatch;
  */
 
 Birdwatch.prototype.feed = function(screenname, options){
-    if(!arguments.length){
+    if (!arguments.length) {
         return this._feed;
     }
 
@@ -69,7 +69,7 @@ Birdwatch.prototype.start = function (cb){
 
     cb = cb || function () {};
 
-    if(!this.feed() || this.feed().length === 0){
+    if (!this.feed() || this.feed().length === 0) {
         cb(new Error("You must supply at least one feed to Birdwatch"));
         return;
     }
@@ -78,7 +78,7 @@ Birdwatch.prototype.start = function (cb){
 
         var options = item.options;
 
-        if(!item.screenname || item.screenname.length === 0){
+        if (!item.screenname || item.screenname.length === 0) {
             cb(new Error('Screenname required'));
             return;
         }
@@ -89,16 +89,16 @@ Birdwatch.prototype.start = function (cb){
 
     }.bind(this), function (error){
 
-        if(error){
+        if (error) {
             cb(error);
             return;
         }
 
-        if (this.logReports){
+        if (this.logReports) {
             report.logStartMessage(this.options, this.feeds);
         }
 
-        this.processFeeds(this.feeds, this.options, cb);
+        this.processFeeds(this.feeds, cb);
         this.startTimer(this.feeds, this.options, cb);
 
     }.bind(this));
