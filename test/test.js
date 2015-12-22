@@ -1,96 +1,66 @@
-'use strict';
-var configuration = require('../configure/birdwatch-config.js');
-var Birdwatch = require('../');
-var chai = require("chai");
-var assert = chai.assert;
-var chaiAsPromised = require("chai-as-promised");
-chai.use(chaiAsPromised);
+import configuration from '../configure/birdwatch-config.js';
+import Birdwatch from '../dist';
+import test from 'ava';
 
 
-describe('Birdwatch', function() {
-
-    it('should expose a constructor', function () {
-        assert.equal(typeof(Birdwatch), "function");
-    });
-
-    it('should return an instance if called without `new`', function(){
-        var birdwatch = Birdwatch;
-        assert(birdwatch() instanceof Birdwatch);
-    });
-
+test('should expose a constructor', t => {
+	t.is(typeof Birdwatch, 'function');
 });
 
-describe('Public API', function(){
+test('should add a feed with .feed()', t => {
+	const birdwatch = new Birdwatch().feed('testfeed');
+	t.is(birdwatch._feed[0].screenname, 'testfeed');
+});
 
-    it('should add a feed with .feed()', function(){
-        var birdwatch = new Birdwatch()
-            .feed('testfeed');
-        assert(birdwatch._feed[0].screenname === 'testfeed');
-    });
+test('should fail when a screenname is not supplied to .feed()', async t => {
+	const birdwatch = new Birdwatch().feed('');
+	await t.throws(birdwatch.start(), 'Screenname required');
+});
 
-    it('should fail when a screenname is not supplied to .feed()', function(){
+test('should add a feed with options', t => {
+	const birdwatch = new Birdwatch().feed('testfeed', { filterTags:/test/i });
+	t.true(birdwatch._feed[0].options.hasOwnProperty('filterTags'));
+});
 
-        var birdwatch = new Birdwatch()
-            .feed('', {});
+test('should fail if no feed is supplied', async t => {
+	const birdwatch = new Birdwatch();
+	await t.throws(birdwatch.start(), "You must supply at least one feed to Birdwatch");
+});
 
-        birdwatch.start(function(err){
-                assert(err && error.message === "Screenname required");
-        });
+test('should get fulfilled promise from .getCachedTweets()', async t => {
+	const bw = await new Birdwatch()
+		.feed('MichaelWuergler', {})
+		.start();
 
-    });
+	t.is(typeof bw.tweets[0].text, 'string');
+});
 
-    it('should add a feed with options', function(){
+test('should get tweet data returned from .getCachedTweets()', async t => {
+	const bw = await new Birdwatch()
+		.feed('MichaelWuergler', {})
+		.start();
 
-        var birdwatch = new Birdwatch()
-           .feed('testfeed', { filterTags:/test/i });
+	t.is(typeof bw.getCachedTweets()[0].text, 'string');
+});
 
-        assert(birdwatch._feed[0].options.hasOwnProperty('filterTags'));
-    });
+test('should fail when filterTags is not a valid regex', async t => {
+	const bw = await new Birdwatch()
+		.feed('MichaelWuergler', {filterTags: ''});
 
-    it('should fail if no feed is supplied', function(){
+	t.throws(bw.start(), 'You must supply a valid regex to filterTags.');
+});
 
-        var birdwatch = new Birdwatch();
-        birdwatch.start(function(err){
-            assert(err.message === "You must supply at least one feed to Birdwatch");
-        });
-    });
+test('should not expose private keys in configure/birdwatch-config.js', t => {
+	t.true(
+		configuration.consumer_key          === 'YOUR_CONSUMER_KEY' &&
+		configuration.consumer_secret       === 'YOUR_CONSUMER_SECRET' &&
+		configuration.access_token          === 'YOUR_ACCESS_TOKEN' &&
+		configuration.access_token_secret   === 'YOUR_ACCESS_TOKEN_SECRET'
+	);
+});
 
-    it('should get fulfilled promise from .getCachedTweets()', function(){
 
-        var birdwatch = new Birdwatch({useTestData:true})
-            .feed('MichaelWuergler');
 
-        birdwatch.start(function(err){});
-
-        return birdwatch.getCachedTweets().then(function(tweetdata){
-            assert(tweetdata);
-        });
-
-    });
-
-    it('should get tweet data returned from .getCachedTweets()', function(){
-
-        var birdwatch = new Birdwatch({useTestData:true})
-            .feed('MichaelWuergler');
-
-        birdwatch.start(function(err){});
-
-        return birdwatch.getCachedTweets().then(function(tweetdata){
-            assert(tweetdata[0].created_at);
-        });
-
-    });
-
-    it('should fail when filter_tweets is not a valid regex', function(){
-
-        var birdwatch = new Birdwatch()
-            .feed('Twitterer', {filterTags: ''});
-
-        birdwatch.start(function(err){
-            assertEqual(err.message.slice(0,38) , "You must supply a regex to filterTags");
-        });
-
-    });
 
     /*
      // Currently, we can't test filterTags
@@ -136,22 +106,6 @@ describe('Public API', function(){
 
     });
     */
-
-});
-
-describe('Configuration', function(){
-
-    it("should not expose private keys in configure/birdwatch-config.js", function(){
-
-        assert(
-            configuration.consumer_key          === 'YOUR_CONSUMER_KEY' &&
-            configuration.consumer_secret       === 'YOUR_CONSUMER_SECRET' &&
-            configuration.access_token          === 'YOUR_ACCESS_TOKEN' &&
-            configuration.access_token_secret   === 'YOUR_ACCESS_TOKEN_SECRET'
-        );
-    });
-
-});
 
 
 
