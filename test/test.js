@@ -27,27 +27,19 @@ test('should fail if no feed is supplied', async t => {
 	await t.throws(birdwatch.start(), "You must supply at least one feed to Birdwatch");
 });
 
-test('should get fulfilled promise from .getCachedTweets()', async t => {
-	const bw = await new Birdwatch()
+test('should get tweet data returned from Birdwatch.getCachedTweets()', async t => {
+	const bw = new Birdwatch()
 		.feed('MichaelWuergler', {})
-		.start();
-
-	t.is(typeof bw.tweets[0].text, 'string');
-});
-
-test('should get tweet data returned from .getCachedTweets()', async t => {
-	const bw = await new Birdwatch()
-		.feed('MichaelWuergler', {})
-		.start();
-
-	t.is(typeof bw.getCachedTweets()[0].text, 'string');
+		.start().then(() => {
+			t.is(typeof bw.getCachedTweets()[0].text, 'string');
+		});
 });
 
 test('should fail when filterTags is not a valid regex', async t => {
 	const bw = await new Birdwatch()
-		.feed('MichaelWuergler', {filterTags: ''});
+		.feed('MichaelWuergler', {filterTags: 'a'});
 
-	t.throws(bw.start(), 'You must supply a valid regex to filterTags.');
+	t.throws(bw.start(), 'Invalid regex: a for MichaelWuergler');
 });
 
 test('should not expose private keys in configure/birdwatch-config.js', t => {
