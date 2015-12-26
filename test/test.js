@@ -28,18 +28,30 @@ test('should fail if no feed is supplied', async t => {
 });
 
 test('should get tweet data returned from Birdwatch.getCachedTweets()', async t => {
-	const bw = new Birdwatch()
-		.feed('MichaelWuergler', {})
-		.start().then(() => {
-			t.is(typeof bw.getCachedTweets()[0].text, 'string');
-		});
+	const bw = await new Birdwatch().feed('MichaelWuergler', {}).start();
+	t.is(typeof bw.getCachedTweets()[0].text, 'string');
 });
 
 test('should fail when filterTags is not a valid regex', async t => {
-	const bw = await new Birdwatch()
-		.feed('MichaelWuergler', {filterTags: 'a'});
-
+	const bw = await new Birdwatch().feed('MichaelWuergler', {filterTags: 'a'});
 	t.throws(bw.start(), 'Invalid regex: a for MichaelWuergler');
+});
+
+test('should filter hashtags', async t => {
+	const bw = await new Birdwatch({useTestData:true}).feed('test', {filterTags: /#01|#02|#03/}).start();
+	t.is(bw.getCachedTweets().length, 3);
+});
+
+test('should remove retweets with removeRetweets:true', async t => {
+	const bw = await new Birdwatch({useTestData:true}).feed('test', {removeRetweets:true}).start();
+	t.is(bw.getCachedTweets().length, 5);
+});
+
+test('should sort the tweets', async t => {
+	const bw = await new Birdwatch({useTestData:true}).feed('test').start();
+	t.is(bw.getCachedTweets().length, 10);
+	t.is(bw.getCachedTweets()[9].created_at, 'Mon Jul 01 14:14:42 +0000 2015');
+	t.is(bw.getCachedTweets()[0].created_at, 'Mon Jul 10 14:14:42 +0000 2015');
 });
 
 test('should not expose private keys in configure/birdwatch-config.js', t => {
@@ -50,54 +62,6 @@ test('should not expose private keys in configure/birdwatch-config.js', t => {
 		configuration.access_token_secret   === 'YOUR_ACCESS_TOKEN_SECRET'
 	);
 });
-
-
-
-
-    /*
-     // Currently, we can't test filterTags
-     // below test fails on iojs and node 0.12
-     // See: https://github.com/radiovisual/birdwatch/issues/4
-    it('should return only filtered tweets with option `filterTags`', function(){
-
-        var birdwatch = new Birdwatch({useTestData:true})
-            .feed('MichaelWuergler', {filterTags: /#09|#08|#07|#06/});
-
-        birdwatch.start(function(err){});
-
-        return birdwatch.getCachedTweets().then(function(tweetdata){
-            assert(tweetdata.length === 4);
-        });
-
-    });
-    */
-
-    /*
-    // Currently, we can't test removeRetweets
-    // See: https://github.com/radiovisual/birdwatch/issues/4
-    it('should remove retweets with option `removeRetweets`', function(){
-
-        var birdwatch = new Birdwatch({useTestData:true})
-            .feed('Twitterer', {removeRetweets:true} );
-
-        birdwatch.start(function(err){});
-
-        return birdwatch.getCachedTweets().then(function(tweetdata){
-            console.log("tweetdata.length ",tweetdata.length);
-            console.log("tweetdata ",tweetdata);
-            assert(tweetdata.length === 5);
-        });
-
-    });
-    */
-
-    /*
-    // Currently, we can't test sorting
-    // See: https://github.com/radiovisual/birdwatch/issues/4
-    it('should sort the tweets', function(){
-
-    });
-    */
 
 
 
