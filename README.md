@@ -97,6 +97,12 @@ Default: `false`
 
 Use the test tweet data instead of making a network requests. Useful for testing/debugging.
 
+##### sortBy
+
+Type: `function`<br>
+
+Override the custom sorting function. Birdwatch defaults sorting to chronological order.
+
 ### birdwatch.feed(screenname, options)
 
 Add a twitter feed.
@@ -119,7 +125,7 @@ Feed options.
 `filterTags`<br>
   The regular expression containing the tags you want to filter with.<br>
   Type: `Regex`<br>
-  Default: `null (filters off by default)
+  Default: `none`
   
   **Tip:** If you need help writing your regular expressions, try [regexpal.com](http://regexpal.com/)
    
@@ -129,28 +135,15 @@ Feed options.
   Default: `false`
 
 
-### birdwatch.start(callback)
+### birdwatch.start()
 
-Start the Birdwatch process.
-
-#### callback(error)
-
-Type: `function`
-
-The callback gets sent to birdwatch.start() when complete.
+Start the Birdwatch process. `.start()` returns a Promise if you want to log when Birdwatch is ready.
 
 ### birdwatch.getCachedTweets()
 
 Use this to access the birdwatch cache of tweets in the JSON format
 
-Returns: `Promise`
-
-
-### Coming Soon:
-
-- [ ] Better serving solution (see issue [#9](https://github.com/radiovisual/birdwatch/issues/9))
-- [ ] Allow custom sorting rules (see issue [#5](https://github.com/radiovisual/birdwatch/issues/5))
-- [ ] Better caching options 
+Returns: `Array`
 
 ### License
 

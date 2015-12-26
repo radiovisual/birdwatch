@@ -47,11 +47,44 @@ test('should remove retweets with removeRetweets:true', async t => {
 	t.is(bw.getCachedTweets().length, 5);
 });
 
+test('should allow multiple feeds with options', async t => {
+	const bw = await new Birdwatch({useTestData:true})
+		.feed('noretweets', {removeRetweets:true})
+		.feed('specifichashtags', {filterTags: /#01|#02|#03/})
+		.start();
+	t.is(bw.getCachedTweets().length, 8);
+});
+
 test('should sort the tweets', async t => {
 	const bw = await new Birdwatch({useTestData:true}).feed('test').start();
 	t.is(bw.getCachedTweets().length, 10);
 	t.is(bw.getCachedTweets()[9].created_at, 'Mon Jul 01 14:14:42 +0000 2015');
 	t.is(bw.getCachedTweets()[0].created_at, 'Mon Jul 10 14:14:42 +0000 2015');
+});
+
+test('should sort tweets from multiple feeds', async t => {
+	const bw = await new Birdwatch({useTestData:true})
+		.feed('test1', 	{filterTags: /#01|#02/})
+		.feed('test2', 	{filterTags: /#01|#02/})
+		.start();
+
+	t.is(bw.getCachedTweets().length, 4);
+	t.is(bw.getCachedTweets()[0].created_at, 'Mon Jul 02 14:14:42 +0000 2015');
+	t.is(bw.getCachedTweets()[1].created_at, 'Mon Jul 02 14:14:42 +0000 2015');
+
+});
+
+test('should allow custom sorting', async t => {
+	const fn = function(x,y) { var n = parseInt(x.text.substring(12)); if (n % 2 === 0) { return 1; } return -1 };
+	const bw = await new Birdwatch({useTestData:true, sortBy:fn }).feed('test1').start();
+
+	t.is(bw.getCachedTweets()[0].text, 'test tweet #09');
+	t.is(bw.getCachedTweets()[9].text, 'test tweet #02');
+});
+
+test('should fail if custom sorting function is not a valid function', async t => {
+	const bw = await new Birdwatch({useTestData:true, sortBy:[] }).feed('test1');
+	t.throws(bw.start(), "sortBy value must be a function.");
 });
 
 test('should not expose private keys in configure/birdwatch-config.js', t => {
