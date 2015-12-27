@@ -88,9 +88,9 @@ test('should fail if custom sorting function is not a valid function', async t =
 
 test('should not expose private keys in configure/birdwatch-config.js', t => {
 	t.true(
-		configuration.consumer_key          === 'YOUR_CONSUMER_KEY' &&
-		configuration.consumer_secret       === 'YOUR_CONSUMER_SECRET' &&
-		configuration.access_token          === 'YOUR_ACCESS_TOKEN' &&
-		configuration.access_token_secret   === 'YOUR_ACCESS_TOKEN_SECRET'
+		configuration.consumerKey         === 'YOUR_CONSUMER_KEY' &&
+		configuration.consumerSecret      === 'YOUR_CONSUMER_SECRET' &&
+		configuration.accessToken         === 'YOUR_ACCESS_TOKEN' &&
+		configuration.accessTokenSecret   === 'YOUR_ACCESS_TOKEN_SECRET'
 	);
 });

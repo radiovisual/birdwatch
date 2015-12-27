@@ -64,10 +64,7 @@
     "ignores": [
       "birdwatch-config.js",
       "dist/**",
-      "test/**",
-      "lib/report.js",
-      "configure/**",
-      "app.js"
+      "test/**"
     ]
   }
 }

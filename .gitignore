@@ -6,7 +6,5 @@ dist
 # Don't store private keys in the repo
 birdwatch-config.js
 
-# Ignore the test app
-app.js
-
+# Don't store any cached tweets
 dist/cache
