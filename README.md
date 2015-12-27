@@ -75,9 +75,9 @@ Options set here will override the defaults in the constructor.
 ##### refreshTime
 
 Type: `number` *(seconds)*<br>
-Default: `600` *(10 minutes)*
+Default: `600`
 
-The number of seconds to wait before the cache updates again.
+The number of seconds to wait before the cache updates again. The default is 10 minutes (600 seconds)
  
 **Tip:** Update your cache frequently, but not frequently enough to hit any [Twitter API Rate Limits](https://dev.twitter.com/rest/public/rate-limits).
   
@@ -96,6 +96,13 @@ Type: `boolean`<br>
 Default: `false`
 
 Use the test tweet data instead of making a network requests. Useful for testing/debugging.
+
+##### cacheFile
+
+Type: `path`<br>
+Default: `${__dirname}/cache/cached_tweets.json`
+
+The location of the cache file. Use this option if you want the cache file to be saved in a new location.
 
 ##### sortBy
 

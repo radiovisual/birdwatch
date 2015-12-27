@@ -1,13 +1,13 @@
 {
   "name": "birdwatch",
-  "version": "0.4.4",
+  "version": "1.0.0",
   "description": "Monitor, filter and cache specific twitter feeds.",
   "main": "index.js",
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "npm run prepublish && ava",
+    "test": "xo && npm run prepublish && ava",
     "prepublish": "babel lib --out-dir=dist --optional=runtime"
   },
   "repository": {
@@ -47,8 +47,8 @@
   "dependencies": {
     "babel-runtime": "^5.8.29",
     "chalk": "~1.1.0",
-    "fs-access": "^1.0.0",
     "is-regexp": "~1.0.0",
+    "mkdirp": "^0.5.1",
     "oauth": "^0.9.14",
     "object-assign": "~3.0.0",
     "tweet-patch": "^1.0.0",
@@ -62,9 +62,12 @@
   "xo": {
     "esnext": true,
     "ignores": [
+      "birdwatch-config.js",
       "dist/**",
-      "lib/index.js",
-      "test/_*.js"
+      "test/**",
+      "lib/report.js",
+      "configure/**",
+      "app.js"
     ]
   }
 }

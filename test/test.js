@@ -28,13 +28,13 @@ test('should fail if no feed is supplied', async t => {
 });
 
 test('should get tweet data returned from Birdwatch.getCachedTweets()', async t => {
-	const bw = await new Birdwatch().feed('MichaelWuergler', {}).start();
+	const bw = await new Birdwatch().feed('birdwatchnpm', {}).start();
 	t.is(typeof bw.getCachedTweets()[0].text, 'string');
 });
 
 test('should fail when filterTags is not a valid regex', async t => {
-	const bw = await new Birdwatch().feed('MichaelWuergler', {filterTags: 'a'});
-	t.throws(bw.start(), 'Invalid regex: a for MichaelWuergler');
+	const bw = await new Birdwatch().feed('birdwatchnpm', {filterTags: 'a'});
+	t.throws(bw.start(), 'Invalid regex: a for birdwatchnpm');
 });
 
 test('should filter hashtags', async t => {
@@ -71,7 +71,6 @@ test('should sort tweets from multiple feeds', async t => {
 	t.is(bw.getCachedTweets().length, 4);
 	t.is(bw.getCachedTweets()[0].created_at, 'Mon Jul 02 14:14:42 +0000 2015');
 	t.is(bw.getCachedTweets()[1].created_at, 'Mon Jul 02 14:14:42 +0000 2015');
-
 });
 
 test('should allow custom sorting', async t => {
@@ -95,6 +94,3 @@ test('should not expose private keys in configure/birdwatch-config.js', t => {
 		configuration.access_token_secret   === 'YOUR_ACCESS_TOKEN_SECRET'
 	);
 });
-
-
-

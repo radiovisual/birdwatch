@@ -4,10 +4,9 @@ coverage
 dist
 
 # Don't store private keys in the repo
-configure/local_configure.js
 birdwatch-config.js
 
 # Ignore the test app
 app.js
 
-
+dist/cache
