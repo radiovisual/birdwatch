@@ -27,13 +27,13 @@ test('should fail if no feed is supplied', async t => {
 });
 
 test('should get tweet data returned from Birdwatch.getCachedTweets()', async t => {
-	const bw = await new Birdwatch().feed('birdwatchnpm', {}).start();
+	const bw = await new Birdwatch({useTestData:true}).feed('test', {}).start();
 	t.is(typeof bw.getCachedTweets()[0].text, 'string');
 });
 
 test('should fail when filterTags is not a valid regex', async t => {
-	const bw = await new Birdwatch().feed('birdwatchnpm', {filterTags: 'a'});
-	t.throws(bw.start(), 'Invalid regex: a for birdwatchnpm');
+	const bw = await new Birdwatch({useTestData:true}).feed('test', {filterTags: 'a'});
+	t.throws(bw.start(), 'Invalid regex: a for test');
 });
 
 test('should filter hashtags', async t => {
