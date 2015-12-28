@@ -143,7 +143,7 @@ Returns: `Array`
 - Birdwatch is now in its `1.0` release, which means some subtle API changes have occurred:
   - `.start()` and `.getCachedTweets()` no longer return a Promise.
   - Custom sorting functions can now be passed to the Birdwatch instance. 
-- Birdwatch saves the filtered and sorted tweets to the hard disk, so you can use the cache file anyway you want, **but Birdwatch only uses in-memory cache to serve data**. See discussion in [#9](https://github.com/radiovisual/birdwatch/issues/9).
+- Birdwatch saves the filtered and sorted tweets to the hard disk, so you can use the cache file anyway you want, **but Birdwatch only uses in-memory cache to serve data**. [Discussion here](https://github.com/radiovisual/birdwatch/issues/9).
 - Internally, the entire codebase has adopted the ES6 syntax (transpiles with Babel).
 - The unit testing framework has migrated from Mocha to AVA.  
 
