@@ -24,27 +24,20 @@ $ npm install --save birdwatch
   3. Now update the `birdwatch-config.js` file with your Twitter app credentials and save the file.
   4. *Now you're ready to birdwatch!*
 
-*Note: Skipping these steps will tell the app to serve up fake tweet data for testing purposes.
-
 ## Usage
 
 ```js
 
 var Birdwatch = require('birdwatch');
 
-var birdwatch = new Birdwatch({refreshTime: 500})
+var birdwatch = new Birdwatch()
     .feed('gulpjs')
     .feed('reactjs', {filterTags: /#reactjs/i })
-    .feed('nodejs',  {filterTags: /#nodejs/i, removeRetweets:true  });
-
-birdwatch.start(function (err) {
-    if(err) { console.log(err); }
-});
+    .feed('nodejs',  {filterTags: /#nodejs/i, removeRetweets:true  })
+    .start();
 
 // Now get your tweets in JSON format to serve or print
-birdwatch.getCachedTweets().then(function(tweetdata){
-    console.log(tweetdata);
-});
+birdwatch.getCachedTweets();
 
 ```
 
@@ -74,7 +67,7 @@ Options set here will override the defaults in the constructor.
 
 ##### refreshTime
 
-Type: `number` *(seconds)*<br>
+Type: `Number`<br>
 Default: `600`
 
 The number of seconds to wait before the cache updates again. The default is 10 minutes (600 seconds)
@@ -83,7 +76,7 @@ The number of seconds to wait before the cache updates again. The default is 10 
   
 ##### logReports
 
-Type: `boolean`<br>
+Type: `Boolean`<br>
 Default: `false`
 
 Shows a pretty-printed update to the console. Useful for debugging and logging.
@@ -96,13 +89,6 @@ Type: `boolean`<br>
 Default: `false`
 
 Use the test tweet data instead of making a network requests. Useful for testing/debugging.
-
-##### cacheFile
-
-Type: `path`<br>
-Default: `${__dirname}/cache/cached_tweets.json`
-
-The location of the cache file. Use this option if you want the cache file to be saved in a new location.
 
 ##### sortBy
 
@@ -127,24 +113,24 @@ Type: `object`
 
 Feed options.
 
-##### Possible Options:
-
-`filterTags`<br>
-  The regular expression containing the tags you want to filter with.<br>
-  Type: `Regex`<br>
-  Default: `none`
+##### filterTags
   
-  **Tip:** If you need help writing your regular expressions, try [regexpal.com](http://regexpal.com/)
+Type: `Regex`<br>
+  
+The regular expression containing the tags you want to filter with. If you do not supply a feed with a filter, then Birdwatch simply returns all tweets from that feed.
+  
+**Tip:** If you need help writing your regular expressions, try [regexpal.com](http://regexpal.com/)
    
-`removeRetweets`<br>
-  Use this if you want to remove retweets from the feed you are watching.<br>
-  Type: `boolean`<br>
-  Default: `false`
+##### removeRetweets
+  
+Type: `boolean`<br>
+Default: `false`
 
+Use this if you want to remove retweets from the feed you are watching.
 
 ### birdwatch.start()
 
-Start the Birdwatch process. `.start()` returns a Promise if you want to log when Birdwatch is ready.
+Start the Birdwatch process.
 
 ### birdwatch.getCachedTweets()
 
