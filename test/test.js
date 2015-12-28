@@ -1,4 +1,4 @@
-import configuration from '../configure/birdwatch-config.js';
+import configuration from '../birdwatch-config.js';
 import Birdwatch from '../dist';
 import test from 'ava';
 
@@ -85,7 +85,7 @@ test('should fail if custom sorting function is not a valid function', async t =
 	t.throws(bw.start(), "sortBy value must be a function.");
 });
 
-test('should not expose private keys in configure/birdwatch-config.js', t => {
+test('should not expose private keys in birdwatch-config.js', t => {
 	t.true(
 		configuration.consumerKey         === 'YOUR_CONSUMER_KEY' &&
 		configuration.consumerSecret      === 'YOUR_CONSUMER_SECRET' &&

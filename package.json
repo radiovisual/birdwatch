@@ -62,7 +62,7 @@
   "xo": {
     "esnext": true,
     "ignores": [
-      "birdwatch-config.js",
+      "local-config.js",
       "dist/**",
       "test/**"
     ]

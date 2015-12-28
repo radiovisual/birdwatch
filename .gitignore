@@ -4,7 +4,7 @@ coverage
 dist
 
 # Don't store private keys in the repo
-birdwatch-config.js
+local-config.js
 
 # Don't store any cached tweets
 dist/cache

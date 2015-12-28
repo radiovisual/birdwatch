@@ -1,6 +1,11 @@
+/*
 
-// Copy this file into your application's root directory, then
-// replace the strings with your Twitter API Credentials.
+ Install Instructions:
+
+ 1. Replace the strings in this object to include your Twitter App Credentials.
+ 2. Rename this file to `local-config.js`
+
+*/
 
 module.exports = {
 	consumerKey: 'YOUR_CONSUMER_KEY',
