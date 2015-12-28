@@ -88,7 +88,7 @@ Default: `false`
 
 Shows a pretty-printed update to the console. Useful for debugging and logging.
 
-# ![birdwatch](media/screenshot-v.0.0.1.png)
+# ![birdwatch](media/screenshot-v.1.0.0.png)
 
 ##### useTestData
 
