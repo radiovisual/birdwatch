@@ -1,6 +1,6 @@
 # Birdwatch :baby_chick::watch:
 
-> Get raw tweets from one or more specific twitter feeds. 
+> Get and cache raw tweets from one or more specific twitter feeds. 
 > *Optionally filter the tweets by hashtag!*
 
 [![Build Status](https://travis-ci.org/radiovisual/birdwatch.svg?branch=master)](https://travis-ci.org/radiovisual/birdwatch)
@@ -41,7 +41,7 @@ birdwatch.getCachedTweets();
 
 ```
 
-## Features
+## Extra Features
 
 ### Cached HTML Tweet
  - If birdwatch can't find an `html` string on the returned tweet data, then it adds one for you using [tweet-patch](https://github.com/radiovisual/tweet-patch). 
@@ -145,7 +145,8 @@ Returns: `Array`
   - Custom sorting functions can now be passed to the Birdwatch instance. 
 - Birdwatch saves the filtered and sorted tweets to the hard disk, so you can use the cache file anyway you want, **but Birdwatch only uses in-memory cache to serve data**. [Discussion here](https://github.com/radiovisual/birdwatch/issues/9).
 - Internally, the entire codebase has adopted the ES6 syntax (transpiles with Babel).
-- The unit testing framework has migrated from Mocha to AVA.  
+- The unit testing framework has migrated from Mocha to AVA.
+- Simplified install process.
 
 ### License
 
