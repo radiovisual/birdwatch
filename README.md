@@ -32,8 +32,8 @@ var Birdwatch = require('birdwatch');
 
 var birdwatch = new Birdwatch()
     .feed('gulpjs')
-    .feed('reactjs', {filterTags: /#reactjs/i })
-    .feed('nodejs',  {filterTags: /#nodejs/i, removeRetweets:true  })
+    .feed('reactjs', {filterTags: /#reactjs/i})
+    .feed('nodejs',  {filterTags: /#nodejs/i, removeRetweets:true})
     .start();
 
 // Now get your tweets in JSON format to serve or print
@@ -137,6 +137,14 @@ Start the Birdwatch process.
 Use this to access the birdwatch cache of tweets in the JSON format
 
 Returns: `Array`
+
+### Notes on Release 1.0
+
+- Birdwatch is now in its `1.0` release, which means some subtle API changes have occurred:
+  - `.start()` and `.getCachedTweets()` no longer return a Promise.
+  - Custom sorting functions can now be passed to the Birdwatch instance. 
+- Internally, the entire codebase has adopted the ES6 syntax (transpiles with Babel).
+- The unit testing framework has migrated from Mocha to AVA.  
 
 ### License
 
