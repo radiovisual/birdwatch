@@ -24,27 +24,20 @@ $ npm install --save birdwatch
   3. Now update the `birdwatch-config.js` file with your Twitter app credentials and save the file.
   4. *Now you're ready to birdwatch!*
 
-*Note: Skipping these steps will tell the app to serve up fake tweet data for testing purposes.
-
 ## Usage
 
 ```js
 
 var Birdwatch = require('birdwatch');
 
-var birdwatch = new Birdwatch({refreshTime: 500})
+var birdwatch = new Birdwatch()
     .feed('gulpjs')
-    .feed('reactjs', {filterTags: /#reactjs/i })
-    .feed('nodejs',  {filterTags: /#nodejs/i, removeRetweets:true  });
-
-birdwatch.start(function (err) {
-    if(err) { console.log(err); }
-});
+    .feed('reactjs', {filterTags: /#reactjs/i})
+    .feed('nodejs',  {filterTags: /#nodejs/i, removeRetweets:true})
+    .start();
 
 // Now get your tweets in JSON format to serve or print
-birdwatch.getCachedTweets().then(function(tweetdata){
-    console.log(tweetdata);
-});
+birdwatch.getCachedTweets();
 
 ```
 
@@ -74,21 +67,21 @@ Options set here will override the defaults in the constructor.
 
 ##### refreshTime
 
-Type: `number` *(seconds)*<br>
-Default: `600` *(10 minutes)*
+Type: `Number`<br>
+Default: `600`
 
-The number of seconds to wait before the cache updates again.
+The number of seconds to wait before the cache updates again. The default is 10 minutes (600 seconds)
  
 **Tip:** Update your cache frequently, but not frequently enough to hit any [Twitter API Rate Limits](https://dev.twitter.com/rest/public/rate-limits).
   
 ##### logReports
 
-Type: `boolean`<br>
+Type: `Boolean`<br>
 Default: `false`
 
 Shows a pretty-printed update to the console. Useful for debugging and logging.
 
-# ![birdwatch](media/screenshot-v.0.0.1.png)
+# ![birdwatch](media/screenshot-v.1.0.0.png)
 
 ##### useTestData
 
@@ -96,6 +89,12 @@ Type: `boolean`<br>
 Default: `false`
 
 Use the test tweet data instead of making a network requests. Useful for testing/debugging.
+
+##### sortBy
+
+Type: `function`<br>
+
+Override the custom sorting function. Birdwatch defaults sorting to chronological order.
 
 ### birdwatch.feed(screenname, options)
 
@@ -114,43 +113,38 @@ Type: `object`
 
 Feed options.
 
-##### Possible Options:
-
-`filterTags`<br>
-  The regular expression containing the tags you want to filter with.<br>
-  Type: `Regex`<br>
-  Default: `null (filters off by default)
+##### filterTags
   
-  **Tip:** If you need help writing your regular expressions, try [regexpal.com](http://regexpal.com/)
+Type: `Regex`<br>
+  
+The regular expression containing the tags you want to filter with. If you do not supply a feed with a filter, then Birdwatch simply returns all tweets from that feed.
+  
+**Tip:** If you need help writing your regular expressions, try [regexpal.com](http://regexpal.com/)
    
-`removeRetweets`<br>
-  Use this if you want to remove retweets from the feed you are watching.<br>
-  Type: `boolean`<br>
-  Default: `false`
+##### removeRetweets
+  
+Type: `boolean`<br>
+Default: `false`
 
+Use this if you want to remove retweets from the feed you are watching.
 
-### birdwatch.start(callback)
+### birdwatch.start()
 
 Start the Birdwatch process.
-
-#### callback(error)
-
-Type: `function`
-
-The callback gets sent to birdwatch.start() when complete.
 
 ### birdwatch.getCachedTweets()
 
 Use this to access the birdwatch cache of tweets in the JSON format
 
-Returns: `Promise`
+Returns: `Array`
 
+### Notes on Release 1.0
 
-### Coming Soon:
-
-- [ ] Better serving solution (see issue [#9](https://github.com/radiovisual/birdwatch/issues/9))
-- [ ] Allow custom sorting rules (see issue [#5](https://github.com/radiovisual/birdwatch/issues/5))
-- [ ] Better caching options 
+- Birdwatch is now in its `1.0` release, which means some subtle API changes have occurred:
+  - `.start()` and `.getCachedTweets()` no longer return a Promise.
+  - Custom sorting functions can now be passed to the Birdwatch instance. 
+- Internally, the entire codebase has adopted the ES6 syntax (transpiles with Babel).
+- The unit testing framework has migrated from Mocha to AVA.  
 
 ### License
 

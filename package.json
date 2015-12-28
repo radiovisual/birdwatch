@@ -4,21 +4,23 @@
   "description": "Monitor, filter and cache specific twitter feeds.",
   "main": "index.js",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.12.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "xo && npm run prepublish && ava",
+    "prepublish": "babel lib --out-dir=dist --optional=runtime"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/radiovisual/birdwatch.git"
   },
   "keywords": [
-    "twitter",
     "birdwatch",
+    "twitter",
     "tweets",
     "tweet",
     "caching",
+    "cache",
     "monitor",
     "json",
     "filter",
@@ -28,7 +30,9 @@
     "retweet",
     "remove",
     "html",
-    "cache"
+    "save",
+    "service",
+    "server"
   ],
   "author": {
     "name": "Michael Wuergler",
@@ -41,20 +45,26 @@
   },
   "homepage": "https://github.com/radiovisual/birdwatch",
   "dependencies": {
+    "babel-runtime": "^5.8.29",
     "chalk": "~1.1.0",
-    "each-async": "~1.1.1",
-    "fs-access": "^1.0.0",
     "is-regexp": "~1.0.0",
     "mkdirp": "^0.5.1",
-    "native-promise-only": "~0.8.0-a",
+    "oauth": "^0.9.14",
     "object-assign": "~3.0.0",
     "tweet-patch": "^1.0.0",
-    "twit": "~2.1.0",
     "underscore": "~1.8.3"
   },
   "devDependencies": {
-    "chai": "^3.2.0",
-    "chai-as-promised": "^5.1.0",
-    "mocha": "^2.2.5"
+    "ava": "*",
+    "babel": "^5.8.23",
+    "xo": "*"
+  },
+  "xo": {
+    "esnext": true,
+    "ignores": [
+      "birdwatch-config.js",
+      "dist/**",
+      "test/**"
+    ]
   }
 }
