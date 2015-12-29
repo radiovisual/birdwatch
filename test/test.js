@@ -93,3 +93,8 @@ test('should not expose private keys in birdwatch-config.js', t => {
 		configuration.accessTokenSecret   === 'YOUR_ACCESS_TOKEN_SECRET'
 	);
 });
+
+test('filterTags should accept an array of strings', async t => {
+	const bw = await new Birdwatch({useTestData:true}).feed('test', {filterTags:['01','02']}).start();
+	t.is(bw.getCachedTweets().length, 2);
+});
