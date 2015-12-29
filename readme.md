@@ -32,8 +32,8 @@ var Birdwatch = require('birdwatch');
 
 var birdwatch = new Birdwatch()
     .feed('gulpjs')
-    .feed('reactjs', {filterTags: /#reactjs/i})
-    .feed('nodejs',  {filterTags: /#nodejs/i, removeRetweets:true})
+    .feed('reactjs', {filterTags: ['tag1', 'tag2']})
+    .feed('nodejs',  {filterTags: /#tag1|#tag2/i, removeRetweets:true})
     .start();
 
 // Now get your tweets in JSON format to serve or print
