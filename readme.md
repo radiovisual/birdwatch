@@ -96,7 +96,7 @@ Type: `function`<br>
 
 Override the custom sorting function. Birdwatch defaults sorting to chronological order.
 
-### birdwatch.feed(screenname, options)
+### birdwatch.feed(screenname, [options])
 
 Add a twitter feed.
 
@@ -117,11 +117,12 @@ Feed options.
   
 Type: `Regex|Array`<br>
   
-The regular expression containing the tags you want to filter with, or an array of strings. For example, both of these values will result in the same filter:
+The regular expression containing the tags you want to filter with, or an array of strings. For example, all of these examples will result in the same filter:
 
 ```js
 .feed('user1', {filterTags: /#01|#02/gi })
 .feed('user2', {filterTags: ['01','02'] })
+.feed('user3', {filterTags: ['#01','#02'] })
 ```
   
 **Tip:** If you need help writing your regular expressions, try [regexpal.com](http://regexpal.com/)
