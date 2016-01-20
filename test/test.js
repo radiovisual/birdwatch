@@ -6,6 +6,11 @@ test('should expose a constructor', t => {
 	t.is(typeof Birdwatch, 'function');
 });
 
+test('api should have getCachedTweets() function', t => {
+	const bw = new Birdwatch();
+	t.is(typeof bw.getCachedTweets, 'function');
+});
+
 test('should add a feed with .feed()', t => {
 	const birdwatch = new Birdwatch().feed('testfeed');
 	t.is(birdwatch._feed[0].screenname, 'testfeed');
