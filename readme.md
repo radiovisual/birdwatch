@@ -83,12 +83,11 @@ Shows a pretty-printed update to the console. Useful for debugging and logging.
 
 # ![birdwatch](media/screenshot-v.1.0.0.png)
 
-##### useTestData
+##### testData
 
-Type: `boolean`<br>
-Default: `false`
+Type: `json`<br>
 
-Use the test tweet data instead of making a network requests. Useful for testing/debugging.
+Serve tweet data in JSON format to birdwatch. Useful for testing/debugging without making network requests.
 
 ##### sortBy
 
