@@ -5,8 +5,7 @@
   "main": "dist/index.js",
   "files" : [
     "dist",
-    "birdwatch-config.js",
-    "test"
+    "birdwatch-config.js"
   ],
   "engines": {
     "node": ">=0.12.0"

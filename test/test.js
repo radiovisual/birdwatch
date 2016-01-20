@@ -1,6 +1,7 @@
 import configuration from '../birdwatch-config.js';
 import Birdwatch from '../dist';
 import test from 'ava';
+import testData from './testTweets.json';
 
 test('should expose a constructor', t => {
 	t.is(typeof Birdwatch, 'function');
@@ -32,27 +33,27 @@ test('should fail if no feed is supplied', async t => {
 });
 
 test('should get tweet data returned from Birdwatch.getCachedTweets()', async t => {
-	const bw = await new Birdwatch({useTestData:true}).feed('test', {}).start();
+	const bw = await new Birdwatch({testData:testData}).feed('test', {}).start();
 	t.is(typeof bw.getCachedTweets()[0].text, 'string');
 });
 
 test('should fail when filterTags is not a valid regex', async t => {
-	const bw = await new Birdwatch({useTestData:true}).feed('test', {filterTags: 'a'});
+	const bw = await new Birdwatch({testData:testData}).feed('test', {filterTags: 'a'});
 	t.throws(bw.start(), 'Invalid regex: a for test');
 });
 
 test('should filter hashtags', async t => {
-	const bw = await new Birdwatch({useTestData:true}).feed('test', {filterTags: /#01|#02|#03/}).start();
+	const bw = await new Birdwatch({testData:testData}).feed('test', {filterTags: /#01|#02|#03/}).start();
 	t.is(bw.getCachedTweets().length, 3);
 });
 
 test('should remove retweets with removeRetweets:true', async t => {
-	const bw = await new Birdwatch({useTestData:true}).feed('test', {removeRetweets:true}).start();
+	const bw = await new Birdwatch({testData:testData}).feed('test', {removeRetweets:true}).start();
 	t.is(bw.getCachedTweets().length, 5);
 });
 
 test('should allow multiple feeds with options', async t => {
-	const bw = await new Birdwatch({useTestData:true})
+	const bw = await new Birdwatch({testData:testData})
 		.feed('noretweets', {removeRetweets:true})
 		.feed('specifichashtags', {filterTags: /#01|#02|#03/})
 		.start();
@@ -60,14 +61,14 @@ test('should allow multiple feeds with options', async t => {
 });
 
 test('should sort the tweets', async t => {
-	const bw = await new Birdwatch({useTestData:true}).feed('test').start();
+	const bw = await new Birdwatch({testData:testData}).feed('test').start();
 	t.is(bw.getCachedTweets().length, 10);
 	t.is(bw.getCachedTweets()[9].created_at, 'Mon Jul 01 14:14:42 +0000 2015');
 	t.is(bw.getCachedTweets()[0].created_at, 'Mon Jul 10 14:14:42 +0000 2015');
 });
 
 test('should sort tweets from multiple feeds', async t => {
-	const bw = await new Birdwatch({useTestData:true})
+	const bw = await new Birdwatch({testData:testData})
 		.feed('test1', 	{filterTags: /#01|#02/})
 		.feed('test2', 	{filterTags: /#01|#02/})
 		.start();
@@ -79,14 +80,14 @@ test('should sort tweets from multiple feeds', async t => {
 
 test('should allow custom sorting', async t => {
 	const fn = function(x,y) { var n = parseInt(x.text.substring(12)); if (n % 2 === 0) { return 1; } return -1 };
-	const bw = await new Birdwatch({useTestData:true, sortBy:fn }).feed('test1').start();
+	const bw = await new Birdwatch({testData:testData, sortBy:fn }).feed('test1').start();
 
 	t.is(bw.getCachedTweets()[0].text, 'test tweet #09');
 	t.is(bw.getCachedTweets()[9].text, 'test tweet #02');
 });
 
 test('should fail if custom sorting function is not a valid function', async t => {
-	const bw = await new Birdwatch({useTestData:true, sortBy:[] }).feed('test1');
+	const bw = await new Birdwatch({testData:testData, sortBy:[] }).feed('test1');
 	t.throws(bw.start(), "sortBy value must be a function.");
 });
 
@@ -100,6 +101,11 @@ test('should not expose private keys in birdwatch-config.js', t => {
 });
 
 test('filterTags should accept an array of strings', async t => {
-	const bw = await new Birdwatch({useTestData:true}).feed('test', {filterTags:['01','02']}).start();
+	const bw = await new Birdwatch({testData:testData}).feed('test', {filterTags:['01','02']}).start();
 	t.is(bw.getCachedTweets().length, 2);
+});
+
+test('gets tweets over the network', async t => {
+	const bw = await new Birdwatch().feed('birdwatchnpm', {filterTags:['birdwatch']}).start();
+	t.true(bw.getCachedTweets().length >= 2);
 });
