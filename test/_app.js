@@ -1,8 +1,9 @@
 'use strict';
 const Birdwatch = require('./../dist/');
+const testData = require('./testTweets.json');
 
 const settings = {
-	useTestData:true,
+	testData:testData,
 	logReports:true,
 	refreshTime:60
 };

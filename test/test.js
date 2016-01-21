@@ -109,3 +109,6 @@ test('gets tweets over the network', async t => {
 	const bw = await new Birdwatch().feed('birdwatchnpm', {filterTags:['birdwatch']}).start();
 	t.true(bw.getCachedTweets().length >= 2);
 });
+
+
+
