@@ -4,11 +4,14 @@ const testData = require('./testTweets.json');
 
 const settings = {
 	testData:testData,
-	logReports:true,
-	refreshTime:60
+	logReports: true,
+	refreshTime:250
 };
 
-const bw = new Birdwatch(settings)
+let bw = new Birdwatch(settings)
 	.feed('test01')
 	.feed('test02', {filterTags:/#1|#2/})
-	.start();
+	.start()
+	.then(function(tweets){
+		console.log('birdwatch is ready to serve tweets');
+	});

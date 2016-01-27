@@ -11,3 +11,6 @@ local-config.js
 
 # Don't store any cached tweets
 dist/cache
+
+# Don't add experimental files
+setup.sh
