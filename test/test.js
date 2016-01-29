@@ -5,7 +5,6 @@ import condense from 'selective-whitespace';
 import fs from 'fs';
 import testData from './testTweets.json';
 
-
 test('should expose a constructor', t => {
 	t.is(typeof Birdwatch, 'function');
 });

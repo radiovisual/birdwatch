@@ -29,18 +29,17 @@ $ npm install --save birdwatch
 ## Usage
 
 ```js
-
 var Birdwatch = require('birdwatch');
 
-var birdwatch = new Birdwatch()
-    .feed('gulpjs')
-    .feed('reactjs', {filterTags: ['tag1', 'tag2']})
-    .feed('nodejs',  {filterTags: /#tag1|#tag2/i, removeRetweets:true})
-    .start();
+const settings = { logReports: true };
 
-// Now get your tweets in JSON format to serve or print
-birdwatch.getCachedTweets();
-
+const bw = new Birdwatch(settings)
+	.feed('test01')
+	.feed('test02', {filterTags:['tagone', 'tagtwo']})
+	.start()
+	.then(function(tweets){
+		console.log('birdwatch is ready to serve tweets');
+	});
 ```
 
 ## Extra Features
@@ -69,7 +68,7 @@ Options set here will override the defaults in the constructor.
 
 ##### refreshTime
 
-Type: `Number`<br>
+Type: `Number` 
 Default: `600`
 
 The number of seconds to wait before the cache updates again. The default is 10 minutes (600 seconds)
@@ -78,16 +77,28 @@ The number of seconds to wait before the cache updates again. The default is 10 
   
 ##### logReports
 
-Type: `Boolean`<br>
+Type: `Boolean` 
 Default: `false`
 
-Shows a pretty-printed update to the console. Useful for debugging and logging.
+##### url
+
+Type: `string` 
+Default: `/birdwatch/tweets`
+
+The url you want to use to access the cached tweets. Requires the server to be running.
+
+##### server
+
+Type: `boolean` 
+Default: `true` 
+
+Boolean to turn the server off or on. Turn the server off if you want to run your own server. Your own server can do whatever it wants with the cache file in `birdwatch/dist/cache/`
 
 # ![birdwatch](media/screenshot-v.1.0.0.png)
 
 ##### testData
 
-Type: `json`<br>
+Type: `json` 
 
 Serve tweet data in JSON format to birdwatch. Useful for testing/debugging without making network requests.
 

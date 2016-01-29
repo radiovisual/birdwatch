@@ -8,10 +8,24 @@ const settings = {
 	refreshTime:250
 };
 
-let bw = new Birdwatch(settings)
-	.feed('test01')
-	.feed('test02', {filterTags:/#1|#2/})
+ //const bw = new Birdwatch(settings)
+	//.feed('test01')
+	//.feed('test02', {filterTags:/#1|#2/})
+	//.start()
+	//.then(function(tweets){
+	//	console.log('birdwatch is ready to serve tweets');
+	//});
+
+var birdwatch = new Birdwatch({logReports: true, testData:testData})
+	.feed('Refugees')
+	.feed('UNDP')
+	.feed('UNOCHA')
+	.feed('NRC_Norway')
+	.feed('DRC_uk')
+	.feed('OCHA_Syria')
+	.feed('UNDP_Africa')
+	.feed('BBCWorld', {filterTags: ['humanitarian', 'UN', 'UnitedNations']})
 	.start()
-	.then(function(tweets){
+  .then(function(tweets){
 		console.log('birdwatch is ready to serve tweets');
 	});
