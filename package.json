@@ -65,7 +65,7 @@
     "babel": "^5.8.23",
     "pify": "^2.3.0",
     "selective-whitespace": "^1.0.0",
-    "xmark": "0.0.2",
+    "xmark": "0.0.4",
     "xo": "*"
   },
   "xo": {

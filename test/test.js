@@ -99,8 +99,9 @@ test('should allow custom sorting', async t => {
 });
 
 test('should fail if custom sorting function is not a valid function', async t => {
-	const bw = await new Birdwatch({testData:testData, sortBy:[], server:false }).feed('test1');
-	t.throws(bw.start(), 'sortBy value must be a function.');
+	t.throws(() => {
+		new Birdwatch({testData:testData, sortBy:[], server:false }).feed('test1').start();
+	}, TypeError, 'sortBy value must be a function.');
 });
 
 test('should not expose private keys in birdwatch-config.js', t => {
@@ -119,7 +120,6 @@ test('filterTags should accept an array of strings', async t => {
 			t.is(tweets.length, 2);
 		});
 });
-
 
 
 

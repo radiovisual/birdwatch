@@ -16,7 +16,7 @@ const settings = {
 	//	console.log('birdwatch is ready to serve tweets');
 	//});
 
-var birdwatch = new Birdwatch({logReports: true, testData:testData})
+var birdwatch = new Birdwatch({logReports: true})
 	.feed('Refugees')
 	.feed('UNDP')
 	.feed('UNOCHA')
@@ -27,5 +27,5 @@ var birdwatch = new Birdwatch({logReports: true, testData:testData})
 	.feed('BBCWorld', {filterTags: ['humanitarian', 'UN', 'UnitedNations']})
 	.start()
   .then(function(tweets){
-		console.log('birdwatch is ready to serve tweets');
+		console.log('birdwatch is ready to serve tweets', tweets.length);
 	});
