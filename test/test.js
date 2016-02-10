@@ -1,12 +1,10 @@
 import configuration from './../birdwatch-config.js';
-import Birdwatch from '../dist';
-import test from 'ava';
-
-
 import testData from './testTweets.json';
-import rm from 'rimraf';
-import got from 'got';
+import Birdwatch from '../dist';
 import getPort from 'get-port';
+import rm from 'rimraf';
+import test from 'ava';
+import got from 'got';
 
 test.before('setup', () => {
 	rm.sync(`${__dirname}/custom`);
