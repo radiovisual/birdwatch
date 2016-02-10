@@ -4,6 +4,19 @@ import test from 'ava';
 import condense from 'selective-whitespace';
 import fs from 'fs';
 import testData from './testTweets.json';
+import rm from 'rimraf';
+import got from 'got';
+import getPort from 'get-port';
+
+const tempDir = `${__dirname}/custom/location/test`;
+
+test.before('setup', () => {
+	rm.sync(`${__dirname}/custom`);
+});
+
+test.after('cleanup', () => {
+	rm.sync(`${__dirname}/custom`);
+});
 
 test('should expose a constructor', t => {
 	t.is(typeof Birdwatch, 'function');
@@ -122,13 +135,36 @@ test('filterTags should accept an array of strings', async t => {
 });
 
 test('should set a limit', async t => {
-	t.true(false);
+	await new Birdwatch({testData:testData, server:false})
+		.feed('test', {filterTags:['01','02', '03', '04'], limit: 2})
+		.start().then(tweets => {
+			t.is(tweets.length, 2);
+		});
 });
 
-test('should save file to cache', async t => {
-	t.true(false);
+test('should set custom cache directory', async t => {
+	const birdwatch = new Birdwatch({server: false, cacheDir:'/custom/location'}).feed('testfeed');
+	t.is(birdwatch.options.cacheDir, '/custom/location');
 });
 
-test('should set cacheFile', async t => {
-	t.true(false);
+test('should set custom url', async t => {
+	const birdwatch = new Birdwatch({server: false, url:'/custom/url'}).feed('testfeed');
+	t.is(birdwatch.options.url, '/custom/url');
 });
+
+test('should launch server', async t => {
+	await getPort().then(async port => {
+		const bw = await new Birdwatch({testData:testData, port:port}).feed('testfeed').start();
+		t.true((await got(`http://localhost:${port}/birdwatch/tweets`)).body.length > 0);
+		t.true(JSON.parse((await got(`http://localhost:${port}/birdwatch/tweets`)).body)[0].hasOwnProperty('created_at'));
+	});
+});
+
+test('should set custom url', async t => {
+	await getPort().then(async port => {
+		const bw = await new Birdwatch({testData:testData, port:port, url:'/custom/url'}).feed('testfeed').start();
+		t.true((await got(`http://localhost:${port}/custom/url`)).body.length > 0);
+		t.true(JSON.parse((await got(`http://localhost:${port}/custom/url`)).body)[0].hasOwnProperty('created_at'));
+	});
+});
+

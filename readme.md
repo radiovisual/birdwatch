@@ -29,16 +29,20 @@ $ npm install --save birdwatch
 ```js
 var Birdwatch = require('birdwatch');
 
-const settings = { logReports: true };
-
-const bw = new Birdwatch(settings)
+const bw = new Birdwatch()
 	.feed('test01')
 	.feed('test02', {filterTags:['tagone', 'tagtwo']})
-	.start()
-	.then(function(tweets){
-		console.log('birdwatch is ready to serve tweets');
-	});
+	.start();
 ```
+
+By default, Birdwatch will launch a server on port `8417` for you, but you can change the port number using the `port` option. After running the code above, you can access your tweets at the default location:
+
+```
+http://localhost:8417/birdwatch/tweets
+```
+
+# ![birdwatch](media/screenshot-v.1.0.0.png)
+
 
 ## Extra Features
 
@@ -72,22 +76,6 @@ Default: `600`
 The number of seconds to wait before the cache updates again. The default is 10 minutes (600 seconds)
  
 **Tip:** Update your cache frequently, but not frequently enough to hit any [Twitter API Rate Limits](https://dev.twitter.com/rest/public/rate-limits).
-  
-##### logReports
-
-Type: `Boolean`  
-Default: `false`  
-
-Pretty print Bridwatch activity to the console. 
-
-# ![birdwatch](media/screenshot-v.1.0.0.png)
-
-##### url
-
-Type: `string`  
-Default: `/birdwatch/tweets`
-
-The url you want to use to access the cached tweets. Requires the server to be running.
 
 ##### server
 
@@ -96,12 +84,26 @@ Default: `true`
 
 Boolean to turn the server off or on. Turn the server off if you want to run your own server. Your own server can do whatever it wants with the cache file in `birdwatch/dist/cache/`
 
-##### cacheFile
+##### port
+
+Type: `number`  
+Default: `8417`  
+
+Assign a port to the Birdwatch server. If you set a port of `0` the server will assign an open port for you, and you can get the port number with the `logReport: true` setting.
+
+##### url
 
 Type: `string`  
-Default: `${__dirname}/cache/cached_tweets.json`  
+Default: `/birdwatch/tweets`
 
-Override the location and filename of the cache file. Make sure you have appropriate read/write permissions on your new directory.
+The url you want to use to access the cached tweets. Requires the server to be running.
+
+##### cacheDir
+
+Type: `string`  
+Default: `${__dirname}/cache/`  
+
+Override the location of the cache file. Make sure you have appropriate read/write permissions on this directory.
 
 ##### testData
 
@@ -112,7 +114,7 @@ Serve tweet data in JSON format to birdwatch. Useful for testing/debugging witho
 ##### sortBy
 
 Type: `function`  
-Default: *(chronological order)*  
+Default: `tweet => { return new Date(tweet.created_at) * -1; }`    
 
 Override the custom sorting function. Birdwatch defaults sorting to chronological order.
 
@@ -144,7 +146,14 @@ The regular expression containing the tags you want to filter with, or an array 
 .feed('user2', {filterTags: ['01','02'] })
 .feed('user3', {filterTags: ['#01','#02'] })
 ```
+
+##### limit
   
+Type: `number`  
+Default: `12`  
+  
+Set a limit on how many tweets you want to cache from the feed. If you are watching three feeds with a limit of 10, you will have a cache of 30 tweets.
+
 **Tip:** If you need help writing your regular expressions, try [regexpal.com](http://regexpal.com/)
    
 ##### removeRetweets

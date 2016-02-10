@@ -15,7 +15,7 @@ const settings = {
 	//	console.log('birdwatch is ready to serve tweets');
 	//});
 
-var birdwatch = new Birdwatch({logReports: true, refreshTime:20})
+var birdwatch = new Birdwatch({logReports:false, refreshTime:20, port:0})
 	.feed('Refugees')
 	.feed('UNDP')
 	.feed('UNOCHA')

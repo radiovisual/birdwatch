@@ -1,11 +1,11 @@
 {
   "name": "birdwatch",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Monitor, filter, cache and serve specific twitter feeds.",
   "main": "dist/index.js",
   "files": [
     "dist",
-    "birdwatch-config.env"
+    "birdwatch-config.js"
   ],
   "engines": {
     "node": ">=0.12.0"
@@ -51,7 +51,9 @@
   "dependencies": {
     "babel-runtime": "^5.8.29",
     "chalk": "~1.1.0",
+    "clear": "0.0.1",
     "express": "^4.13.4",
+    "get-port": "^2.1.0",
     "hash-regex": "^1.0.0",
     "is-regexp": "~1.0.0",
     "mkdirp": "^0.5.1",
@@ -63,7 +65,9 @@
   "devDependencies": {
     "ava": "*",
     "babel": "^5.8.23",
+    "got": "^6.1.1",
     "pify": "^2.3.0",
+    "rimraf": "^2.5.1",
     "selective-whitespace": "^1.0.0",
     "xmark": "0.0.4",
     "xo": "*"
@@ -74,6 +78,9 @@
       "dist/**",
       "test/**",
       "local-config.js"
-    ]
+    ],
+    "rules" : {
+      "no-new": 0
+    }
   }
 }
