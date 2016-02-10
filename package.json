@@ -76,7 +76,6 @@
     "esnext": true,
     "ignores": [
       "dist/**",
-      "test/**",
       "local-config.js"
     ],
     "rules" : {
