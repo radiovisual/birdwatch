@@ -9,7 +9,7 @@ Birdwatch will help you grab tweets from specific twitter accounts, and cache th
 thus avoiding any request limits set by the Twitter API, and giving you more control over the data that is saved.
 **You can filter tweets by hashtags, or ignore retweets!** 
 
-**Note:** This is a work in progress. *Pull requests welcome!* 
+**Note:** This is a work in progress. If you find any bugs, or suggestions [please report them](https://github.com/radiovisual/birdwatch/issues). If you want to help, pull requests are always appreciated! 
 
 ## Installation
 
@@ -22,7 +22,7 @@ $ npm install --save birdwatch
   1. Open the file `node_modules/birdwatch/birdwatch-config.js`
   2. Update the file with your Twitter App credentials.
   3. Rename the file to `local-config.js`
-  4. *Now you're ready to birdwatch!*
+  4. *Now you're ready to birdwatch!* :baby_chick: :bowtie: 
 
 ## Usage
 
@@ -146,6 +146,7 @@ The regular expression containing the tags you want to filter with, or an array 
 .feed('user2', {filterTags: ['01','02'] })
 .feed('user3', {filterTags: ['#01','#02'] })
 ```
+**Tip:** If you need help writing your regular expressions, try [regexpal.com](http://regexpal.com/)
 
 ##### limit
   
@@ -153,8 +154,6 @@ Type: `number`
 Default: `12`  
   
 Set a limit on how many tweets you want to cache from the feed. If you are watching three feeds with a limit of 10, you will have a cache of 30 tweets.
-
-**Tip:** If you need help writing your regular expressions, try [regexpal.com](http://regexpal.com/)
    
 ##### removeRetweets
   
