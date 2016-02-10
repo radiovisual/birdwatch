@@ -57,12 +57,12 @@ cached_tweets[0].html;
 
 ### Built-in Server
 
-Birdwatch v3 comes equipped with it's own built-in server. You don't have to configure the server at all, it will launch just fine using the defaults, but in case you need more control, you can configure the server by:
+Birdwatch v3 comes equipped with its own built-in server. You don't have to configure the server at all, it will launch just fine using the defaults, but in case you need more control, you can configure the server by:
 
 - [Turning it on or off](https://github.com/radiovisual/birdwatch#server) using the `server: <true|false>` option. 
-- [Override the url to the Birdwatch cache](https://github.com/radiovisual/birdwatch#cacheDir) with the `cacheDir: <path>` option
-- [Specify the port](https://github.com/radiovisual/birdwatch#port) you want the server to run on with the `port: <portnumber>` option
-- [Optionally serve test data](https://github.com/radiovisual/birdwatch#testData) in a JSON format using the `testData: <json>` option
+- [Overriding the url to the Birdwatch cache](https://github.com/radiovisual/birdwatch#cacheDir) with the `cacheDir: <path>` option
+- [Specifying the port](https://github.com/radiovisual/birdwatch#port) you want the server to run on with the `port: <portnumber>` option
+- [Optionally serving test data](https://github.com/radiovisual/birdwatch#testData) in a JSON format using the `testData: <json>` option
 
 **Tip:** If you have your own caching server, just turn the Birdwatch server off, and feed your server the Birdwatch cache file.
  
