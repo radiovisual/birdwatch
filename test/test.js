@@ -121,5 +121,14 @@ test('filterTags should accept an array of strings', async t => {
 		});
 });
 
+test('should set a limit', async t => {
+	t.true(false);
+});
 
+test('should save file to cache', async t => {
+	t.true(false);
+});
 
+test('should set cacheFile', async t => {
+	t.true(false);
+});

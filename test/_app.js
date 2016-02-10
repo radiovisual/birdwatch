@@ -1,4 +1,3 @@
-'use strict';
 const Birdwatch = require('./../dist/');
 const testData = require('./testTweets.json');
 
@@ -16,7 +15,7 @@ const settings = {
 	//	console.log('birdwatch is ready to serve tweets');
 	//});
 
-var birdwatch = new Birdwatch({logReports: true})
+var birdwatch = new Birdwatch({logReports: true, refreshTime:20})
 	.feed('Refugees')
 	.feed('UNDP')
 	.feed('UNOCHA')
@@ -25,7 +24,6 @@ var birdwatch = new Birdwatch({logReports: true})
 	.feed('OCHA_Syria')
 	.feed('UNDP_Africa')
 	.feed('BBCWorld', {filterTags: ['humanitarian', 'UN', 'UnitedNations']})
-	.start()
-  .then(function(tweets){
-		console.log('birdwatch is ready to serve tweets', tweets.length);
-	});
+	.start();
+
+
