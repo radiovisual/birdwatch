@@ -22,7 +22,7 @@ $ npm install --save birdwatch
   1. Open the file `node_modules/birdwatch/birdwatch-config.js`
   2. Update the file with your Twitter App credentials.
   3. Rename the file to `local-config.js`
-  4. *Now you're ready to birdwatch!* :baby_chick: :bowtie: 
+  4. *Now you're ready to birdwatch!* :bowtie: 
 
 ## Usage
 
@@ -59,12 +59,12 @@ cached_tweets[0].html;
 
 Birdwatch v3 comes equipped with its own built-in server. You don't have to configure the server at all, it will launch just fine using the defaults, but in case you need more control, you can configure the server by:
 
-- [Turning it on or off](https://github.com/radiovisual/birdwatch#server) using the `server: <true|false>` option. 
+- [Turning it on or off](https://github.com/radiovisual/birdwatch#server) using the `server: <true|false>` option 
 - [Overriding the url to the Birdwatch cache](https://github.com/radiovisual/birdwatch#cacheDir) with the `cacheDir: <path>` option
 - [Specifying the port](https://github.com/radiovisual/birdwatch#port) you want the server to run on with the `port: <portnumber>` option
 - [Optionally serving test data](https://github.com/radiovisual/birdwatch#testData) in a JSON format using the `testData: <json>` option
 
-**Tip:** If you have your own caching server, just turn the Birdwatch server off, and feed your server the Birdwatch cache file.
+**Tip:** If you have your own caching server, just turn the Birdwatch server off, and feed your server the Birdwatch cache file. The cache file is generated even if the server is turned off. 
  
 ## API
 
