@@ -45,7 +45,7 @@ http://localhost:8417/birdwatch/tweets
 ```
 
 ### Cached HTML Tweet
-If birdwatch can't find an `html` string on the returned tweet data, (which is sometimes the default from the Twitter API), then one will be rebuilt and added for you via [tweet-patch](https://github.com/radiovisual/tweet-patch). This means the **plaintext** hashtags, user-mentions and hyperlinks are converted back to twitter-ready markup for you. ::heart_eyes:: (You're welcome) Example below.
+If birdwatch can't find an `html` string on the returned tweet data, (which is sometimes the default from the Twitter API), then one will be rebuilt and added for you via [tweet-patch](https://github.com/radiovisual/tweet-patch). This means the **plaintext** hashtags, user-mentions and hyperlinks are converted back to twitter-ready markup for you. :heart_eyes: (You're welcome) Example below.
    
 ```js
 cached_tweets[0].text;
