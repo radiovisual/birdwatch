@@ -3,7 +3,8 @@ const testData = require('./testTweets.json');
 
 const settings = {
 	testData:testData,
-	refreshTime:20,
+	refreshTime:600,
+	logReports: false,
 	port: 0
 };
 
@@ -12,6 +13,6 @@ const settings = {
 	 .feed('justinbieber')
 	 .start()
 	 .then(tweets => {
-		console.log('birdwatch is ready to serve tweets: ', tweets.length);
+		console.log('\nbirdwatch is ready to serve %s tweets', tweets.length);
 	});
 

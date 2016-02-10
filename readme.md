@@ -9,7 +9,7 @@ Birdwatch will help you grab tweets from specific twitter accounts, and cache th
 thus avoiding any request limits set by the Twitter API, and giving you more control over the data that is saved.
 **You can filter tweets by hashtags, or ignore retweets!** 
 
-**Note:** This is a work in progress. If you find any bugs, or suggestions [please report them](https://github.com/radiovisual/birdwatch/issues). If you want to help, pull requests are always appreciated! 
+**Note:** This is a work in progress. If you find any bugs, or have suggestions [please report them](https://github.com/radiovisual/birdwatch/issues). If you want to help, pull requests are always appreciated! 
 
 ## Installation
 
@@ -30,8 +30,8 @@ $ npm install --save birdwatch
 var Birdwatch = require('birdwatch');
 
 const bw = new Birdwatch()
-	.feed('test01')
-	.feed('test02', {filterTags:['tagone', 'tagtwo']})
+	.feed('justinbieber')
+	.feed('taylorswift13', {filterTags:['tagOne', 'tagTwo']})
 	.start();
 ```
 
@@ -40,8 +40,6 @@ By default, Birdwatch will launch a server on port `8417` for you, but you can c
 ```
 http://localhost:8417/birdwatch/tweets
 ```
-
-# ![birdwatch](media/screenshot-v.1.0.0.png)
 
 
 ## Extra Features
@@ -68,6 +66,15 @@ Type: `object`
 
 Options set here will override the defaults in the constructor.
 
+##### logReports
+
+Type: `boolean`  
+Default: `true`
+
+Pretty-print birdwatch activity to the console.
+
+# ![birdwatch](media/screenshot-v.3.0.0.png)
+
 ##### refreshTime
 
 Type: `Number`  
@@ -89,7 +96,7 @@ Boolean to turn the server off or on. Turn the server off if you want to run you
 Type: `number`  
 Default: `8417`  
 
-Assign a port to the Birdwatch server. If you set a port of `0` the server will assign an open port for you, and you can get the port number with the `logReport: true` setting.
+Assign a port to the Birdwatch server. If you set a port of `0` the server will assign an open port for you, and you can get the port number with the `logReport: true` setting or using `birdwatch.options.port`
 
 ##### url
 
