@@ -44,21 +44,28 @@ By default, Birdwatch will launch a server on port `8417` for you, but you can c
 http://localhost:8417/birdwatch/tweets
 ```
 
-
-## Extra Features
-
 ### Cached HTML Tweet
- - If birdwatch can't find an `html` string on the returned tweet data, then it adds one for you using [tweet-patch](https://github.com/radiovisual/tweet-patch). 
-   This means the plain-text hashtags, user-mentions and hyperlinks are converted to twitter-ready HTML. Example below.
+If birdwatch can't find an `html` string on the returned tweet data, (which is sometimes the default from the Twitter API), then one will be rebuilt and added for you via [tweet-patch](https://github.com/radiovisual/tweet-patch). This means the **plaintext** hashtags, user-mentions and hyperlinks are converted to twitter-ready HTML. ::heart_eyes:: (You're welcome) Example below.
    
- - ```js
-   cached_tweets[0].text;
-   //=> "This is the #plaintext tweet"
+```js
+cached_tweets[0].text;
+//=> "This is the #plaintext tweet"
    
-   cached_tweets[0].html;
-   //=> "This is the <a href="https://twitter.com/hashtag/plaintext">#plaintext</a> tweet"
-   ```
-   
+cached_tweets[0].html;
+//=> "This is the <a href="https://twitter.com/hashtag/plaintext">#plaintext</a> tweet"
+```
+
+### Built-in Server
+
+Birdwatch v3 comes equipped with it's own built-in server. You don't have to configure the server at all, it will launch just fine using the defaults, but in case you need more control, you can configure the server by:
+
+- [Turning it on or off](https://github.com/radiovisual/birdwatch#server) using the `server: <true|false>` option. 
+- [Override the url to the Birdwatch cache](https://github.com/radiovisual/birdwatch#cacheDir) with the `cacheDir: <path>` option
+- [Specify the port](https://github.com/radiovisual/birdwatch#port) you want the server to run on with the `port: <portnumber>` option
+- [Optionally serve test data](https://github.com/radiovisual/birdwatch#testData) in a JSON format using the `testData: <json>` option
+
+**Tip:** If you have your own caching server, just turn the Birdwatch server off, and feed your server the Birdwatch cache file.
+ 
 ## API
 
 ### Birdwatch([options])
