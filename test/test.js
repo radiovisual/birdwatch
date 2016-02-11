@@ -168,3 +168,8 @@ test('should set custom url', async t => {
 	});
 });
 
+test('should set refreshTime', async t => {
+	const birdwatch = new Birdwatch({refreshTime: 300, server: false}).feed('testfeed');
+	t.is(birdwatch.options.refreshTime, 300);
+});
+
