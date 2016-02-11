@@ -64,7 +64,7 @@ Birdwatch v3 comes equipped with its own built-in server. You don't have to conf
 - [Specifying the port](https://github.com/radiovisual/birdwatch#port) you want the server to run on with the `port: <portnumber>` option
 - [Optionally serving test data](https://github.com/radiovisual/birdwatch#testData) in a JSON format using the `testData: <json>` option
 
-**Tip:** If you have your own caching server, just turn the Birdwatch server off, and feed your server the Birdwatch cache file. The cache file is generated even if the server is turned off. 
+**Tip:** The cache file is created even if the server is turned off, this means you can use Birdwatch with your own caching server: just turn the Birdwatch server off, and use the cache file however you want. 
  
 ## API
 
