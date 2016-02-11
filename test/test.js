@@ -173,3 +173,7 @@ test('should set refreshTime', async t => {
 	t.is(birdwatch.options.refreshTime, 300);
 });
 
+test('should set server option', async t => {
+	const birdwatch = new Birdwatch({refreshTime: 300, server: false}).feed('testfeed');
+	t.is(birdwatch.options.server, false);
+});
