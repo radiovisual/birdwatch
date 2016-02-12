@@ -6,8 +6,7 @@
 [![Build Status](https://travis-ci.org/radiovisual/birdwatch.svg?branch=master)](https://travis-ci.org/radiovisual/birdwatch) [![Coverage Status](https://coveralls.io/repos/github/radiovisual/birdwatch/badge.svg?branch=master)](https://coveralls.io/github/radiovisual/birdwatch?branch=master)
 
 Birdwatch will help you grab tweets from specific twitter accounts, and cache the tweets on your server, 
-thus avoiding any request limits set by the Twitter API, and giving you more control over the data that is saved.
-**You can filter tweets by hashtags, or ignore retweets!** 
+thus avoiding any request limits set by the Twitter API, and giving you more control over the data that is saved (filter tweets by hashtag, ignore rewtweets, custom sorting options, etc). Use the built-in server to get you up and running quickly, or switch the server off and use the cache file anyway you like.
 
 **Note:** This is a work in progress. If you find any bugs, or have suggestions [please report them](https://github.com/radiovisual/birdwatch/issues). If you want to help, pull requests are always appreciated! 
 
@@ -30,12 +29,12 @@ $ npm install --save birdwatch
 var Birdwatch = require('birdwatch');
 
 new Birdwatch()
-  .feed('justinbieber')
-  .feed('taylorswift13', {filterTags:['tagOne', 'tagTwo']})
-  .start()
-  .then(tweets => {
-      console.log('birdwatch is ready to serve %s tweets', tweets.length);
-  });
+    .feed('justinbieber')
+    .feed('taylorswift13', {filterTags:['tagOne', 'tagTwo']})
+    .start()
+    .then(tweets => {
+        console.log('birdwatch is ready to serve %s tweets', tweets.length);
+    });
 ```
 
 By default, Birdwatch will launch a server on port `8417` for you, but you can change the port number using the `port` option. After running the code above, you can access your tweets at the default location:
