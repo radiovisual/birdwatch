@@ -30,12 +30,12 @@ $ npm install --save birdwatch
 var Birdwatch = require('birdwatch');
 
 new Birdwatch()
-    .feed('justinbieber')
-	.feed('taylorswift13', {filterTags:['tagOne', 'tagTwo']})
-	.start()
-	.then(tweets => {
-	    console.log('birdwatch is ready to serve %s tweets', tweets.length);
-	});
+  .feed('justinbieber')
+  .feed('taylorswift13', {filterTags:['tagOne', 'tagTwo']})
+  .start()
+  .then(tweets => {
+      console.log('birdwatch is ready to serve %s tweets', tweets.length);
+  });
 ```
 
 By default, Birdwatch will launch a server on port `8417` for you, but you can change the port number using the `port` option. After running the code above, you can access your tweets at the default location:
