@@ -6,7 +6,7 @@
 [![Build Status](https://travis-ci.org/radiovisual/birdwatch.svg?branch=master)](https://travis-ci.org/radiovisual/birdwatch) [![Coverage Status](https://coveralls.io/repos/github/radiovisual/birdwatch/badge.svg?branch=master)](https://coveralls.io/github/radiovisual/birdwatch?branch=master)
 
 Birdwatch will help you grab tweets from specific twitter accounts, and cache the tweets on your server, 
-thus avoiding any request limits set by the Twitter API, and giving you more control over the data that is saved (filter tweets by hashtag, ignore rewtweets, custom sorting options, etc). Use the built-in server to get you up and running quickly, or switch the server off and use the cache file anyway you like.
+thus avoiding any request limits set by the Twitter API, and giving you more control over the data that is saved (filter tweets by hashtag, ignore retweets, custom sorting options, etc). Use the built-in server to get you up and running quickly, or switch the server off and use the cache file anyway you like.
 
 **Note:** This is a work in progress. If you find any bugs, or have suggestions [please report them](https://github.com/radiovisual/birdwatch/issues). If you want to help, pull requests are always appreciated! 
 
