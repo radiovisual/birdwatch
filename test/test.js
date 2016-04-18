@@ -1,10 +1,11 @@
-import configuration from './../birdwatch-config.js';
-import testData from './testTweets.json';
-import Birdwatch from '../dist';
 import getPort from 'get-port';
 import rm from 'rimraf';
 import test from 'ava';
 import got from 'got';
+
+import Birdwatch from '../dist';
+import configuration from './../birdwatch-config.js';
+import testData from './testTweets.json';
 
 test.before('setup', () => {
 	rm.sync(`${__dirname}/custom`);
@@ -147,7 +148,7 @@ test('should set custom cache directory', async t => {
 	t.is(birdwatch.options.cacheDir, '/custom/location');
 });
 
-test('should set custom url', async t => {
+test('should set custom url in options', async t => {
 	const birdwatch = new Birdwatch({server: false, url: '/custom/url'}).feed('testfeed');
 	t.is(birdwatch.options.url, '/custom/url');
 });
@@ -160,7 +161,7 @@ test('should launch server', async t => {
 	});
 });
 
-test('should set custom url', async t => {
+test('custom url should be reachable', async t => {
 	await getPort().then(async port => {
 		await new Birdwatch({testData, port, url: '/custom/url'}).feed('testfeed').start();
 		t.true((await got(`http://localhost:${port}/custom/url`)).body.length > 0);
