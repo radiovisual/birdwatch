@@ -1,10 +1,10 @@
-import configuration from './../birdwatch-config.js';
-import testData from './testTweets.json';
-import Birdwatch from '../dist';
 import getPort from 'get-port';
 import rm from 'rimraf';
 import test from 'ava';
 import got from 'got';
+import Birdwatch from '../dist';
+import configuration from './../birdwatch-config.js';
+import testData from './testTweets.json';
 
 test.before('setup', () => {
 	rm.sync(`${__dirname}/custom`);
@@ -160,7 +160,7 @@ test('should launch server', async t => {
 	});
 });
 
-test('should set custom url', async t => {
+test('should set custom url - 2', async t => {
 	await getPort().then(async port => {
 		await new Birdwatch({testData, port, url: '/custom/url'}).feed('testfeed').start();
 		t.true((await got(`http://localhost:${port}/custom/url`)).body.length > 0);
