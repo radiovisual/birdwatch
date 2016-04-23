@@ -1,6 +1,6 @@
 {
   "name": "birdwatch",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Monitor, filter, cache and serve specific twitter feeds.",
   "main": "dist/index.js",
   "files": [
@@ -12,6 +12,7 @@
   },
   "scripts": {
     "test": "xo && npm run build && ava && nyc ava",
+    "ava": "npm run build && ava --verbose",
     "build": "babel lib --out-dir=dist --optional=runtime",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
@@ -80,9 +81,6 @@
     "ignores": [
       "dist/**",
       "local-config.js"
-    ],
-    "rules": {
-      "no-new": 0
-    }
+    ]
   }
 }
