@@ -6,10 +6,6 @@ import Birdwatch from '../dist';
 import configuration from './../birdwatch-config.js';
 import testData from './testTweets.json';
 
-import Birdwatch from '../dist';
-import configuration from './../birdwatch-config.js';
-import testData from './testTweets.json';
-
 test.before('setup', () => {
 	rm.sync(`${__dirname}/custom`);
 });
