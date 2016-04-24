@@ -2,7 +2,6 @@ import getPort from 'get-port';
 import rm from 'rimraf';
 import test from 'ava';
 import got from 'got';
-
 import Birdwatch from '../dist';
 import configuration from './../birdwatch-config.js';
 import testData from './testTweets.json';
