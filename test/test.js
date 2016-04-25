@@ -25,7 +25,7 @@ test('should add a feed with .feed()', t => {
 });
 
 test('should fail when a screenname is not supplied to .feed()', async t => {
-	const birdwatch = new Birdwatch({server: false}).feed('');
+	const birdwatch = new Birdwatch({server: false, testData}).feed('');
 	await t.throws(birdwatch.start(), 'Screenname required');
 });
 
@@ -177,4 +177,9 @@ test('should set refreshTime', async t => {
 test('should set server option', async t => {
 	const birdwatch = new Birdwatch({refreshTime: 300, server: false}).feed('testfeed');
 	t.is(birdwatch.options.server, false);
+});
+
+test('fails with hint if no local-config.js file', async t => {
+	const birdwatch = new Birdwatch({configFile: 'path/no/exists/local-config.js', testData: false}).feed('testfeed');
+	await t.throws(birdwatch.start(), 'path/no/exists/local-config.js file not found. Cannot connect to Twitter without valid credentials.');
 });

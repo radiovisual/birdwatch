@@ -136,6 +136,13 @@ Default: `tweet => { return new Date(tweet.created_at) * -1; }`
 
 Override the custom sorting function. Birdwatch defaults sorting to chronological order.
 
+##### configFile
+
+Type: `string`  
+Default: `../local-config.js`    
+
+Override the default twitter configuration file path location.
+
 ### birdwatch.feed(screenname, [options])
 
 Add a twitter feed.
