@@ -1,8 +1,8 @@
 const Birdwatch = require('./../dist/');
-const testData = require('./testTweets.json');
+// const testData = require('./testTweets.json');
 
 const settings = {
-	testData,
+	testData: false,
 	refreshTime: 600,
 	port: 0
 };
