@@ -1,6 +1,6 @@
 {
   "name": "birdwatch",
-  "version": "3.0.1",
+  "version": "3.1.1",
   "description": "Monitor, filter, cache and serve specific twitter feeds.",
   "main": "dist/index.js",
   "files": [
