@@ -1,3 +1,5 @@
+import path from 'path';
+
 import getPort from 'get-port';
 import rm from 'rimraf';
 import test from 'ava';
@@ -6,6 +8,7 @@ import got from 'got';
 import Birdwatch from '../dist';
 import configuration from './../birdwatch-config.js';
 import testData from './testTweets.json';
+import testCreds from './_testCreds.js';
 
 test.before('setup', () => {
 	rm.sync(`${__dirname}/custom`);
@@ -126,6 +129,15 @@ test('should not expose private keys in birdwatch-config.js', t => {
 	);
 });
 
+test('testCreds should have fake values', t => {
+	t.true(
+		testCreds.consumerKey === 'FAKEABC123' &&
+		testCreds.consumerSecret === 'FAKEABC123' &&
+		testCreds.accessToken === 'FAKEABC123' &&
+		testCreds.accessTokenSecret === 'FAKEABC123'
+	);
+});
+
 test('filterTags should accept an array of strings', async t => {
 	await new Birdwatch({testData, server: false})
 		.feed('test', {filterTags: ['01', '02']})
@@ -180,6 +192,11 @@ test('should set server option', async t => {
 });
 
 test('fails with hint if no local-config.js file', async t => {
-	const birdwatch = new Birdwatch({configFile: 'path/no/exists/local-config.js', testData: false}).feed('testfeed');
+	const birdwatch = new Birdwatch({configFile: 'path/no/exists/local-config.js', testData: false, server: false}).feed('testfeed');
 	await t.throws(birdwatch.start(), 'path/no/exists/local-config.js file not found. Cannot connect to Twitter without valid credentials.');
+});
+
+test('fails with hint if invalid twitter credentials supplied', async t => {
+	const birdwatch = new Birdwatch({configFile: path.resolve(__dirname, '..', 'birdwatch-config.js'), testData: false, server: false}).feed('testfeed');
+	await t.throws(birdwatch.start(), 'Invalid or expired token.');
 });

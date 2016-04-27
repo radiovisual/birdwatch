@@ -14,4 +14,6 @@ new Birdwatch(settings)
 	.start()
 	.then(tweets => {
 		console.log('\nbirdwatch is ready to serve %s tweets', tweets.length);
+	}).catch(err => {
+		console.log(err);
 	});

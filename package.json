@@ -59,6 +59,7 @@
     "hash-regex": "^1.0.0",
     "is-regexp": "~1.0.0",
     "mkdirp": "^0.5.1",
+    "node-oauth-error": "0.0.2",
     "oauth": "^0.9.14",
     "object-assign": "~3.0.0",
     "tweet-patch": "^1.0.0",
