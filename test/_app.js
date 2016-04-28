@@ -17,3 +17,4 @@ new Birdwatch(settings)
 	}).catch(err => {
 		console.log(err);
 	});
+
