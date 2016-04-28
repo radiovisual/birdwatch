@@ -1,9 +1,12 @@
 import path from 'path';
+import fs from 'fs';
 
+import osTmpdir from 'os-tmpdir';
 import getPort from 'get-port';
 import rm from 'rimraf';
 import test from 'ava';
 import got from 'got';
+import pify from 'pify';
 
 import Birdwatch from '../dist';
 import configuration from './../birdwatch-config.js';
@@ -199,4 +202,16 @@ test('fails with hint if no local-config.js file', async t => {
 test('fails with hint if invalid twitter credentials supplied', async t => {
 	const birdwatch = new Birdwatch({configFile: path.resolve(__dirname, '..', 'birdwatch-config.js'), testData: false, server: false}).feed('testfeed');
 	await t.throws(birdwatch.start(), 'Invalid or expired token.');
+});
+
+test('saves to cache file', async t => {
+	const tempdir = osTmpdir();
+	const filepath = path.join(tempdir, 'cached_tweets.json');
+
+	await new Birdwatch({cacheDir: tempdir, testData, server: false}).feed('testfeed', {removeRetweets: true}).start();
+
+	pify(fs.readFile)(filepath, 'utf8').then(data => {
+		const tweets = JSON.parse(data);
+		t.is(tweets.length, 5);
+	});
 });
