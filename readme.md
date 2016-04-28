@@ -84,7 +84,7 @@ Default: `true`
 
 Pretty-print birdwatch activity to the console.
 
-# ![birdwatch](media/screenshot-v.3.0.0.png)
+# ![birdwatch](media/screenshot-v.3.1.2.png)
 
 ##### refreshTime
 
