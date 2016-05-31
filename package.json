@@ -85,5 +85,12 @@
       "dist/**",
       "local-config.js"
     ]
+  },
+  "ava": {
+    "files": [
+      "test/test.js",
+      "!test/test-creds.js",
+      "!test/app.js"
+    ]
   }
 }

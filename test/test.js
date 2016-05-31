@@ -10,8 +10,8 @@ import pify from 'pify';
 
 import Birdwatch from '../dist';
 import configuration from './../birdwatch-config.js';
-import testData from './testTweets.json';
-import testCreds from './_testCreds.js';
+import testData from './test-tweets.json';
+import testCreds from './test-creds.js';
 
 test.before('setup', () => {
 	rm.sync(`${__dirname}/custom`);
