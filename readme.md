@@ -8,7 +8,8 @@
 Birdwatch will help you grab tweets from specific twitter accounts, and cache the tweets on your server, 
 thus avoiding any request limits set by the Twitter API, and giving you more control over the data that is saved (filter tweets by hashtag, ignore retweets, custom sorting options, etc). Use the built-in server to get you up and running quickly, or switch the server off and use the cache file anyway you like.
 
-**Note:** This is a work in progress. If you find any bugs, or have suggestions [please report them](https://github.com/radiovisual/birdwatch/issues). If you want to help, pull requests are always appreciated! 
+If you find any bugs, or have suggestions [please report them](https://github.com/radiovisual/birdwatch/issues). If you want to help, pull requests are always appreciated! 
+
 
 ## Installation
 
@@ -17,11 +18,18 @@ thus avoiding any request limits set by the Twitter API, and giving you more con
 $ npm install --save birdwatch
 ```
 
-**Step 2:** Add your twitter app credentials to the configuration file
-  1. Open the file `node_modules/birdwatch/birdwatch-config.js`
-  2. Update the file with your Twitter App credentials.
-  3. Rename the file to `local-config.js`
-  4. *Now you're ready to birdwatch!* :bowtie: 
+**Step 2:** Add your Twitter App Credentials via environment variables
+
+There are a number of ways to set environment variables in your app, some depend on your operating system. I use [dotenv](https://github.com/motdotla/dotenv), but you can use
+the command line, or npm. No matter what method you choose, your environment variables should have the following names:
+
+- `CONSUMER_KEY` : Your Twitter Consumer Key
+- `CONSUMER_SECRET` : Your Twitter Consumer Secret
+- `ACCESS_TOKEN` : Your Twitter Access Token
+- `ACCESS_TOKEN_SECRET` : Your Twitter Access Token Secret
+
+*Now you're ready to birdwatch!* :bowtie: 
+
 
 ## Usage
 
@@ -58,7 +66,7 @@ tweet.html;
 
 ### Built-in Server
 
-Birdwatch v3 comes equipped with its own built-in server. You don't have to configure the server at all, it will launch just fine using the defaults, but in case you need more control, you can configure the server by:
+Birdwatch comes equipped with its own built-in server. You don't have to configure the server at all, it will launch just fine using the defaults, but in case you need more control, you can configure the server by:
 
 - [Turning it on or off](https://github.com/radiovisual/birdwatch#server) using the `server: <true|false>` option 
 - [Overriding the url to the Birdwatch cache](https://github.com/radiovisual/birdwatch#cacheDir) with the `cacheDir: <path>` option
@@ -135,13 +143,6 @@ Type: `function`
 Default: `tweet => { return new Date(tweet.created_at) * -1; }`    
 
 Override the custom sorting function. Birdwatch defaults sorting to chronological order.
-
-##### configFile
-
-Type: `string`  
-Default: `../local-config.js`    
-
-Override the default twitter configuration file path location.
 
 ### birdwatch.feed(screenname, [options])
 

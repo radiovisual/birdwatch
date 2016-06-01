@@ -8,7 +8,7 @@ const settings = {
 };
 
 new Birdwatch(settings)
-	.feed('birdwatchnpmTHISSHOULDNOTEXISTSATALLEVER')
+	.feed('birdwatchnpm')
 	.feed('justinbieber', {filterTags: ['believe']})
 	.feed('taylorswift13')
 	.start()

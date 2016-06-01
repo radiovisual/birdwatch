@@ -5,6 +5,7 @@ node_modules
 .nyc_output
 coverage
 dist
+.env
 
 # Don't store private keys in the repo
 local-config.js
