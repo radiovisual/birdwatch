@@ -21,7 +21,7 @@ $ npm install --save birdwatch
 **Step 2:** Add your Twitter App Credentials via environment variables
 
 There are a number of ways to set environment variables in your app, some depend on your operating system. I use [dotenv](https://github.com/motdotla/dotenv), but you can use
-the command line, or npm. No matter what method you choose, your environment variables should have the following names:
+the command line, a makefile or npm. No matter what method you choose, your environment variables should have the following names:
 
 - `CONSUMER_KEY` : Your Twitter Consumer Key
 - `CONSUMER_SECRET` : Your Twitter Consumer Secret
