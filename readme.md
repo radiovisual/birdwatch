@@ -66,7 +66,7 @@ tweet.html;
 
 ### Built-in Server
 
-Birdwatch comes equipped with its own built-in server. You don't have to configure the server at all, it will launch just fine using the defaults, but in case you need more control, you can configure the server by:
+Birdwatch comes equipped with its own built-in server. You don't have to configure the server at all, it will launch just fine using the defaults, but in case you need more control, you can configure the server by the following: 
 
 - [Turning it on or off](https://github.com/radiovisual/birdwatch#server) using the `server: <true|false>` option 
 - [Overriding the url to the Birdwatch cache](https://github.com/radiovisual/birdwatch#cacheDir) with the `cacheDir: <path>` option
@@ -74,7 +74,10 @@ Birdwatch comes equipped with its own built-in server. You don't have to configu
 - [Optionally serving test data](https://github.com/radiovisual/birdwatch#testData) in a JSON format using the `testData: <json>` option
 
 **Tip:** The cache file is created even if the server is turned off, this means you can use Birdwatch with your own caching server: just turn the Birdwatch server off, and use the cache file however you want. 
- 
+
+**Note:** As of `v4.0.4`, birdwatch sets defaults for CORS middleware, to see the default settings, see [the source code](https://github.com/radiovisual/birdwatch/blob/master/lib/utils.js#L20-L30). In the future, you will be [able to customize these settings](https://github.com/radiovisual/birdwatch/issues/28) *PR's welcome!*.
+
+
 ## API
 
 ### Birdwatch([options])
