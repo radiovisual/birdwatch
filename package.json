@@ -65,8 +65,7 @@
     "object-assign": "~3.0.0",
     "pify": "^2.3.0",
     "tweet-patch": "^1.0.0",
-    "underscore": "~1.8.3",
-    "valid-file": "0.0.2"
+    "underscore": "~1.8.3"
   },
   "devDependencies": {
     "ava": "*",
@@ -83,14 +82,12 @@
   "xo": {
     "esnext": true,
     "ignores": [
-      "dist/**",
-      "local-config.js"
+      "dist/**"
     ]
   },
   "ava": {
     "files": [
       "test/test.js",
-      "!test/test-creds.js",
       "!test/app.js"
     ]
   }
