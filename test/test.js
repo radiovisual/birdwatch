@@ -164,6 +164,17 @@ test('custom url should be reachable', async t => {
 	});
 });
 
+test('should set default tweetPatch options', async t => {
+	const birdwatch = new Birdwatch({testData, server: false});
+	t.is(birdwatch.options.tweetPatchOptions.stripTrailingUrl, true);
+	t.is(birdwatch.options.tweetPatchOptions.hrefProps, 'target="_blank"');
+});
+
+test('should allow custom tweetPatch options', async t => {
+	const birdwatch = new Birdwatch({testData, server: false, tweetPatchOptions: {stripTrailingUrl: false}});
+	t.is(birdwatch.options.tweetPatchOptions.stripTrailingUrl, false);
+});
+
 test('should set refreshTime', async t => {
 	const birdwatch = new Birdwatch({refreshTime: 300, server: false}).feed('testfeed');
 	t.is(birdwatch.options.refreshTime, 300);

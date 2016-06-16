@@ -1,12 +1,11 @@
-# Birdwatch :baby_chick::watch:
+![Birdwatch logo](media/birdwatch-logo.png)
 
-> Get and cache raw tweets from one or more specific twitter feeds. 
-> *Optionally filter the tweets by hashtag!*
+[![Build Status](https://travis-ci.org/radiovisual/birdwatch.svg?branch=master)](https://travis-ci.org/radiovisual/birdwatch)
+[![Coverage Status](https://coveralls.io/repos/github/radiovisual/birdwatch/badge.svg?branch=master)](https://coveralls.io/github/radiovisual/birdwatch?branch=master)
 
-[![Build Status](https://travis-ci.org/radiovisual/birdwatch.svg?branch=master)](https://travis-ci.org/radiovisual/birdwatch) [![Coverage Status](https://coveralls.io/repos/github/radiovisual/birdwatch/badge.svg?branch=master)](https://coveralls.io/github/radiovisual/birdwatch?branch=master)
-
-Birdwatch will help you grab tweets from specific twitter accounts, and cache the tweets on your server, 
-thus avoiding any request limits set by the Twitter API, and giving you more control over the data that is saved (filter tweets by hashtag, ignore retweets, custom sorting options, etc). Use the built-in server to get you up and running quickly, or switch the server off and use the cache file anyway you like.
+Birdwatch helps you fetch, filter, sort, cache and serve specific tweets from specific twitter accounts, thus avoiding any request
+limits set by the Twitter API, and giving you more control over the data that is served to your applications or websites.
+ Use the built-in server to get you up and running quickly, or switch the server off and use the cache file anyway you like.
 
 If you find any bugs, or have suggestions [please report them](https://github.com/radiovisual/birdwatch/issues). If you want to help, pull requests are always appreciated! 
 
@@ -105,6 +104,14 @@ Default: `600`
 The number of seconds to wait before the cache updates again. The default is 10 minutes (600 seconds)
  
 **Tip:** Update your cache frequently, but not frequently enough to hit any [Twitter API Rate Limits](https://dev.twitter.com/rest/public/rate-limits).
+##### tweetPatchOptions
+
+Type: `object`<br>
+Default: `{stripTrailingUrl: true, hrefProps: 'target="_blank"'}`
+
+The [tweet-patch](https://github.com/radiovisual/tweet-patch) options you want to pass to Birdwatch. This will affect how 
+the final `html` property on the returned/cached tweets will be processed. By default, Birdwatch removed the trailing url that
+Twitter adds to the end of the `text` property, and forces all converted urls to open up in a new tab.
 
 ##### server
 
@@ -118,7 +125,9 @@ Boolean to turn the server off or on. Turn the server off if you want to run you
 Type: `number`  
 Default: `8417`  
 
-Assign a port to the Birdwatch server. If you set a port of `0` the server will assign an open port for you, and you can get the port number with the `logReport: true` setting or using `birdwatch.options.port`
+Assign a port to the Birdwatch server. If you set a port of `0` the server will assign an open port for you, and you can 
+get the port number with the `logReport: true` setting or using `birdwatch.options.port`. Note that setting the port to `0` (zero)
+will assign any open port.
 
 ##### url
 

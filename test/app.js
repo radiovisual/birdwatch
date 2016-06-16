@@ -8,12 +8,15 @@ const settings = {
 };
 
 new Birdwatch(settings)
-	.feed('birdwatchnpm')
-	.feed('justinbieber', {filterTags: ['believe']})
 	.feed('taylorswift13')
 	.start()
 	.then(tweets => {
 		console.log('\nbirdwatch is ready to serve %s tweets', tweets.length);
+		tweets.forEach(tweet => {
+			console.log('text', tweet.text);
+			console.log('html', tweet.html);
+			console.log('\n\n');
+		});
 	}).catch(err => {
 		console.log(err);
 	});
