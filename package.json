@@ -1,6 +1,6 @@
 {
   "name": "birdwatch",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "Monitor, filter, cache and serve specific twitter feeds.",
   "main": "dist/index.js",
   "files": [
@@ -63,7 +63,7 @@
     "oauth": "^0.9.14",
     "object-assign": "~3.0.0",
     "pify": "^2.3.0",
-    "tweet-patch": "^2.0.0",
+    "tweet-patch": "^2.0.3",
     "underscore": "~1.8.3"
   },
   "devDependencies": {
