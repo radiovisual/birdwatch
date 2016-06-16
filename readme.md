@@ -104,14 +104,16 @@ Default: `600`
 The number of seconds to wait before the cache updates again. The default is 10 minutes (600 seconds)
  
 **Tip:** Update your cache frequently, but not frequently enough to hit any [Twitter API Rate Limits](https://dev.twitter.com/rest/public/rate-limits).
+
 ##### tweetPatchOptions
 
 Type: `object`<br>
 Default: `{stripTrailingUrl: true, hrefProps: 'target="_blank"'}`
 
 The [tweet-patch](https://github.com/radiovisual/tweet-patch) options you want to pass to Birdwatch. This will affect how 
-the final `html` property on the returned/cached tweets will be processed. By default, Birdwatch removed the trailing url that
-Twitter adds to the end of the `text` property, and forces all converted urls to open up in a new tab.
+the final `html` property on the returned/cached tweets will be processed. By default, Birdwatch removes the trailing url that
+Twitter adds to the end of the `text` property when media was attached to the tweet. Since the media url can't render in a 
+text-based tweet, Birdwatch removes the unneeded trailing url.
 
 ##### server
 

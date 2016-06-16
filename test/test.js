@@ -1,3 +1,4 @@
+/* eslint-disable object-property-newline */
 import path from 'path';
 import fs from 'fs';
 
@@ -34,8 +35,8 @@ test('should fail when a screenname is not supplied to .feed()', async t => {
 });
 
 test('should add a feed with options', t => {
-	const birdwatch = new Birdwatch({server: false}).feed('testfeed', {filterTags: /test/i});
-	t.true(birdwatch._feed[0].options.hasOwnProperty('filterTags'));
+	const birdwatch = new Birdwatch({server: false}).feed('testfeed', {filterTags: '#foo'});
+	t.is(birdwatch._feed[0].options.filterTags, '#foo');
 });
 
 test('should fail if no feed is supplied', async t => {
@@ -152,7 +153,7 @@ test('should launch server', async t => {
 	await getPort().then(async port => {
 		await new Birdwatch({testData, port}).feed('testfeed').start();
 		t.true((await got(`http://localhost:${port}/birdwatch/tweets`)).body.length > 0);
-		t.true(JSON.parse((await got(`http://localhost:${port}/birdwatch/tweets`)).body)[0].hasOwnProperty('created_at'));
+		t.is(JSON.parse((await got(`http://localhost:${port}/birdwatch/tweets`)).body)[0].created_at, 'Mon Jul 10 14:14:42 +0000 2015');
 	});
 });
 
@@ -160,7 +161,7 @@ test('custom url should be reachable', async t => {
 	await getPort().then(async port => {
 		await new Birdwatch({testData, port, url: '/custom/url'}).feed('testfeed').start();
 		t.true((await got(`http://localhost:${port}/custom/url`)).body.length > 0);
-		t.true(JSON.parse((await got(`http://localhost:${port}/custom/url`)).body)[0].hasOwnProperty('created_at'));
+		t.is(JSON.parse((await got(`http://localhost:${port}/custom/url`)).body)[0].created_at, 'Mon Jul 10 14:14:42 +0000 2015');
 	});
 });
 
