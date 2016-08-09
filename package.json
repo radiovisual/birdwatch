@@ -63,7 +63,7 @@
     "oauth": "^0.9.14",
     "object-assign": "~3.0.0",
     "pify": "^2.3.0",
-    "tweet-patch": "^2.0.3",
+    "tweet-patch": "^2.0.5",
     "underscore": "~1.8.3"
   },
   "devDependencies": {
