@@ -7,7 +7,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=8.0.0"
   },
   "scripts": {
     "test": "xo && npm run build && ava --verbose && nyc ava",
