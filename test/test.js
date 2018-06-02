@@ -42,7 +42,11 @@ test('should add a feed with options', t => {
 test('listMembersToFeedEntries should convert a twitter list to screen_names', async t => {
 	const birdwatch = new Birdwatch({server: false});
 	const feeds = await birdwatch.listMembersToFeedEntries('{"users":[{"screen_name": "foo"},{"screen_name": "bar"}]}');
-	t.deepEqual(feeds, ['foo', 'bar']);
+	const expected = [
+		{screenname: 'foo', options: {}},
+		{screenname: 'bar', options: {}}
+	];
+	t.deepEqual(feeds, expected);
 });
 
 test('should fail if no feed is supplied', async t => {

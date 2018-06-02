@@ -3,13 +3,13 @@ const Birdwatch = require('./../dist');
 
 const settings = {
 	testData: false,
-	refreshTime: 600,
+	refreshTime: 35,
 	port: 0
 };
 
 new Birdwatch(settings)
 	.feed('taylorswift13')
-	.feedsFromList('unhcr-twitter-stars', 'GisellaLomax')
+	.feedsFromList('birdwatch-allstars', 'birdwatchnpm')
 	.start()
 	.then(tweets => {
 		console.log('\nbirdwatch is ready to serve %s tweets', tweets.length);
