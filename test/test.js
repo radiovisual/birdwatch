@@ -1,4 +1,4 @@
-/* eslint-disable object-property-newline */
+/* eslint-disable object-property-newline no-unresolved */
 import path from 'path';
 import fs from 'fs';
 

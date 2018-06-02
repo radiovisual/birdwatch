@@ -1,3 +1,4 @@
+/* eslint-disable no-unresolved */
 const Birdwatch = require('./../dist');
 
 const settings = {
