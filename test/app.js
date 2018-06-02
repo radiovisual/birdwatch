@@ -10,6 +10,7 @@ const settings = {
 new Birdwatch(settings)
 	.feed('taylorswift13')
 	.feedsFromList('birdwatch-allstars', 'birdwatchnpm')
+	.feedsFromList('unhcr-twitter-stars', 'GisellaLomax')
 	.start()
 	.then(tweets => {
 		console.log('\nbirdwatch is ready to serve %s tweets', tweets.length);
