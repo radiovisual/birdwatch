@@ -1,4 +1,4 @@
-/* eslint-disable object-property-newline no-unresolved */
+/* eslint-disable object-property-newline */
 import path from 'path';
 import fs from 'fs';
 
@@ -9,7 +9,7 @@ import test from 'ava';
 import got from 'got';
 import pify from 'pify';
 
-import Birdwatch from '../dist';
+import Birdwatch from '../dist'; // eslint-disable-line import/no-unresolved
 import testData from './test-tweets.json'; // eslint-disable-line import/extensions
 
 test.before('setup', () => {
