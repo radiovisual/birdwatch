@@ -43,8 +43,8 @@ test('listMembersToFeedEntries should convert a twitter list to screen_names', a
 	const birdwatch = new Birdwatch({server: false});
 	const feeds = await birdwatch.listMembersToFeedEntries('{"users":[{"screen_name": "foo"},{"screen_name": "bar"}]}');
 	const expected = [
-		{screenname: 'foo', options: {}},
-		{screenname: 'bar', options: {}}
+		{screenname: 'foo', options: {limit: 20}},
+		{screenname: 'bar', options: {limit: 20}}
 	];
 	t.deepEqual(feeds, expected);
 });
