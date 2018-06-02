@@ -39,9 +39,15 @@ test('should add a feed with options', t => {
 	t.is(birdwatch._feed[0].options.filterTags, '#foo');
 });
 
+test('listMembersToFeedEntries should convert a twitter list to screen_names', async t => {
+	const birdwatch = new Birdwatch({server: false});
+	const feeds = await birdwatch.listMembersToFeedEntries('{"users":[{"screen_name": "foo"},{"screen_name": "bar"}]}');
+	t.deepEqual(feeds, ['foo', 'bar']);
+});
+
 test('should fail if no feed is supplied', async t => {
 	const birdwatch = new Birdwatch({server: false});
-	await t.throws(birdwatch.start(), 'You must supply at least one feed to Birdwatch');
+	await t.throws(birdwatch.start(), 'You must supply at least one feed or list to Birdwatch');
 });
 
 test('should get tweet data returned', async t => {
@@ -53,8 +59,10 @@ test('should get tweet data returned', async t => {
 });
 
 test('should fail when filterTags is not a valid regex', async t => {
-	const bw = await new Birdwatch({testData, server: false}).feed('test', {filterTags: 'a'});
-	t.throws(bw.start(), 'Invalid regex: a for test');
+	const bw = new Birdwatch().feed('filtertest', {filterTags: 'a'});
+	const error = await t.throws(bw.start());
+
+	t.is(error.message, 'Invalid regex: a for filtertest');
 });
 
 test('should filter hashtags', async t => {
@@ -116,7 +124,7 @@ test('should allow custom sorting', async t => {
 		});
 });
 
-test('should fail if custom sorting function is not a valid function', async t => {
+test('should fail if custom sorting function is not a valid function', t => {
 	t.throws(() => {
 		new Birdwatch({testData, sortBy: [], server: false}).feed('test1').start();
 	}, TypeError, 'sortBy value must be a function.');
@@ -139,7 +147,7 @@ test('should set a limit', async t => {
 		});
 });
 
-test('should set custom cache directory', async t => {
+test('should set custom cache directory', t => {
 	const birdwatch = new Birdwatch({server: false, cacheDir: '/custom/location'}).feed('testfeed');
 	t.is(birdwatch.options.cacheDir, '/custom/location');
 });
@@ -192,7 +200,7 @@ test('saves to cache file', async t => {
 
 	await new Birdwatch({cacheDir: tempdir, testData, server: false}).feed('testfeed', {removeRetweets: true}).start();
 
-	pify(fs.readFile)(filepath, 'utf8').then(data => {
+	await pify(fs.readFile)(filepath, 'utf8').then(data => {
 		const tweets = JSON.parse(data);
 		t.is(tweets.length, 5);
 	});
