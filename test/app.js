@@ -1,4 +1,4 @@
-const Birdwatch = require('./../dist/');
+const Birdwatch = require('./../dist');
 
 const settings = {
 	testData: false,

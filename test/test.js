@@ -10,7 +10,7 @@ import got from 'got';
 import pify from 'pify';
 
 import Birdwatch from '../dist';
-import testData from './test-tweets.json';
+import testData from './test-tweets.json'; // eslint-disable-line import/extensions
 
 test.before('setup', () => {
 	rm.sync(`${__dirname}/custom`);
@@ -152,7 +152,7 @@ test('should set custom cache directory', t => {
 	t.is(birdwatch.options.cacheDir, '/custom/location');
 });
 
-test('should set custom url in options', async t => {
+test('should set custom url in options', t => {
 	const birdwatch = new Birdwatch({server: false, url: '/custom/url'}).feed('testfeed');
 	t.is(birdwatch.options.url, '/custom/url');
 });
@@ -173,23 +173,23 @@ test('custom url should be reachable', async t => {
 	});
 });
 
-test('should set default tweetPatch options', async t => {
+test('should set default tweetPatch options', t => {
 	const birdwatch = new Birdwatch({testData, server: false});
 	t.is(birdwatch.options.tweetPatchOptions.stripTrailingUrl, true);
 	t.is(birdwatch.options.tweetPatchOptions.hrefProps, 'target="_blank"');
 });
 
-test('should allow custom tweetPatch options', async t => {
+test('should allow custom tweetPatch options', t => {
 	const birdwatch = new Birdwatch({testData, server: false, tweetPatchOptions: {stripTrailingUrl: false}});
 	t.is(birdwatch.options.tweetPatchOptions.stripTrailingUrl, false);
 });
 
-test('should set refreshTime', async t => {
+test('should set refreshTime', t => {
 	const birdwatch = new Birdwatch({refreshTime: 300, server: false}).feed('testfeed');
 	t.is(birdwatch.options.refreshTime, 300);
 });
 
-test('should set server option', async t => {
+test('should set server option', t => {
 	const birdwatch = new Birdwatch({refreshTime: 300, server: false}).feed('testfeed');
 	t.is(birdwatch.options.server, false);
 });
