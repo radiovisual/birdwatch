@@ -4,7 +4,7 @@ const Birdwatch = require('./../dist');
 const settings = {
 	testData: false,
 	refreshTime: 35,
-	port: 0
+	port: 8417
 };
 
 new Birdwatch(settings)
