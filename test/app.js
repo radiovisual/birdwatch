@@ -8,8 +8,6 @@ const settings = {
 };
 
 new Birdwatch(settings)
-	.feed('taylorswift13')
-	.feedsFromList('birdwatch-allstars', 'birdwatchnpm')
 	.feedsFromList('unhcr-twitter-stars', 'GisellaLomax')
 	.start()
 	.then(tweets => {
