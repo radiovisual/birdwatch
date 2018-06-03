@@ -1,14 +1,16 @@
-const Birdwatch = require('./../dist/');
-// const testData = require('./testTweets.json');
+/* eslint-disable import/no-unresolved */
+const Birdwatch = require('./../dist');
 
 const settings = {
 	testData: false,
-	refreshTime: 600,
-	port: 0
+	refreshTime: 35,
+	port: 8417
 };
 
 new Birdwatch(settings)
 	.feed('taylorswift13')
+	.feedsFromList('birdwatch-allstars', 'birdwatchnpm')
+	.feedsFromList('unhcr-twitter-stars', 'GisellaLomax')
 	.start()
 	.then(tweets => {
 		console.log('\nbirdwatch is ready to serve %s tweets', tweets.length);
@@ -20,4 +22,3 @@ new Birdwatch(settings)
 	}).catch(err => {
 		console.log(err);
 	});
-

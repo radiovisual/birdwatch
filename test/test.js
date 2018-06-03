@@ -9,8 +9,8 @@ import test from 'ava';
 import got from 'got';
 import pify from 'pify';
 
-import Birdwatch from '../dist';
-import testData from './test-tweets.json';
+import Birdwatch from '../dist'; // eslint-disable-line import/no-unresolved
+import testData from './test-tweets.json'; // eslint-disable-line import/extensions
 
 test.before('setup', () => {
 	rm.sync(`${__dirname}/custom`);
@@ -39,9 +39,19 @@ test('should add a feed with options', t => {
 	t.is(birdwatch._feed[0].options.filterTags, '#foo');
 });
 
+test('listMembersToFeedEntries should convert a twitter list to screen_names', async t => {
+	const birdwatch = new Birdwatch({server: false});
+	const feeds = await birdwatch.listMembersToFeedEntries('{"users":[{"screen_name": "foo"},{"screen_name": "bar"}]}');
+	const expected = [
+		{screenname: 'foo', options: {limit: 20}},
+		{screenname: 'bar', options: {limit: 20}}
+	];
+	t.deepEqual(feeds, expected);
+});
+
 test('should fail if no feed is supplied', async t => {
 	const birdwatch = new Birdwatch({server: false});
-	await t.throws(birdwatch.start(), 'You must supply at least one feed to Birdwatch');
+	await t.throws(birdwatch.start(), 'You must supply at least one feed or list to Birdwatch');
 });
 
 test('should get tweet data returned', async t => {
@@ -53,8 +63,10 @@ test('should get tweet data returned', async t => {
 });
 
 test('should fail when filterTags is not a valid regex', async t => {
-	const bw = await new Birdwatch({testData, server: false}).feed('test', {filterTags: 'a'});
-	t.throws(bw.start(), 'Invalid regex: a for test');
+	const bw = new Birdwatch().feed('filtertest', {filterTags: 'a'});
+	const error = await t.throws(bw.start());
+
+	t.is(error.message, 'Invalid regex: a for filtertest');
 });
 
 test('should filter hashtags', async t => {
@@ -116,7 +128,7 @@ test('should allow custom sorting', async t => {
 		});
 });
 
-test('should fail if custom sorting function is not a valid function', async t => {
+test('should fail if custom sorting function is not a valid function', t => {
 	t.throws(() => {
 		new Birdwatch({testData, sortBy: [], server: false}).feed('test1').start();
 	}, TypeError, 'sortBy value must be a function.');
@@ -139,12 +151,12 @@ test('should set a limit', async t => {
 		});
 });
 
-test('should set custom cache directory', async t => {
+test('should set custom cache directory', t => {
 	const birdwatch = new Birdwatch({server: false, cacheDir: '/custom/location'}).feed('testfeed');
 	t.is(birdwatch.options.cacheDir, '/custom/location');
 });
 
-test('should set custom url in options', async t => {
+test('should set custom url in options', t => {
 	const birdwatch = new Birdwatch({server: false, url: '/custom/url'}).feed('testfeed');
 	t.is(birdwatch.options.url, '/custom/url');
 });
@@ -165,23 +177,23 @@ test('custom url should be reachable', async t => {
 	});
 });
 
-test('should set default tweetPatch options', async t => {
+test('should set default tweetPatch options', t => {
 	const birdwatch = new Birdwatch({testData, server: false});
 	t.is(birdwatch.options.tweetPatchOptions.stripTrailingUrl, true);
 	t.is(birdwatch.options.tweetPatchOptions.hrefProps, 'target="_blank"');
 });
 
-test('should allow custom tweetPatch options', async t => {
+test('should allow custom tweetPatch options', t => {
 	const birdwatch = new Birdwatch({testData, server: false, tweetPatchOptions: {stripTrailingUrl: false}});
 	t.is(birdwatch.options.tweetPatchOptions.stripTrailingUrl, false);
 });
 
-test('should set refreshTime', async t => {
+test('should set refreshTime', t => {
 	const birdwatch = new Birdwatch({refreshTime: 300, server: false}).feed('testfeed');
 	t.is(birdwatch.options.refreshTime, 300);
 });
 
-test('should set server option', async t => {
+test('should set server option', t => {
 	const birdwatch = new Birdwatch({refreshTime: 300, server: false}).feed('testfeed');
 	t.is(birdwatch.options.server, false);
 });
@@ -192,7 +204,7 @@ test('saves to cache file', async t => {
 
 	await new Birdwatch({cacheDir: tempdir, testData, server: false}).feed('testfeed', {removeRetweets: true}).start();
 
-	pify(fs.readFile)(filepath, 'utf8').then(data => {
+	await pify(fs.readFile)(filepath, 'utf8').then(data => {
 		const tweets = JSON.parse(data);
 		t.is(tweets.length, 5);
 	});

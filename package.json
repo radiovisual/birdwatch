@@ -7,7 +7,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=8.0.0"
   },
   "scripts": {
     "test": "xo && npm run build && ava --verbose && nyc ava",
@@ -57,7 +57,7 @@
     "express": "^4.13.4",
     "get-port": "^2.1.0",
     "hash-regex": "^1.0.0",
-    "is-regexp": "~1.0.0",
+    "is-regexp": "^2.0.0",
     "mkdirp": "^0.5.1",
     "node-oauth-error": "0.0.2",
     "oauth": "^0.9.14",
@@ -67,10 +67,10 @@
     "underscore": "~1.8.3"
   },
   "devDependencies": {
-    "ava": "*",
+    "ava": "^0.25.0",
     "babel": "^5.8.23",
     "coveralls": "^2.11.6",
-    "got": "^6.1.1",
+    "got": "^8.3.1",
     "nyc": "^5.6.0",
     "os-tmpdir": "^1.0.1",
     "rimraf": "^2.5.1",
