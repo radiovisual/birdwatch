@@ -158,6 +158,38 @@ Default: `tweet => { return new Date(tweet.created_at) * -1; }`
 
 Override the custom sorting function. Birdwatch defaults sorting to chronological order.
 
+##### balancedScreennames
+
+Type: `boolean`  
+Default: `false`    
+
+If this is set to `true` then a special sorting of the tweets will occur, which will balance the 
+tweets by the unique `screen_name` values. This will spread the usernames apart evenly so that the 
+distribution of tweets seems balanced. For example, suppose you have tweets authored by three people, 
+and they are returned from the Twitter API in this order:
+
+```
+USER01
+USER01
+USER02
+USER02
+USER03
+USER03
+```
+
+setting this option to `true` will shuffle the tweets in a balanced order:
+
+```
+USER01
+USER02
+USER03
+USER01
+USER02
+USER03
+```
+
+:warning: **Important to note** that this option can NOT be used in combination with the `sortBy` option.
+
 ### birdwatch.feed(screenname, [options])
 
 Add a twitter feed.
